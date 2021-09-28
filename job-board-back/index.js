@@ -10,7 +10,10 @@ db.connect((err) => {
 })
 
 app.get('/adverts', (req, res) => {
-
+    db.query('SELECT * FROM advertisements', (err, res) => {
+        if (err) throw err
+        console.log(res)
+    })
 })
 
 
