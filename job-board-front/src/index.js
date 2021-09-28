@@ -7,14 +7,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 ReactDOM.render(
   <React.StrictMode>
-   
-
     <Router>
+
       <Route exact path="/">
-      <App />
+        <App />
       </Route>
       <Route path="/login">
-      <h1>test</h1>
+        <h1>test</h1>
       </Route>
     </Router>
   </React.StrictMode>,
