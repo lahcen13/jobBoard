@@ -1,0 +1,22 @@
+.Advert {
+    margin-top:10vh;
+    height:30vh;
+    background:WHITE;
+    filter: drop-shadow(0 0 0.3rem rgb(185, 185, 185));
+    position: relative;
+    margin-left:2vh;
+    margin-right:2vh;
+}
+
+#titleAdvert, #paragraphAdvert{
+    text-align:center;
+}
+
+
+
+#buttonAdvert{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border-radius:0rem 0rem .3rem .3rem!important;
+}

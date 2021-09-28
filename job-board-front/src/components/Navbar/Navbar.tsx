@@ -9,8 +9,7 @@ import Image from 'react-bootstrap/Image';
 
 const Navbar = () => (
   <div className="Navbar">
-    <Navv bg="primary" variant="dark" fixed="top" >
-
+    <Navv bg="primary" variant="dark" >
       <Container>
         <Navv.Brand href="#home">JobBoard</Navv.Brand>
         <Navv.Text>

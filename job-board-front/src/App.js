@@ -1,7 +1,7 @@
-import logo from './logo.svg';
+
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-
+import Advert from './components/Advert/Advert';
 
 
 function App() {
@@ -11,6 +11,8 @@ function App() {
       <Navbar title="Jean">
 
       </Navbar>
+      <Advert>
+      </Advert>
     </div>
   );
 }
