@@ -3,18 +3,20 @@ import './Navbar.css';
 import Navv from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
-
+import PropTypes from 'prop-types';
+import { BellFill } from 'react-bootstrap-icons';
+import Image from 'react-bootstrap/Image';
 
 const Navbar = () => (
   <div className="Navbar">
-    <Navv bg="primary" variant="dark">
+    <Navv bg="primary" variant="dark" fixed="top" >
+
       <Container>
-        <Navv.Brand href="#home">Navbar</Navv.Brand>
-        <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-        </Nav>
+        <Navv.Brand href="#home">JobBoard</Navv.Brand>
+        <Navv.Text>
+          <BellFill size={25} color="white" className="logoCloche"> </BellFill>
+          <Image src="https://picsum.photos/200/200" className="photo" width="35px" roundedCircle />
+        </Navv.Text>
       </Container>
     </Navv>
   </div>
