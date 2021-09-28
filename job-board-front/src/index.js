@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Login from './components/Login/Login'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 ReactDOM.render(
@@ -13,7 +14,9 @@ ReactDOM.render(
         <App />
       </Route>
       <Route path="/login">
-        <h1>test</h1>
+
+      <Login />
+
       </Route>
     </Router>
   </React.StrictMode>,
