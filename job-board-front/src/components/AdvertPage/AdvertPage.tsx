@@ -4,7 +4,7 @@ import axios from "axios";
 import Advert from '../Advert/Advert';
 
 const AdvertPage = () => {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<any>(null)
   useEffect(() => {
     console.log("useEffect")
    if (!data) {
@@ -20,10 +20,17 @@ const AdvertPage = () => {
         }
       }).catch(err => console.error(err))
    }
-  }, [data, setData])
+  })
   return (<div className={classes.AdvertPage}>
-    {/* {data && data.map((el, i) => <Advert key={i} title={el.title} description={el.description} published={el.published} date={el.date}  />)} */}
+    {data && data.map((el: advert, i: number) => <Advert key={i} title={el.title} description={el.description} published={el.published} date={el.date}  />)}
   </div>)
 };
+
+interface advert {
+  title: string,
+  description: string,
+  published: boolean,
+  date: string
+}
 
 export default AdvertPage;
