@@ -11,10 +11,10 @@ db.connect((err) => {
     console.log('Database connected')
 })
 
-app.get('/adverts', (req, res) => {
+app.get('/adverts', (req, response) => {
     db.query('SELECT * FROM advertisements', (err, res) => {
         if (err) throw err
-        console.log(res)
+        response.status(200).send(res)
     })
 })
 
