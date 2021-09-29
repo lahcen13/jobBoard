@@ -1,22 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './AdvertPage.module.css';
 import axios from "axios"
+import Advert from '../Advert/Advert.tsx'
 
 const AdvertPage = () => {
+  const [data, setData] = useState(null)
   useEffect(() => {
     console.log("useEffect")
+   if (!data) {
     axios.get('http://localhost:5000/adverts', {
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+        'Access-Control-Allow-Origin': '*'
       }
     })
       .then(res => {
-        console.log(res)
+        if (res.data.length > 0) {
+          console.log(res.data)
+          setData(res.data)
+        }
       }).catch(err => console.error(err))
-  })
+   }
+  }, [data, setData])
   return (<div className={classes.AdvertPage}>
-    AdvertPage Component
+    {data && data.map((el, i) => <Advert key={i} title={el.title} description={el.description} published={el.published} date={el.date}  />)}
   </div>)
 };
 
