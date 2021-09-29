@@ -1,16 +1,20 @@
+
 const express = require('express')
 const db = require('./config')
 const app = express()
 
-const crypto = require('crypto');
+// from where we want the request
 const cors = require('cors')
 
 const PORT = process.env.PORT || 5000
 app.use(cors())
-
+//cryptdata
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const someOtherPlaintextPassword = 'not_bacon';
+
+//token
+var jwt = require('jsonwebtoken');
+
 
 app.use(express.json())
 
@@ -26,16 +30,30 @@ app.get('/adverts', (req, response) => {
     })
 })
 
-app.post('/login', (req, res) => {
+app.post('/login', (req, response) => {
     console.log(req.body.email)
     if (!req.body || !req.body.password || !req.body.email) {
-        res.status(406).send('field_missing')
+        response.status(406).send('field_missing')
     }
-
     db.query(`SELECT * FROM people WHERE email="${req.body.email}"`, (err, res) => {
         if (err) throw err
-        console.log(res)
+        console.log(req.body.password);
+        console.log(res[0]['password_']);
+        bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
+            if (err) throw err
+            if (result) {
+                var token = jwt.sign({ email: req.body.email, id: res[0].id }, process.env.SECRET);
+                response.status(200).send(token);
+            } else {
+                response.status(401).send("wrong_password")
+            }
+        });
     })
+
+
+
+
+
 })
 
 app.post('/register', (req, response) => {
