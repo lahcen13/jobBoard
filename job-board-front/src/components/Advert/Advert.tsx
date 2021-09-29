@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 
 
-const Advert = () => (
+const Advert = (props: {title: string, description: string, published: boolean, date: string}) => (
   <div className="container">
     <div className="Advert rounded">
       <div className="container">
-        <h3 id="titleAdvert">Hello le people</h3>
-        <p id="paragraphAdvert">  Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Proin eget tortor risus. Proin eget tortor risus.  Proin eget tortor risus.  Proin eget tortor risus.  Proin eget tortor risus.  </p>
+        <h3 id="titleAdvert">{props.title}</h3>
+        <p id="paragraphAdvert">{props.description}</p>
       </div>
-      <Button variant="primary" id="buttonAdvert">Primary</Button>
+      <Button variant="primary" id="buttonAdvert">Learn more</Button>
     </div>
   </div>
 );
