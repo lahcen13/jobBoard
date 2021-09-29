@@ -38,7 +38,7 @@ app.post('/login', (req, res) => {
     })
 })
 
-app.get('/register', (req, response) => {
+app.post('/register', (req, response) => {
 
 
     if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
