@@ -5,9 +5,13 @@
     align-items: center;
 }
 
-.buttonFirstPage:nth-of-type(1){
+a:nth-of-type(1) .buttonFirstPage{
     margin-top:26vh;
 }
+a:nth-of-type(2) .buttonFirstPage{
+    margin-top:10vh;
+}
+
 .buttonFirstPage{
     filter: drop-shadow(0 0 0.3rem rgb(167, 166, 166));
     font-size: 30px;
