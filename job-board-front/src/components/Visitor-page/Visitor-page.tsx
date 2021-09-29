@@ -7,7 +7,7 @@ const Visitorpage = () => (
 
   <div className="Visitor-page">
 
-    <Link to="/register"><Button variant="primary" className="buttonFirstPage ">I want to find a job</Button> </Link><br />
+    <Link to="/login"><Button variant="primary" className="buttonFirstPage ">I want to find a job</Button> </Link><br />
     <Link to="/"><Button variant="primary" className="buttonFirstPage">I am a company</Button></Link>
 
 
