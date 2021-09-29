@@ -3,20 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Login from './components/Login/Login'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import Login from './components/Login/Login';
+import FirstPageRegister from './components/FirstPageRegister/FirstPageRegister';
+import SecondPageRegister from './components/SecondPageRegister/SecondPageRegister';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-
       <Route exact path="/">
         <App />
       </Route>
       <Route path="/login">
-
-      <Login />
-
+        <Login />
+      </Route>
+      <Route path="/firstPageRegister">
+        <FirstPageRegister />
+      </Route>
+      <Route path="/secondPageRegister">
+        <SecondPageRegister />
       </Route>
     </Router>
   </React.StrictMode>,
