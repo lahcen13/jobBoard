@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
-import { InputGroup, FormControl, Button } from 'react-bootstrap'
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import axios from "axios";
+
 
 
 
@@ -9,10 +11,23 @@ const Login = () => {
 
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value })
-    console.log(data)
   }
 
   const onClick = () => {
+    console.log('tetet')
+    axios.post('http://localhost:5000/login', data, {
+      headers: { 'content-type': 'application/json' }
+    }).then(res => {
+      console.log('OK')
+      if (res.data) {
+        const data: session = { token: res.data, expire: "tetetetet" }
+        console.log(res)
+        sessionStorage.setItem("token", JSON.stringify(data));
+      } else {
+
+      }
+    }).catch(err => console.error(err))
+
 
     
   }
@@ -35,5 +50,9 @@ const Login = () => {
     </div>
   </div>
 };
+interface session {
+  token: string,
+  expire: string,
+}
 
 export default Login;
