@@ -49,11 +49,6 @@ app.post('/login', (req, response) => {
             }
         });
     })
-
-
-
-
-
 })
 
 app.post('/register', (req, response) => {
@@ -80,6 +75,26 @@ app.post('/register', (req, response) => {
     })
 })
 
+
+
+
+
+app.get('/filter', (req, response) => {
+    console.log(req.body.email)
+    if (!req.body && !req.body.domaine && !req.body.city && !req.body.company && !req.body.salaireMin && !req.body.salaireMax) {
+        response.status(406).send('field_missing')
+    }
+    { req.body.domaine !== null ? domaine = `advertisements.domaine="${req.body.domaine}" ` : domaine = "" }
+    { req.body.city !== null ? city = `and companies.city="${req.body.city}" ` : city = "" }
+    { req.body.company !== null ? company = `and companies.name="${req.body.company}" ` : company = "" }
+    { req.body.salaireMin !== null && req.body.salaireMax !== null ? salaire = `and salaire between "${req.body.salaireMin}" and "${req.body.salaireMax}" ` : salaire = "" }
+    { req.body.salaireMin !== null && req.body.salaireMax == null ? salaire = `and salaire>="${req.body.salaireMin}"  ` : salaire = "" }
+    { req.body.salaireMin == null && req.body.salaireMax !== null ? salaire = `and salaire<="${req.body.salaireMax}"  ` : salaire = "" }
+    db.query('SELECT * FROM advertisements inner join companies on advertisements.companie_id=companies.id where ' + domaine + '' + city + '' + company + '' + salaire + '', (err, res) => {
+        if (err) throw err
+        response.status(200).send(res)
+    })
+})
 
 
 
