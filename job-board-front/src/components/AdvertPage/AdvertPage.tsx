@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classes from './AdvertPage.module.css';
-import axios from "axios"
-import Advert from '../Advert/Advert.tsx'
+import axios from "axios";
+import Advert from '../Advert/Advert';
 
 const AdvertPage = () => {
   const [data, setData] = useState(null)
@@ -22,7 +22,7 @@ const AdvertPage = () => {
    }
   }, [data, setData])
   return (<div className={classes.AdvertPage}>
-    {data && data.map((el, i) => <Advert key={i} title={el.title} description={el.description} published={el.published} date={el.date}  />)}
+    {/* {data && data.map((el, i) => <Advert key={i} title={el.title} description={el.description} published={el.published} date={el.date}  />)} */}
   </div>)
 };
 
