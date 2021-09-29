@@ -9,7 +9,7 @@ const Advert = (props: {title: string, description: string, published: boolean, 
     <div className="Advert rounded">
       <div className="container">
         <h3 id="titleAdvert">{props.title}</h3>
-        <p id="paragraphAdvert">{props.description}</p>
+        <p id="paragraphAdvert">{props.description.substring(0, 190)+"..."}</p>
       </div>
       <Button variant="primary" id="buttonAdvert">Learn more</Button>
     </div>
