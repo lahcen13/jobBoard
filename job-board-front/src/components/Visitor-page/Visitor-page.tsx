@@ -1,13 +1,14 @@
 import React from 'react';
 import './Visitor-page.css';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 const Visitorpage = () => (
 
   <div className="Visitor-page">
 
-    <Button variant="primary" className="buttonFirstPage ">I wan.t to find a job</Button> <br />
-    <Button variant="primary" className="buttonFirstPage">I am a company</Button>
+    <Link to="/register"><Button variant="primary" className="buttonFirstPage ">I want to find a job</Button> </Link><br />
+    <Link to="/"><Button variant="primary" className="buttonFirstPage">I am a company</Button></Link>
 
 
   </div >
