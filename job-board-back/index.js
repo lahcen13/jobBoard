@@ -2,7 +2,9 @@ const express = require('express')
 const db = require('./config')
 const app = express()
 const crypto = require('crypto');
+const cors = require('cors')
 const PORT = process.env.PORT || 5000
+app.use(cors())
 
 app.use(express.json())
 
@@ -11,10 +13,10 @@ db.connect((err) => {
     console.log('Database connected')
 })
 
-app.get('/adverts', (req, res) => {
+app.get('/adverts', (req, response) => {
     db.query('SELECT * FROM advertisements', (err, res) => {
         if (err) throw err
-        console.log(res)
+        response.status(200).send(res)
     })
 })
 

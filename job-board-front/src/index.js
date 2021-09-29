@@ -7,12 +7,14 @@ import Login from './components/Login/Login';
 import FirstPageRegister from './components/FirstPageRegister/FirstPageRegister';
 import SecondPageRegister from './components/SecondPageRegister/SecondPageRegister';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Visitorpage from './components/Visitor-page/Visitor-page';
+import AdvertPage from './components/AdvertPage/AdvertPage.tsx'
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Route exact path="/">
-        <App />
+        <Visitorpage />
       </Route>
       <Route path="/login">
         <Login />
@@ -22,6 +24,9 @@ ReactDOM.render(
       </Route>
       <Route path="/secondPageRegister">
         <SecondPageRegister />
+      </Route>
+      <Route path="/adverts">
+          <AdvertPage />
       </Route>
     </Router>
   </React.StrictMode>,
