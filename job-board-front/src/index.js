@@ -7,12 +7,13 @@ import Login from './components/Login/Login';
 import FirstPageRegister from './components/FirstPageRegister/FirstPageRegister';
 import SecondPageRegister from './components/SecondPageRegister/SecondPageRegister';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Visitorpage from './components/Visitor-page/Visitor-page';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Route exact path="/">
-        <App />
+        <Visitorpage />
       </Route>
       <Route path="/login">
         <Login />
