@@ -28,7 +28,7 @@ const Register = () => {
     console.log(data)
   }
   return (<div className={styles.Register}>
-    {step == 1 ? <FirstPageRegister update={(input: any) => updateData(input)} onClick={() => setStep(2)} /> : <SecondPageRegister onClick={() => submit()} update={(input: any) => updateData(input)} />};
+    {step == 1 ? <FirstPageRegister update={(input: any) => updateData(input)} onClick={() => setStep(2)} /> : <SecondPageRegister onClick={() => submit()} update={(input: any) => updateData(input)} />}
   </div>)
 };
 

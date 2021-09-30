@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Login.css';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import axios from "axios";
+import expireDate from '../../functions/expireDate.js'
 
 
 
@@ -20,9 +21,10 @@ const Login = () => {
     }).then(res => {
       console.log('OK')
       if (res.data) {
-        const data: session = { token: res.data, expire: "tetetetet" }
+        const data: session = { token: res.data, expire: expireDate().toString() }
         console.log(res)
-        sessionStorage.setItem("token", JSON.stringify(data));
+        sessionStorage.setItem("session", JSON.stringify(data));
+        console.log()
       } else {
 
       }
