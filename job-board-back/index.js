@@ -52,8 +52,6 @@ app.post('/login', (req, response) => {
 })
 
 app.post('/register', (req, response) => {
-
-
     if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
         response.status(406).send('field_missing')
     }
@@ -80,19 +78,27 @@ app.post('/register', (req, response) => {
 
 
 app.get('/filter', (req, response) => {
-    console.log(req.body.email)
     if (!req.body && !req.body.domaine && !req.body.city && !req.body.company && !req.body.salaireMin && !req.body.salaireMax) {
         response.status(406).send('field_missing')
     }
-
-    { req.body.domaine !== null ? domaine = `advertisements.domaine="${req.body.domaine}" ` : domaine = "" }
+    //Filtre activity
+    { req.body.domaine !== null ? domaine = `advertisements.activity="${req.body.domaine}" ` : domaine = "" }
+    //Filtre company city 
     { req.body.city !== null ? city = `and companies.city="${req.body.city}" ` : city = "" }
-    { req.body.company !== null ? company = `and companies.name="${req.body.company}" ` : company = "" }
-    { req.body.salaireMin !== null && req.body.salaireMax !== null ? salaire = `and salaire between "${req.body.salaireMin}" and "${req.body.salaireMax}" ` : salaire = "" }
-    { req.body.salaireMin !== null && req.body.salaireMax == null ? salaire = `and salaire>="${req.body.salaireMin}"  ` : salaire = "" }
-    { req.body.salaireMin == null && req.body.salaireMax !== null ? salaire = `and salaire<="${req.body.salaireMax}"  ` : salaire = "" }
+    //Filtre company id
+    { req.body.company !== null ? company = `and companies.id="${req.body.company}" ` : company = "" }
+    //Filtre salary
+    { req.body.salaireMin !== null && req.body.salaireMax !== null ? salaire = `and salary between "${req.body.salaireMin}" and "${req.body.salaireMax}" ` : salaire = "" }
 
-
+    const sql = `SELECT advertisements.id, advertisements.title, advertisements.description, advertisements.date, advertisements.salary, advertisements.activity FROM advertisements inner join companies on advertisements.companie_id=companies.id where published=1 and ` + domaine + city + company + salaire
+    db.query(sql, (err, res) => {
+        if (err) throw err
+        if (res) {
+            response.status(200).send(res)
+        } else {
+            response.status(406).send('email_exist');
+        }
+    })
 })
 
 
