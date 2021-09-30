@@ -29,7 +29,7 @@ const Login = () => {
     }).catch(err => console.error(err))
 
 
-    
+
   }
   return <div className="login-container">
     <h1 className='title'>LogIn</h1>
@@ -40,7 +40,6 @@ const Login = () => {
       <InputGroup onChange={(e) => onChange(e)} className="input">
         <FormControl name="password" className="center-text" placeholder="Password" />
       </InputGroup>
-
       <Button onClick={() => onClick()} className="button" variant="light">Connect</Button>
     </div>
 
