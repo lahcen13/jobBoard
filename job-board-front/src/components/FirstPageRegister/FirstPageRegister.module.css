@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Rowdies&display=swap');
 
 .registercontainer {
-    background-color: #0D6EFD;
+    background-image: url("../../assets/svgs/svgBackground.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-size: 100%;
     min-height: 100vh;
     width: 100vw;
     font-family: "Rowdies";
