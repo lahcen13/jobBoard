@@ -15,11 +15,11 @@ import authGuard from "./middleware/auth-gard"
 const Middleware = () => {
 
   useEffect(() => {
-    authGuard()
+    // authGuard()
   })
 
   return <React.StrictMode>
- 
+   {authGuard()}
   <Router>
     <Route exact path="/">
       <Visitorpage />
