@@ -55,6 +55,23 @@ app.post('/login', (req, response) => {
     })
 })
 
+app.get('/user', (req, res) => {
+    const user = req.query.email
+    console.log(req.query)
+    if (user) {
+        db.query('SELECT * FROM people WHERE email = ?', [
+            user
+        ], (error, response) => {
+            if (error) throw error
+            if (response.length === 0) {
+                return res.status(404).send('user_not_found')
+            }
+            return res.status(200).send(response[0])
+        })
+    }else {
+        return res.status(406).send("email_field_missing")
+    }
+})
 
 
 app.put('/user', (req, res) => {
