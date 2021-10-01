@@ -8,11 +8,15 @@ import { controleEmail, controleName, controlePassword } from '../../functions/F
 const Register = () => {
   const [step, setStep] = useState(1);
   const [showAlertPassword, setShowAlertPassword] = useState(false);
+  const [showAlertConfirm, setShowAlertConfirm] = useState(false);
   const [showAlertEmail, setShowAlertEmail] = useState(false);
   const [showAlertName, setShowAlertName] = useState(false);
   const [showAlertPrenom, setShowAlertPrenom] = useState(false);
   const [showAlertMailExist, setShowAlertMailExist] = useState(false);
+
   const [canContinue, setCanContinue] = useState(false);
+
+
   const [data, setData] = useState({
     firstName: '',
     lastName: '',
@@ -20,7 +24,6 @@ const Register = () => {
     password: '',
     confirm: ''
   })
-
 
   useEffect(() => {
     console.log(data)
@@ -32,29 +35,39 @@ const Register = () => {
   }
 
   const controle = () => {
-    var validate = true;
+    let validate = true;
     if (step == 1) {
       if (!controleName(data.firstName)) {
         setShowAlertPrenom(true);
         validate = false;
+      } else {
+        setShowAlertPrenom(false);
       }
       if (!controleName(data.lastName)) {
         setShowAlertName(true);
         validate = false;
+      } else {
+        setShowAlertName(false);
       }
       return validate;
     } else {
       if (!controleEmail(data.email)) {
         setShowAlertEmail(true);
         validate = false;
+      } else {
+        setShowAlertEmail(false);
       }
       if (!controlePassword(data.password)) {
         setShowAlertPassword(true);
         validate = false;
+      } else {
+        setShowAlertPassword(false);
       }
       if (data.password !== data.confirm) {
-        setShowAlertPassword(true);
+        setShowAlertConfirm(true);
         validate = false;
+      } else {
+        setShowAlertConfirm(false);
       }
       return validate;
     }
@@ -68,12 +81,13 @@ const Register = () => {
     }).catch(err => {
       setShowAlertMailExist(true);
       console.log(err.mess)
-
     })
   }
+
+
   // {name: "value"}
   return (<div className={styles.Register}>
-    {step == 1 ? <FirstPageRegister disabled={canContinue} update={(input: any) => updateData(input)} onClick={() => setStep(2)} /> : <SecondPageRegister disabled={canContinue} onClick={() => submit()} update={(input: any) => updateData(input)} />}
+    {step == 1 ? <FirstPageRegister showAlertPrenom={showAlertPrenom} showAlertName={showAlertName} showAlertMailExist={showAlertMailExist} disabled={canContinue} update={(input: any) => updateData(input)} onClick={() => setStep(2)} /> : <SecondPageRegister showAlertEmail={showAlertEmail} showAlertPassword={showAlertPassword} showAlertConfirm={showAlertConfirm} disabled={canContinue} onClick={() => submit()} update={(input: any) => updateData(input)} />}
 
   </div>)
 };
