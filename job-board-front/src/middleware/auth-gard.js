@@ -1,3 +1,5 @@
+import { get } from "../functions/session"
+
 export default () => {
     console.log('AUTH')
   
@@ -5,7 +7,7 @@ export default () => {
         return
     }
 
-    const session = JSON.parse(sessionStorage.getItem('session'))
+    const session = JSON.parse(get())
     if (!session) {
         window.location.href = '/'
     }

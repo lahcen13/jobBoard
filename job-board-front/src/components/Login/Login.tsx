@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Login.css';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import axios from "axios";
-import expireDate from '../../functions/expireDate.js'
+import {set} from '../../functions/session'
 import Alert from '../Alert/Alert';
 
 
@@ -12,6 +12,7 @@ import Alert from '../Alert/Alert';
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" })
   const [showAlert, setShowAlert] = useState(false);
+  const [checked, setChecked] = useState<boolean>(false)
 
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value })
@@ -22,9 +23,8 @@ const Login = () => {
       headers: { 'content-type': 'application/json' }
     }).then(res => {
       if (res.data) {
-        const data: session = { token: res.data, expire: expireDate().toString() }
-        sessionStorage.setItem("session", JSON.stringify(data));
-
+      
+        set(res.data, checked)
         window.location.href = '/adverts';
 
       } else if (res.data == 'wrong_password' || res.data == 'wrong_email') {
@@ -48,6 +48,10 @@ const Login = () => {
       </InputGroup>
       <InputGroup onChange={(e) => onChange(e)} className="input">
         <FormControl name="password" className="center-text" placeholder="Password" />
+      </InputGroup>
+      <InputGroup className='input'>
+      <InputGroup.Text>Stay connected</InputGroup.Text>
+      <InputGroup.Checkbox onClick={() => setChecked(!checked)} checked={checked} aria-label="Checkbox for following text input" />
       </InputGroup>
       <Button onClick={() => onClick()} className="button" variant="light">Connect</Button>
       <div>{showAlert && <Alert class=" bg-warning" text="Wrong password or email adress" />}</div>
