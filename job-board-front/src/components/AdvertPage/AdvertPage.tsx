@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 import classes from './AdvertPage.module.css';
 import axios from "axios";
 import Advert from '../Advert/Advert';
+import getUserToken from '../../functions/getUserToken'
 
 const AdvertPage = () => {
   const [data, setData] = useState<any>(null)
+  const token: string = getUserToken()
   useEffect(() => {
     if (!data) {
       axios.get('http://localhost:5000/adverts', {
         headers: {
-          'Access-Control-Allow-Origin': '*'
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ' + token
         }
       })
         .then(res => {
