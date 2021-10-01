@@ -12,9 +12,9 @@ var jwt = require('jsonwebtoken');
 const token = require('./middleware/token')
 
 //middleware
+app.use(cors())
 app.use((req, res, next) => token(req, res, next, ['/login', '/register']))
 app.use(express.json())
-app.use(cors())
 //-------
 
 
