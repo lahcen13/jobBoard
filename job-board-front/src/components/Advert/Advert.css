@@ -4,7 +4,6 @@
     min-height: 200px;
     background:WHITE;
     filter: drop-shadow(0 0 0.3rem rgb(185, 185, 185));
- 
     margin: 2%;
     max-width: 200px;
     min-width: 350px;
@@ -12,6 +11,11 @@
   
     /* min-width: 30%; */
 }
+.Advert:hover{
+    transition: 0.4s !important;
+    transform: scale(1.03)!important;
+}
+
 
 #titleAdvert, #paragraphAdvert{
     text-align:center;

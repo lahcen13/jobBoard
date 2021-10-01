@@ -13,8 +13,10 @@ const FirstPageRegister = (props: any) => {
   }
 
   return <div className="register-container">
-    <h1 className='title'>Register</h1>
+
+    <h1 className='titleRegister'>Register</h1>
     <div className="inputBlock">
+
       <InputGroup onChange={(e) => props.update(e)} className="input">
         <FormControl name="firstName" className="center-text" placeholder="FirstName" />
       </InputGroup>
@@ -25,8 +27,9 @@ const FirstPageRegister = (props: any) => {
       </InputGroup>
       <div>{props.showAlertName && <Alert class=" bg-warning" text="Wrong characters used for the last name" />}</div>
 
-      <Button disabled={!props.disabled} onClick={() => onClick()} className="button" variant="light">Continue</Button>
+      <Button disabled={!props.disabled} onClick={() => onClick()} className="buttonRegister" variant="light">Continue</Button>
     </div>
+
     <div className="createLink">
       <p>or</p>
       <p><a>i already have an account</a></p>

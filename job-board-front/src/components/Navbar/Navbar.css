@@ -2,15 +2,24 @@
 .Navbar{
     position: sticky!important;
 	top: 0!important;
-
     z-index: 1000!important;
     width: 100vw;
 }
 
 
 
+
 .photo{
     margin-left:15px;
 }
+.photo:hover{
+    transition: 0.4s;
+    transform: scale(1.3);
 
+}
+
+.logoCloche:hover{
+    transition: 0.4s;
+    transform: scale(1.3);
+}
 
