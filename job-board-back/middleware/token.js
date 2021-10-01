@@ -1,3 +1,4 @@
+var jwt = require('jsonwebtoken');
 module.exports = (req, res, next, exclude) => {
     const excludedRoutes = exclude.indexOf(req.path);
     if (excludedRoutes === -1) {

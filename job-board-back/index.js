@@ -55,9 +55,49 @@ app.post('/login', (req, response) => {
     })
 })
 
+
+
+app.put('/user', (req, res) => {
+    const {
+        name,
+        firstName,
+        email,
+        address,
+        postal_code,
+        city,
+        phone,
+        birth_date,
+        cv,
+        picture,
+        gender
+    } = req.body;
+
+
+    const prepare  = [
+        name,
+        firstName,
+        email,
+        address,
+        postal_code,
+        city,
+        phone,
+        birth_date,
+        cv,
+        picture,
+        gender
+    ]
+    const queryString = `UPDATE people SET name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , City = ? , phone = ? , birth_date = ? , cv = ? , picture = ? , gender = ? WHERE email ='${req.body.email}'`
+    db.query(queryString, prepare, (error, results) => {
+        if (error) throw error
+        return res.status(200).send('data_updated')
+    })
+      
+    
+})
+
 app.post('/register', (req, response) => {
     if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
-        response.status(406).send('field_missing')
+       return response.status(406).send('field_missing')
     }
     db.query(`select email from  people where email="${req.body.email}"`, (err, res) => {
         if (err) throw err
