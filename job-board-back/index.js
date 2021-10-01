@@ -74,6 +74,18 @@ app.get('/user', (req, res) => {
 })
 
 
+app.delete('/user', (req, res) => {
+    const user = req.query.id
+    if (!user) return res.status(406).send("id_not_provided")
+    db.query('DELETE FROM people WHERE id = ? ',[user], (error, response) => {
+        if (error) throw error
+       if (response.affectedRows === 0) return res.status(404).send('user_not_found')
+       if (response.affectedRows === 1) return res.status(200).send("user_deleted")
+       return res.status(500).send('unhandled_error')
+    })
+})
+
+
 app.put('/user', (req, res) => {
     const {
         name,
