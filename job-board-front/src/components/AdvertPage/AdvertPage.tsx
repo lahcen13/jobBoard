@@ -3,6 +3,7 @@ import classes from './AdvertPage.module.css';
 import axios from "axios";
 import Advert from '../Advert/Advert';
 import getUserToken from '../../functions/getUserToken'
+import Navbar from '../Navbar/Navbar';
 
 const AdvertPage = () => {
   const [data, setData] = useState<any>(null)
@@ -23,7 +24,10 @@ const AdvertPage = () => {
         }).catch(err => console.error(err))
     }
   })
-  return (<div className={classes.AdvertPage}>
+  return (<div id={classes.page}>
+    <Navbar />
+    <div className={classes.AdvertPage}>
+    
     <div id={classes.filterBlock}>
     <h5 style={{textAlign: "center"}}>Filter</h5>
 
@@ -31,6 +35,7 @@ const AdvertPage = () => {
     <div id={classes.advertContainer}>
     {data && data.map((el: advert, i: number) => <Advert key={i} title={el.title} description={el.description} published={el.published} date={el.date} />)}
     </div>
+  </div>
   </div>)
 };
 
