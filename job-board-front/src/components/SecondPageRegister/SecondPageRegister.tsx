@@ -3,6 +3,7 @@ import './SecondPageRegister.css';
 import { InputGroup, FormControl, Button } from 'react-bootstrap'
 
 
+
 const SecondPageRegister = (props: any) => {
 
 
@@ -21,7 +22,7 @@ const SecondPageRegister = (props: any) => {
       <InputGroup onChange={(e) => props.update(e)} className="input">
         <FormControl name="confirm" className="center-text" placeholder="Confirm" />
       </InputGroup>
-      <Button onClick={() => props.onClick()} className="button" variant="light">Register</Button>
+      <Button disabled={!props.disabled} onClick={() => props.onClick()} className="button" variant="light">Register</Button>
     </div>
 
     <div className="createLink">
