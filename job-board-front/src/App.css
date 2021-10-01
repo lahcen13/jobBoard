@@ -5,10 +5,15 @@ html, body, #root {
 overflow-x: hidden;
 }
 
-
-body {
-
-}
 p{
   margin:0px;
+}
+
+#svgPerson:hover{
+  transition: 0.2s !important;
+  transform: scale(1.2)!important;
+}
+#svgPower:hover{
+  transition: 0.2s !important;
+  transform: scale(1.2)!important;
 }

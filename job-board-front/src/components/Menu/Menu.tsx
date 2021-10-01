@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { propTypes } from 'react-bootstrap/esm/Image';
 import classes from './Menu.module.css';
-import {ReactComponent as Person} from '../../assets/svgs/person.svg'
-import {ReactComponent as Power} from '../../assets/svgs/power.svg'
+import { ReactComponent as Person } from '../../assets/svgs/person.svg'
+import { ReactComponent as Power } from '../../assets/svgs/power.svg'
 
 const Menu = (props: any) => {
   const menu = useRef<HTMLDivElement>(null)
@@ -16,10 +16,11 @@ const Menu = (props: any) => {
     }
   })
   return (
- <div ref={menu} className={`${classes.menu} ${className}`}>
-  <Person className={classes.icon} />
-  <Power className={classes.icon} />
- </div>
-)};
+    <div ref={menu} className={`${classes.menu} ${className}`}>
+      <Person className={classes.icon} />
+      <Power className={classes.icon} />
+    </div>
+  )
+};
 
 export default Menu;
