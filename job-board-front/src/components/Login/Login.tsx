@@ -3,36 +3,42 @@ import './Login.css';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import axios from "axios";
 import expireDate from '../../functions/expireDate.js'
+import Alert from '../Alert/Alert';
+
 
 
 
 
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" })
+  const [showAlert, setShowAlert] = useState(false);
 
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
 
   const onClick = () => {
-    console.log('tetet')
     axios.post('http://localhost:5000/login', data, {
       headers: { 'content-type': 'application/json' }
     }).then(res => {
-      console.log('OK')
       if (res.data) {
         const data: session = { token: res.data, expire: expireDate().toString() }
-        console.log(res)
         sessionStorage.setItem("session", JSON.stringify(data));
-        console.log()
-      } else {
+        window.location.href = 'http://localhost:3001/adverts';
+      } else if (res.data == 'wrong_password' || res.data == 'wrong_email') {
+        console.log(showAlert);
 
       }
-    }).catch(err => console.error(err))
+    }).catch(err => {
+      console.error(err)
+      setShowAlert(true);
+      console.log(showAlert)
 
-
+    })
 
   }
+
+
   return <div className="login-container">
     <h1 className='title'>LogIn</h1>
     <div className="inputBlock">
@@ -43,6 +49,8 @@ const Login = () => {
         <FormControl name="password" className="center-text" placeholder="Password" />
       </InputGroup>
       <Button onClick={() => onClick()} className="button" variant="light">Connect</Button>
+      <div>{showAlert && <Alert class=" bg-warning" text="Wrong password or email adress" />}</div>
+
     </div>
 
     <div className="createLink">

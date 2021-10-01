@@ -31,23 +31,24 @@ app.get('/adverts', (req, response) => {
 })
 
 app.post('/login', (req, response) => {
-    console.log(req.body.email)
     if (!req.body || !req.body.password || !req.body.email) {
         response.status(406).send('field_missing')
     }
     db.query(`SELECT * FROM people WHERE email="${req.body.email}"`, (err, res) => {
-        if (err) throw err
-        console.log(req.body.password);
-        console.log(res[0]['password_']);
-        bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
-            if (err) throw err
-            if (result) {
-                var token = jwt.sign({ email: req.body.email, id: res[0].id }, process.env.SECRET);
-                response.status(200).send(token);
-            } else {
-                response.status(401).send("wrong_password")
-            }
-        });
+        if (res.length > 0) {
+            console.log(req.body.password);
+            console.log(res[0]['password_']);
+            bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
+                if (result) {
+                    var token = jwt.sign({ email: req.body.email, id: res[0].id }, process.env.SECRET);
+                    response.status(200).send(token);
+                } else {
+                    response.status(401).send("wrong_password")
+                }
+            });
+        } else {
+            response.status(401).send("wrong_email")
+        }
     })
 })
 
@@ -100,10 +101,6 @@ app.get('/filter', (req, response) => {
         }
     })
 })
-
-
-
-
 
 app.listen(PORT, () => {
     console.log('App listening on PORT: ' + PORT);

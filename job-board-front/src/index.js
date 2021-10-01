@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Login from './components/Login/Login';
+import Alert from './components/Alert/Alert';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Visitorpage from './components/Visitor-page/Visitor-page';
@@ -19,27 +20,30 @@ const Middleware = () => {
   })
 
   return <React.StrictMode>
-   {authGuard()}
-  <Router>
-    <Route exact path="/">
-      <Visitorpage />
-    </Route>
-    <Route path="/login">
-      <Login />
-    </Route>
-    <Route path="/register">
-      <Register />
-    </Route>
+    {authGuard()}
+    <Router>
+      <Route exact path="/">
+        <Visitorpage />
+      </Route>
+      <Route path="/login">
+        <Login />
+      </Route>
+      <Route path="/register">
+        <Register />
+      </Route>
 
-    <Route path="/adverts">
-      <AdvertPage />
-    </Route>
-  </Router>
-</React.StrictMode>
+      <Route path="/adverts">
+        <AdvertPage />
+      </Route>
+
+
+
+    </Router>
+  </React.StrictMode>
 }
 
 ReactDOM.render(
-  <Middleware/>,
+  <Middleware />,
   document.getElementById('root')
 );
 
