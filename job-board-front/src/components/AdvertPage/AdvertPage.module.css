@@ -17,11 +17,6 @@ background-color: #3484FA;
     width: 100vw;
 }
 
-.Advert:hover{
-    transition: 0.4s !important;
-    transform: scale(1.3)!important;
-}
-
 #filterBlock {
     z-index: 100;
     height: 100vh;
