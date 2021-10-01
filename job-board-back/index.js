@@ -3,9 +3,7 @@ const express = require('express')
 const db = require('./config')
 const app = express()
 const cors = require('cors')
-
 const PORT = process.env.PORT || 5000
-
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
@@ -27,7 +25,7 @@ db.connect((err) => {
 
 
 app.get('/adverts', (req, response) => {
-    db.query('SELECT * FROM advertisements', (err, res) => {
+    db.query('SELECT * FROM advertisements where published=1 order by date desc', (err, res) => {
         if (err) throw err
         response.status(200).send(res)
     })
@@ -71,7 +69,7 @@ app.get('/user', (req, res) => {
             }
             return res.status(200).send(response[0])
         })
-    }else {
+    } else {
         return res.status(406).send("email_field_missing")
     }
 })
@@ -79,11 +77,11 @@ app.get('/user', (req, res) => {
 app.delete('/user', (req, res) => {
     const user = req.query.id
     if (!user) return res.status(406).send("id_not_provided")
-    db.query('DELETE FROM people WHERE id = ? ',[user], (error, response) => {
+    db.query('DELETE FROM people WHERE id = ? ', [user], (error, response) => {
         if (error) throw error
-       if (response.affectedRows === 0) return res.status(404).send('user_not_found')
-       if (response.affectedRows === 1) return res.status(200).send("user_deleted")
-       return res.status(500).send('unhandled_error')
+        if (response.affectedRows === 0) return res.status(404).send('user_not_found')
+        if (response.affectedRows === 1) return res.status(200).send("user_deleted")
+        return res.status(500).send('unhandled_error')
     })
 })
 
@@ -104,7 +102,7 @@ app.put('/user', (req, res) => {
     } = req.body;
 
 
-    const prepare  = [
+    const prepare = [
         name,
         firstName,
         email,
@@ -122,13 +120,13 @@ app.put('/user', (req, res) => {
         if (error) throw error
         return res.status(200).send('data_updated')
     })
-      
-    
+
+
 })
 
 app.post('/register', (req, response) => {
     if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
-       return response.status(406).send('field_missing')
+        return response.status(406).send('field_missing')
     }
     db.query(`select email from  people where email="${req.body.email}"`, (err, res) => {
         if (err) throw err
