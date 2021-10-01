@@ -24,10 +24,11 @@ const Login = () => {
       if (res.data) {
         const data: session = { token: res.data, expire: expireDate().toString() }
         sessionStorage.setItem("session", JSON.stringify(data));
+
         window.location.href = '/adverts';
+
       } else if (res.data == 'wrong_password' || res.data == 'wrong_email') {
         console.log(showAlert);
-
       }
     }).catch(err => {
       console.error(err)

@@ -3,6 +3,8 @@ import './FirstPageRegister.css';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { propTypes } from 'react-bootstrap/esm/Image';
+import Alert from '../Alert/Alert';
+
 
 const FirstPageRegister = (props: any) => {
 
@@ -16,10 +18,13 @@ const FirstPageRegister = (props: any) => {
       <InputGroup onChange={(e) => props.update(e)} className="input">
         <FormControl name="firstName" className="center-text" placeholder="FirstName" />
       </InputGroup>
+      {/* <div>{showAlert && <Alert class=" bg-warning" text="Wrong characters used for first name" />}</div> */}
+
       <InputGroup onChange={(e) => props.update(e)} className="input">
         <FormControl name="lastName" className="center-text" placeholder="LastName" />
       </InputGroup>
-      <Button onClick={() => onClick()} className="button" variant="light">Continue</Button>
+      {/* <div>{ {props.disabled} && <Alert class=" bg-warning" text="Wrong characters used for the last name" />}</div> */}
+      <Button disabled={!props.disabled} onClick={() => onClick()} className="button" variant="light">Continue</Button>
     </div>
     <div className="createLink">
       <p>or</p>
