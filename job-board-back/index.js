@@ -55,7 +55,7 @@ app.post('/login', (req, response) => {
     })
 })
 
-app.post('/user', (req, response) => {
+app.post('/register', (req, response) => {
     if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
         response.status(406).send('field_missing')
     }
