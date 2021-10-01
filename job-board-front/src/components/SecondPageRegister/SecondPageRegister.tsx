@@ -12,7 +12,7 @@ const SecondPageRegister = (props: any) => {
 
   }
   return <div className="register-container">
-    <h1 className='title'>Register</h1>
+    <h1 className='titleRegister'>Register</h1>
     <div className="inputBlock">
       <InputGroup onChange={(e) => props.update(e)} className="input">
         <FormControl name="email" className="center-text" placeholder="Email" />
@@ -26,7 +26,7 @@ const SecondPageRegister = (props: any) => {
         <FormControl name="confirm" className="center-text" placeholder="Confirm" />
       </InputGroup>
       <div>{props.showAlertConfirm && <Alert class=" bg-warning" text="Wrong characters used for the last name" />}</div>
-      <Button disabled={!props.disabled} onClick={() => props.onClick()} className="button" variant="light">Register</Button>
+      <Button disabled={!props.disabled} onClick={() => props.onClick()} className="buttonRegister" variant="light">Register</Button>
     </div>
     <div className="createLink">
       <p>or <br />
