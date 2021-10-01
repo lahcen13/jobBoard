@@ -21,7 +21,13 @@ const AdvertPage = () => {
     }
   })
   return (<div className={classes.AdvertPage}>
+    <div id={classes.filterBlock}>
+    <h5 style={{textAlign: "center"}}>Filter</h5>
+
+    </div>
+    <div id={classes.advertContainer}>
     {data && data.map((el: advert, i: number) => <Advert key={i} title={el.title} description={el.description} published={el.published} date={el.date} />)}
+    </div>
   </div>)
 };
 
