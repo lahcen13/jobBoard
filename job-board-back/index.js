@@ -12,9 +12,9 @@ var jwt = require('jsonwebtoken');
 const token = require('./middleware/token')
 
 //middleware
+app.use(cors())
 app.use((req, res, next) => token(req, res, next, ['/login', '/register']))
 app.use(express.json())
-app.use(cors())
 //-------
 
 
@@ -55,6 +55,9 @@ app.post('/login', (req, response) => {
     })
 })
 
+
+//USER RELATED REQUESTS
+
 app.get('/user', (req, res) => {
     const user = req.query.email
     console.log(req.query)
@@ -72,7 +75,6 @@ app.get('/user', (req, res) => {
         return res.status(406).send("email_field_missing")
     }
 })
-
 
 app.delete('/user', (req, res) => {
     const user = req.query.id
