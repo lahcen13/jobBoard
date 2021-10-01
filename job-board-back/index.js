@@ -55,6 +55,9 @@ app.post('/login', (req, response) => {
     })
 })
 
+
+//USER RELATED REQUESTS
+
 app.get('/user', (req, res) => {
     const user = req.query.email
     console.log(req.query)
@@ -72,7 +75,6 @@ app.get('/user', (req, res) => {
         return res.status(406).send("email_field_missing")
     }
 })
-
 
 app.delete('/user', (req, res) => {
     const user = req.query.id
