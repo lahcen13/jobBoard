@@ -2,44 +2,21 @@
 const express = require('express')
 const db = require('./config')
 const app = express()
-
-// from where we want the request
 const cors = require('cors')
 
 const PORT = process.env.PORT || 5000
-app.use(cors())
+
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
 var jwt = require('jsonwebtoken');
+const token = require('./middleware/token')
 
-app.use((req, res, next) => {
-    const excludedRoutes = ['/login', '/register'].indexOf(req.path);
-    if (excludedRoutes === -1) {
-        console.log(excludedRoutes)
-        const authorization = req.headers.authorization
-        if (authorization) {
-            const splitted = authorization.split(' ')
-            // console.log(splitted)
-            if (splitted[0] === 'Bearer') {
-                try {
-                    jwt.verify(splitted[1], process.env.SECRET)
-                } catch (err) {
-                    console.error(err)
-                   return res.status(401).end('wrong_token')
-                    
-                }
-            }
-        }else {
-            return res.status(401).end('token_not_provided')
-         
-        }
-       
-    }
-    return next()
-
-})
+//middleware
+app.use((req, res, next) => token(req, res, next, ['/login', '/register']))
 app.use(express.json())
+app.use(cors())
+//-------
+
 
 db.connect((err) => {
     if (err) throw err
@@ -82,7 +59,7 @@ app.post('/register', (req, response) => {
     if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
         response.status(406).send('field_missing')
     }
-    const ligne = db.query(`select email from  people where email="${req.body.email}"`, (err, res) => {
+    db.query(`select email from  people where email="${req.body.email}"`, (err, res) => {
         if (err) throw err
         if (res.length == 0) {
             const myPlaintextPassword = req.body.password;
