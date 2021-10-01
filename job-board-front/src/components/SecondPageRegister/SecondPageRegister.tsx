@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './SecondPageRegister.css';
-import { InputGroup, FormControl, Button } from 'react-bootstrap'
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import Alert from '../Alert/Alert';
+
 
 
 const SecondPageRegister = (props: any) => {
@@ -15,15 +17,17 @@ const SecondPageRegister = (props: any) => {
       <InputGroup onChange={(e) => props.update(e)} className="input">
         <FormControl name="email" className="center-text" placeholder="Email" />
       </InputGroup>
+      <div>{props.showAlertEmail && <Alert class=" bg-warning" text="Wrong characters used for the last name" />}</div>
       <InputGroup onChange={(e) => props.update(e)} className="input">
         <FormControl name="password" className="center-text" placeholder="Password" />
       </InputGroup>
+      <div>{props.showAlertPassword && <Alert class=" bg-warning" text="Wrong characters used for the last name" />}</div>
       <InputGroup onChange={(e) => props.update(e)} className="input">
         <FormControl name="confirm" className="center-text" placeholder="Confirm" />
       </InputGroup>
-      <Button onClick={() => props.onClick()} className="button" variant="light">Register</Button>
+      <div>{props.showAlertConfirm && <Alert class=" bg-warning" text="Wrong characters used for the last name" />}</div>
+      <Button disabled={!props.disabled} onClick={() => props.onClick()} className="button" variant="light">Register</Button>
     </div>
-
     <div className="createLink">
       <p>or <br />
         <a>Create an account</a></p>

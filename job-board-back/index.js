@@ -139,9 +139,7 @@ app.post('/register', (req, response) => {
                     if (err) throw err
                     response.status(200).send('success');
                 })
-
             });
-
         } else {
             response.status(406).send('email_exist');
         }

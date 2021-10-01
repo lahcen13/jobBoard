@@ -3,8 +3,10 @@
     font-family: "Rowdies";
     font-size: 12px;
 }
+
 .toast{
     height: 45px;
     width: 300px;
-    margin-top:10vh;
+    margin-top:5vh;
+    margin-bottom:5vh;
 }
