@@ -8,20 +8,46 @@ const cors = require('cors')
 
 const PORT = process.env.PORT || 5000
 app.use(cors())
-//cryptdata
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-//token
 var jwt = require('jsonwebtoken');
 
+app.use((req, res, next) => {
+    const excludedRoutes = ['/login', '/register'].indexOf(req.path);
+    if (excludedRoutes === -1) {
+        console.log(excludedRoutes)
+        const authorization = req.headers.authorization
+        if (authorization) {
+            const splitted = authorization.split(' ')
+            // console.log(splitted)
+            if (splitted[0] === 'Bearer') {
+                try {
+                    jwt.verify(splitted[1], process.env.SECRET)
+                } catch (err) {
+                    console.error(err)
+                   return res.status(401).end('wrong_token')
+                    
+                }
+            }
+        }else {
+            return res.status(401).end('token_not_provided')
+         
+        }
+       
+    }
+    return next()
 
+})
 app.use(express.json())
 
 db.connect((err) => {
     if (err) throw err
     console.log('Database connected')
 })
+
+
+
 
 app.get('/adverts', (req, response) => {
     db.query('SELECT * FROM advertisements', (err, res) => {
