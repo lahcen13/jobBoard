@@ -10,10 +10,11 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
 const token = require('./middleware/token')
+const { sign, check } = require('./functions/token')
 
 //middleware
 app.use(cors())
-app.use((req, res, next) => token(req, res, next, ['/login', '/register']))
+app.use((req, res, next) => token(req, res, next, ['/login', '/register', '/adverts', '/test']))
 app.use(express.json())
 //-------
 
@@ -24,7 +25,15 @@ db.connect((err) => {
 })
 
 
-
+app.post('/admin/test', (req, res) => {
+    const userEmail = req.body.email
+    db.query('SELECT email, role, id FROM people WHERE email = ?', [userEmail], (error, response) => {
+        if (error) throw error
+        const user = response[0]
+        const token = sign(user.role, user.id, user.email)
+        return res.status(200).send(check(token, 'user'))
+    })
+})
 
 app.get('/adverts', (req, response) => {
     db.query('SELECT * FROM advertisements', (err, res) => {
@@ -43,7 +52,7 @@ app.post('/login', (req, response) => {
             console.log(res[0]['password_']);
             bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
                 if (result) {
-                    var token = jwt.sign({ email: req.body.email, id: res[0].id }, process.env.SECRET);
+                    var token = sign(res[0].role, res[0].id, res[0].email)
                     response.status(200).send(token);
                 } else {
                     response.status(401).send("wrong_password")

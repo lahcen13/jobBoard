@@ -1,21 +1,27 @@
 var jwt = require('jsonwebtoken');
-module.exports = (req, res, next, exclude) => {
-    const excludedRoutes = exclude.indexOf(req.path);
-    if (excludedRoutes === -1) {
-        const authorization = req.headers.authorization
-        if (authorization) {
-            const splitted = authorization.split(' ')
-            if (splitted[0] === 'Bearer') {
-                try {
-                    jwt.verify(splitted[1], process.env.SECRET)
-                } catch (err) {
-                    console.error(err)
-                    return res.status(401).end('wrong_token')
-                }
-            }
-        } else {
-            return res.status(401).end('token_not_provided')
-        }
+const { check, getPayload } = require('../functions/token');
+module.exports = (req, res, next, arr) => {
+    if (arr.includes(req.path)) return next()
+const token = req.headers.authorization.split(' ')[1]
+const decoded = getPayload(token)
+
+if (decoded.role === 'user' && req.path.startsWith('/admin')) return res.status(401).send('admin_reserved')
+if(decoded.role === 'admin') {
+    const checked = check(token, decoded.role)
+    if (checked === 'no_permission') {
+       return res.status(401).send('bad_signature')
+    }else {
+       return next()
     }
-    return next()
+}
+if (decoded.role === 'user') {
+    const checked = check(token, decoded.role)
+    if (checked === 'no_permission') {
+        return res.status(401).send('bad_signature')
+    }else {
+       return next()
+    }
+}
+
+next()
 }
