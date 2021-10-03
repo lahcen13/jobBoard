@@ -1,1 +1,6 @@
-.UserProfil {}
+.UserProfil {
+    margin-top: 10vh!important; 
+}
+.UserProfilColumn{
+    margin:10px;
+}
