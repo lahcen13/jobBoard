@@ -9,6 +9,8 @@ import Alert from './components/Alert/Alert';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Visitorpage from './components/Visitor-page/Visitor-page';
 import AdvertPage from './components/AdvertPage/AdvertPage.tsx'
+import UserProfil from './components/UserProfil/UserProfil';
+
 import Register from './components/Register/Register';
 import authGuard from "./middleware/auth-gard"
 
@@ -34,6 +36,10 @@ const Middleware = () => {
 
       <Route path="/adverts">
         <AdvertPage />
+      </Route>
+
+      <Route path="/UserProfil">
+        <UserProfil />
       </Route>
 
 
