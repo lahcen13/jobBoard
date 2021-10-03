@@ -8,9 +8,49 @@ overflow-x: hidden;
 p{
   margin:0px;
 }
-
-
 .UserProfilColumn{
   margin:20px;
-  background-color: beige;
+  padding:20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffff;
+  filter: drop-shadow(0 0 0.3rem rgb(185, 185, 185));
+  
+}
+#personIcon{
+  padding-bottom:10px;
+}
+.PictureUserProfil{
+  border-radius: 7px 7px 0px 0px;
+}
+
+
+.containerImageUserProfil{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.containerUploadUserProfil{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.uploadImgButton{
+  width:200px;
+  background:#F4F2F2;
+  height:5vh;
+  border-radius:  0px 0px 3px 3px;
+  
+}
+
+.UserProfilBG{
+  height:fit-content;
+  background-color: #F4F2F2;
+}
+.containerNameGender{
+  margin-top:5vh;
+  margin-bottom:5vh;
 }
