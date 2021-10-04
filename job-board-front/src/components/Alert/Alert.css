@@ -5,8 +5,9 @@
 }
 
 .toast{
-    height: 45px;
-    width: 300px;
+    height: auto;
+    min-width: auto;
     margin-top:5vh;
     margin-bottom:5vh;
+    padding-bottom: 5px;
 }
