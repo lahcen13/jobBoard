@@ -8,6 +8,15 @@
     padding-left: 2%;
     padding-right: 2%;
 }
+.icon:hover{
+    transition: 0.2s !important;
+    transform: scale(1.2)!important;
+}
+#svgPower:hover{
+
+    transition: 0.2s !important;
+    transform: scale(1.2)!important;
+}
 
 .menu.isOpen {
     opacity: 1;
@@ -30,15 +39,7 @@
     animation-iteration-count: 1;
 }
 
-#svgPerson:hover{
-    transition: 0.2s !important;
-    transform: scale(1.2)!important;
-  }
-#svgPower:hover{
-    transition: 0.2s !important;
-    transform: scale(1.2)!important;
-}
-  
+
 
 
 @keyframes open {
