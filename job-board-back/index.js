@@ -14,7 +14,7 @@ const { sign, check } = require('./functions/token')
 
 //middleware
 app.use(cors())
-app.use((req, res, next) => token(req, res, next, ['/login', '/register', '/adverts', '/test']))
+app.use((req, res, next) => token(req, res, next, ['/login', '/register']))
 app.use(express.json())
 //-------
 
@@ -64,6 +64,18 @@ app.post('/login', (req, response) => {
     })
 })
 
+
+app.get('/applied', (req, res) => {
+   
+    const id = req.query.id
+    if (!id) return res.status(406).send('missing_field');
+    db.query('SELECT * FROM advertisements inner join applied on advertisements.id = applied.advertisement_id WHERE people_id = ?', [id], (error, response) => {
+        if (error) throw error;
+        if (response.length === 0)
+        return res.status(200).send(response.map(el => el))
+    })
+
+})
 
 //USER RELATED REQUESTS
 
