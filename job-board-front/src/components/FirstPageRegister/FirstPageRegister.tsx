@@ -7,7 +7,6 @@ import Alert from '../Alert/Alert';
 
 
 const FirstPageRegister = (props: any) => {
-
   const onClick = () => {
     props.onClick()
   }

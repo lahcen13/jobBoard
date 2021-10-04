@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './UserProfilImg.module.css';
 
 const UserProfilImg = (props: any) => (
-  <div className="col-sm-12 col-md-3">
+  <div className=" col-12 col-sm-12 col-md-3">
     <div className="UserProfilColumn rounded">
       <div className="row">
         <div className="col-sm-12 col-md-12 containerImageUserProfil">
