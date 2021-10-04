@@ -4,7 +4,7 @@ import FirstPageRegister from '../FirstPageRegister/FirstPageRegister';
 import SecondPageRegister from '../SecondPageRegister/SecondPageRegister';
 import styles from './Register.module.css';
 import { controleEmail, controleName, controlePassword } from '../../functions/FormControle.js'
-
+import Notification from "../Notification/Notification"
 const Register = () => {
   const [step, setStep] = useState(1);
   const [showAlertPassword, setShowAlertPassword] = useState(false);
@@ -13,6 +13,7 @@ const Register = () => {
   const [showAlertName, setShowAlertName] = useState(false);
   const [showAlertPrenom, setShowAlertPrenom] = useState(false);
   const [showAlertMailExist, setShowAlertMailExist] = useState(false);
+  const [noti, setNoti] = useState<any>(null)
 
   const [canContinue, setCanContinue] = useState(false);
 
@@ -79,17 +80,33 @@ const Register = () => {
     }).then(res => {
       window.location.href = '/login'
     }).catch(err => {
-      setShowAlertMailExist(true);
-      console.log(err.mess)
+      switch (err.response.data) {
+        case "email_exist":
+          setNoti({
+            bg: 'danger',
+            show: true,
+            head: 'Error',
+            body: 'This user is already registered'
+          })
+          break;
+
+        default:
+          break;
+      }
     })
   }
 
+  const closeNotification = () => {
+    setNoti({...noti, show: false})
+
+  }
 
   // {name: "value"}
-  return (<div className={styles.Register}>
-    {step == 1 ? <FirstPageRegister showAlertPrenom={showAlertPrenom} showAlertName={showAlertName} showAlertMailExist={showAlertMailExist} disabled={canContinue} update={(input: any) => updateData(input)} onClick={() => setStep(2)} /> : <SecondPageRegister showAlertEmail={showAlertEmail} showAlertPassword={showAlertPassword} showAlertConfirm={showAlertConfirm} disabled={canContinue} onClick={() => submit()} update={(input: any) => updateData(input)} />}
-
-  </div>)
+  return (
+    <div className={styles.Register}>
+      {step == 1 ? <FirstPageRegister showAlertPrenom={showAlertPrenom} showAlertName={showAlertName} showAlertMailExist={showAlertMailExist} disabled={canContinue} update={(input: any) => updateData(input)} onClick={() => setStep(2)} /> : <SecondPageRegister showAlertEmail={showAlertEmail} showAlertPassword={showAlertPassword} showAlertConfirm={showAlertConfirm} disabled={canContinue} onClick={() => submit()} update={(input: any) => updateData(input)} />}
+      {noti && <Notification time={4000} changeState={() => closeNotification()} bg={noti.bg} isShown={noti.show} header={noti.head} body={noti.body} />}
+    </div>)
 };
 
 

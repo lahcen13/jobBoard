@@ -7,7 +7,7 @@ const controleName = (name) => {
 }
 
 const controlePassword = (Password) => {
-    return (Password.match(/[a-zA-Z]+$/)) ? true : false;
+    return (Password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/) ? true : false);
 }
 
 
