@@ -7,12 +7,15 @@ const PORT = process.env.PORT || 5000
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
-const token = require('./middleware/token')
+const token = require('./middleware/handleToken')
 const { sign, check } = require('./functions/token')
+const {get} = require('./functions/user')
+// const handleUser = require('./middleware/handleUser')
 
 //middleware
 app.use(cors())
 app.use((req, res, next) => token(req, res, next, ['/login', '/register']))
+// app.use((req, res, next) => handleUser(req, res, next, db, ['/login', '/register']))
 app.use(express.json())
 //-------
 
@@ -78,11 +81,11 @@ app.get('/applied', (req, res) => {
 //USER RELATED REQUESTS
 
 app.get('/user', (req, res) => {
-    const user = req.query.email
-    console.log(req.query)
+    const user = get(req)
+console.log(user)
     if (user) {
         db.query('SELECT * FROM people WHERE email = ?', [
-            user
+            user.email
         ], (error, response) => {
             if (error) throw error
             if (response.length === 0) {
