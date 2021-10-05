@@ -41,7 +41,9 @@ const UserProfilAbout = (props: any) => {
 
   const onClick = () => {
     axios.put('http://localhost:5000/user', data, {
-      headers: { 'content-type': 'application/json' }
+      headers: { 
+        'content-type': 'application/json',
+        "authorization": "Bearer " + getUserToken() }
     }).then(res => {
       console.log('success')
     }).catch(err => {
@@ -61,7 +63,7 @@ const UserProfilAbout = (props: any) => {
         <div className="col-sm-5 col-md-6">
           <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="LastName">
             <Form.Label>First name</Form.Label>
-            <Form.Control name='name' type="text" value={data.first_name} />
+            <Form.Control name='first_name' type="text" value={data.first_name} />
           </Form.Group>
           <div>{showAlertName && <Alert class=" bg-warning" text="Incorrect name" />}</div>
 
@@ -69,7 +71,7 @@ const UserProfilAbout = (props: any) => {
         <div className="col-sm-5 col-md-6">
           <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="LastName">
             <Form.Label>Last name</Form.Label>
-            <Form.Control name='lastName' type="text" value={data.name} />
+            <Form.Control name='name' type="text" value={data.name} />
           </Form.Group>
           <div>{showAlertlastName && <Alert class=" bg-warning" text="Incorrect Lastname" />}</div>
         </div>
@@ -97,14 +99,14 @@ const UserProfilAbout = (props: any) => {
         <div className="col-sm-5 col-md-6">
           <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="postalCode">
             <Form.Label>Postal code</Form.Label>
-            <Form.Control name='postalCode' type="text" value={data.postal_code ? data.postal_code : ""} />
+            <Form.Control name='postal_code' type="text" value={data.postal_code ? data.postal_code : ""} />
           </Form.Group>
 
         </div>
         <div className="col-sm-12 col-md-12">
           <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="adress">
             <Form.Label>Address</Form.Label>
-            <Form.Control name='adress' type="text" value={data.address.length > 0 ? data.address : ""} />
+            <Form.Control name='address' type="text" value={data.address ? data.address : ""} />
           </Form.Group>
         </div>
         <div className="col-sm-12 col-md-12">

@@ -1,43 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Rowdies&display=swap');
 
-.AdvertPage {
+.advertPage {
 font-family: "Rowdies";
 position: relative;
 width: 100vw;
+height: 90vh;
 display: flex;
-justify-content: center;
-background-image: url('../../assets/svgs/adverts.svg');
-background-repeat: no-repeat;
-background-attachment: fixed;
-background-size: cover;
-background-color: #3484FA;
+flex-direction: row;
+
 }
 
 #page {
-    width: 100vw;
-}
-
-#filterBlock {
-    z-index: 100;
+    overflow: hidden;
     height: 100vh;
-    width: 20vw;
-    min-width: 20vw;
-    background-color: #E5E5E5;
-    box-shadow: 1px 1px 5px;
-    position: sticky;
-    top: 0vh;
-    left: 0;
+    min-width: 100vw;
 }
 
-#advertContainer {
-    
-   /* font-size: 0.9em; */
-    padding-left: 5vw;
-  width: 80vw;
-    display: flex;
-   flex-wrap: wrap;
-    /* background-color: red; */
-    position: relative;
+.filter {
+   width: 20vw;
+   height: 100vh;
+   background-color: powderblue;
+}
+
+.advertContainer {
+    overflow-y: scroll;
+background-color: white;
+width: 35vw;
+height: 100vh;
+}
+
+.advertContainer::-webkit-scrollbar {
+display: none;
 }
 
 @media (max-width: 1100px) {
