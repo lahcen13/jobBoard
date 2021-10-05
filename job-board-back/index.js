@@ -121,31 +121,25 @@ app.delete('/user', (req, res) => {
 app.put('/user', (req, res) => {
     const {
         name,
-        firstName,
+        first_name,
         email,
         address,
         postal_code,
         city,
         phone,
-        birth_date,
-        cv,
-        picture,
         gender
     } = req.body;
     const prepare = [
         name,
-        firstName,
+        first_name,
         email,
         address,
         postal_code,
         city,
         phone,
-        birth_date,
-        cv,
-        picture,
         gender
     ]
-    const queryString = `UPDATE people SET name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , City = ? , phone = ? , birth_date = ? , cv = ? , picture = ? , gender = ? WHERE email ='${req.body.email}'`
+    const queryString = `UPDATE people SET name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? WHERE email ='${req.body.email}'`
     db.query(queryString, prepare, (error, results) => {
         if (error) throw error
         return res.status(200).send('data_updated')
