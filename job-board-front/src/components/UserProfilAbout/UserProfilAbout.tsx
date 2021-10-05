@@ -41,9 +41,10 @@ const UserProfilAbout = (props: any) => {
 
   const onClick = () => {
     axios.put('http://localhost:5000/user', data, {
-      headers: { 
+      headers: {
         'content-type': 'application/json',
-        "authorization": "Bearer " + getUserToken() }
+        "authorization": "Bearer " + getUserToken()
+      }
     }).then(res => {
       console.log('success')
     }).catch(err => {
