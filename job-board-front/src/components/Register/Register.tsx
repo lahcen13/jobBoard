@@ -76,7 +76,9 @@ const Register = () => {
 
   const submit = () => {
     axios.post('http://localhost:5000/register', data, {
-      headers: { 'content-type': 'application/json' }
+      headers: {
+        'content-type': 'application/json'
+      }
     }).then(res => {
       window.location.href = '/login'
     }).catch(err => {
@@ -97,7 +99,7 @@ const Register = () => {
   }
 
   const closeNotification = () => {
-    setNoti({...noti, show: false})
+    setNoti({ ...noti, show: false })
 
   }
 

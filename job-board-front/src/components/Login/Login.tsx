@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Login.css';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import axios from "axios";
-import {set} from '../../functions/session'
+import { set } from '../../functions/session'
 import Alert from '../Alert/Alert';
 
 
@@ -23,7 +23,7 @@ const Login = () => {
       headers: { 'content-type': 'application/json' }
     }).then(res => {
       if (res.data) {
-      
+
         set(res.data, checked)
         window.location.href = '/adverts';
 
@@ -50,8 +50,8 @@ const Login = () => {
         <FormControl name="password" className="center-text" placeholder="Password" />
       </InputGroup>
       <InputGroup className='input'>
-      <InputGroup.Text>Stay connected</InputGroup.Text>
-      <InputGroup.Checkbox onClick={() => setChecked(!checked)} checked={checked} aria-label="Checkbox for following text input" />
+        <InputGroup.Text>Stay connected</InputGroup.Text>
+        <InputGroup.Checkbox onClick={() => setChecked(!checked)} checked={checked} aria-label="Checkbox for following text input" />
       </InputGroup>
       <Button onClick={() => onClick()} className="button" variant="light">Connect</Button>
       <div>{showAlert && <Alert class=" bg-warning" text="Wrong password or email adress" />}</div>
