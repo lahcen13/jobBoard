@@ -5,6 +5,7 @@ import Advert from '../Advert/Advert';
 import getUserToken from '../../functions/getUserToken'
 import Navbar from '../Navbar/Navbar';
 import AdvertDetail from '../AdvertDetail/AdvertDetail'
+import Popup from '../Popup/Popup'
 
 const AdvertPage = () => {
   const [data, setData] = useState<any>(null)
@@ -44,6 +45,7 @@ const AdvertPage = () => {
       </div>
 
      {selected && <AdvertDetail data={selected} />}
+     <Popup />
       </div></div>)
 };
 

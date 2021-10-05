@@ -7,11 +7,13 @@ import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import getUserToken from '../../functions/getUserToken';
 
+
 const AdvertDetail = (props: {
   data: dataProps
 }) => {
 
   const [data, setData] = useState<data | null>(null)
+  const [pop, setPop] = useState<Boolean>(false)
 
 
 
@@ -30,6 +32,8 @@ const AdvertDetail = (props: {
       
     }
   })
+
+ 
 
  
 
@@ -74,7 +78,8 @@ const AdvertDetail = (props: {
             </span>
           </div>
           <div className={styles.buttonContainer}>
-            <input className={styles.button} type="button" value="Apply" />
+            <input onClick={() => setPop(true)} className={styles.button} type="button" value="Apply" />
+            
           </div>
         </div></div> : <Spinner animation="border" role="status">
         <span className="visually-hidden">Loading...</span>
