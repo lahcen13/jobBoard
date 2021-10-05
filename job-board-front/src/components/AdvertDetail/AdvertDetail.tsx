@@ -5,18 +5,24 @@ import { Building, Envelope, Geo, Link45deg, Mailbox, People, Person } from 'rea
 import ReactMarkdown from 'react-markdown';
 
 const AdvertDetail = (props: {
-  data: data
+  data: dataProps
 }) => {
 
-  const [data, setData] = useState<object | null>(null)
+  const [data, setData] = useState<data | null>(null)
 
 
 
-//   useEffect(() => {
-// if (!data) {
-//   axios
-// }
-//   })
+  useEffect(() => {
+if (!data) {
+  // setData({
+  //   email: 'lyann.bourlon@gmail.com',
+  //   name: "google",
+  //   number_employes: "368",
+  //   city: "Marseille",
+  //   postal_code: "13003"
+  // })
+}
+  })
 
   const markdown = `
   # Super ritu angustum
@@ -57,11 +63,11 @@ const AdvertDetail = (props: {
         <div className={styles.row}>
           <span className={styles.labelIcon}>
             <Building size={"25px"} />
-            <p>Google</p>
+            {/* <p>{data.name}</p> */}
           </span>
           <span className={styles.labelIcon}>
             <People size={"25px"} />
-            <p>658</p>
+            {/* <p>{data.number_employes}</p> */}
           </span>
 
         </div>
@@ -73,7 +79,7 @@ const AdvertDetail = (props: {
         </div>
       </div>
       <p className={styles.paragraph}>
-        <ReactMarkdown children={markdown} />
+        <ReactMarkdown children={props.data.description} />
       </p>
       <div className={styles.detailFooter}>
       <span className={styles.labelIcon}>
@@ -99,9 +105,14 @@ const AdvertDetail = (props: {
   )
 };
 
-interface data {
+interface dataProps {
   title: string,
   description: string,
   companyID: number
+}
+
+interface data {
+  email: "string",
+  name: "string",
 }
 export default AdvertDetail;
