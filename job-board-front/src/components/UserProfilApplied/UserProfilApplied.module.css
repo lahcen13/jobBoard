@@ -2,4 +2,8 @@
 
 }
 
+.scroll{
+    height:52vh!important;
+    overflow: auto;
+}
 

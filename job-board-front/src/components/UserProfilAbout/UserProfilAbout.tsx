@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './UserProfilAbout.module.css';
 import { Person } from "react-bootstrap-icons";
-import Form from 'react-bootstrap/Form'
+import Form from 'react-bootstrap/Form';
+import { Button } from 'react-bootstrap';
 
 const UserProfilAbout = (props: any) => (
   <div className="col-sm-12  col-md-4">
@@ -63,6 +64,10 @@ const UserProfilAbout = (props: any) => (
             <option value="Other">Other</option>
           </Form.Select>
         </div>
+        <div className="col-sm-5 col-md-5">
+          <Button className={styles.submit}>Submit</Button>
+        </div>
+
       </div>
     </div>
   </div>
