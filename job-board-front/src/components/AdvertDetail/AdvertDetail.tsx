@@ -1,107 +1,100 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './AdvertDetail.module.css';
 
 import { Building, Envelope, Geo, Link45deg, Mailbox, People, Person } from 'react-bootstrap-icons';
 import ReactMarkdown from 'react-markdown';
+import { Spinner } from 'react-bootstrap';
+import axios from 'axios';
+import getUserToken from '../../functions/getUserToken';
 
 const AdvertDetail = (props: {
-  data: data
+  data: dataProps
 }) => {
 
-  const [data, setData] = useState<object | null>(null)
+  const [data, setData] = useState<data | null>(null)
 
 
 
-//   useEffect(() => {
-// if (!data) {
-//   axios
-// }
-//   })
+  useEffect(() => {
+    if (!data) {
+      console.log(props.data.companie_id)
+      axios.get('http://localhost:5000/company?id='+props.data.companie_id, {
+        headers: {
+          'content-type': 'application/json',
+        "authorization": "Bearer " + getUserToken()
+        }
+      }).then(res => {
+        setData(res.data)
+        console.log(res)
+      }).catch(err => console.error(err.response))
+      
+    }
+  })
 
-  const markdown = `
-  # Super ritu angustum
+ 
 
-  ## Unum nata
-  
-  Lorem markdownum pectora ferrum addidit vultumque et iamque, prolem florem
-  *miratur thymo*: dominis. Babylonia et Sparte habuisse factaque fronti Paridis,
-  pennis temptare aureus dicentem mentem, euntem est iamque genitor. Cruoris rure
-  deum. Herbis relicto, reflectitur sociasque anteit ultima, caelum hos.
-  
-  Mirabile pariter domitamque novenis profectu est vires mutata miserrima quemque.
-  *Aglauros* ibi exierat moriens, declive pomi Fames, viva **es**, et velit! Sub
-  Venus tormento, gente tamen tergo, cui rebus et sibi non. Putes locum minatur
-  aliquisque haec attollens refers non, quam ecce!
-  
-  > **Quo est inmaduit** victa, monstraverat rami ad pede paruerit undas iubet
-  > praeteriit captus. Servat alta mortali iuvenem morti; verum aut non dimittit;
-  > sui culpa tulit, diu gladii **videat** si Hyllus. Sunt Pentheus dumque necem?
-  
-  ## Quo umquam
-  
-  Hinnitibus occurrunt Andros, adorat amplexa dentibus censu. Certa loci ubi:
-  dicta Proca anilibus. Sub moveri seque caelesti causa alioque hasta dedit,
-  discedere quove, blanditiis terras postera.
-  
-  1. At pars publica
-  2. Missus consanguineas tympana pendentia certe
-  3. Illa iussis stirpe gelidumque duxit
-  4. Nescioquam morte
-  5. Nexis creatus
-  `;
-
-  return (
-    <div className={styles.AdvertDetail}>
-      <h3 className={styles.title}>{props.data.title}</h3>
-      <div className={styles.detailHeader}>
-        <div className={styles.row}>
-          <span className={styles.labelIcon}>
-            <Building size={"25px"} />
-            <p>Google</p>
-          </span>
-          <span className={styles.labelIcon}>
-            <People size={"25px"} />
-            <p>658</p>
-          </span>
-
-        </div>
-        <div className={styles.row}>
-          <span className={styles.labelIcon + " " + styles.stretch}>
-            <Geo size={"25px"} />
-            <p>Marseille, 13003</p>
-          </span>
-        </div>
-      </div>
-      <p className={styles.paragraph}>
-        <ReactMarkdown children={markdown} />
-      </p>
-      <div className={styles.detailFooter}>
-      <span className={styles.labelIcon}>
-            <Link45deg size={"25px"} />
-            <a href="http://google.com" target="_blank" rel="noopener noreferrer">Website</a>
-          </span>
-          <h5 className={styles.contactTitle}>Contact</h5>
-            <div className={styles.contactSection}>
+ 
+  return   data ?  <div className={styles.AdvertDetail}><h3 className={styles.title}>{props.data.title}</h3>
+        <div className={styles.detailHeader}>
+          <div className={styles.row}>
             <span className={styles.labelIcon}>
-            <Envelope size={"25px"} />
-            <p>Jean@gmail.com</p>
-          </span>
-          <span className={styles.labelIcon}>
-            <Person size={"25px"} />
-            <p>M. Ive Jean</p>
-          </span>
-            </div>
-           <div className={styles.buttonContainer}>
-           <input className={styles.button} type="button" value="Apply" />
-           </div>
-      </div>
-    </div>
-  )
+              <Building size={"25px"} />
+              <p>{data.name}</p>
+            </span>
+            <span className={styles.labelIcon}>
+              <People size={"25px"} />
+              <p>{data.number_employes}</p>
+            </span>
+
+          </div>
+          <div className={styles.row}>
+            <span className={styles.labelIcon + " " + styles.stretch}>
+              <Geo size={"25px"} />
+              <p>{data.city}, {data.postal_code}</p>
+            </span>
+          </div>
+        </div>
+        <p className={styles.paragraph}>
+          <ReactMarkdown children={props.data.description} />
+        </p>
+        <div className={styles.detailFooter}>
+        {data.website &&   <span className={styles.labelIcon}>
+            <Link45deg size={"25px"} />
+            <a href={data.website} target="_blank" >Website</a>
+          </span>}
+          <h5 className={styles.contactTitle}>Contact</h5>
+          <div className={styles.contactSection}>
+            <span className={styles.labelIcon}>
+              <Envelope size={"25px"} />
+              <p>{data.email}</p>
+            </span>
+            <span className={styles.labelIcon}>
+              <Person size={"25px"} />
+              <p>{data.contact}</p>
+            </span>
+          </div>
+          <div className={styles.buttonContainer}>
+            <input className={styles.button} type="button" value="Apply" />
+          </div>
+        </div></div> : <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+  
 };
 
-interface data {
+interface dataProps {
   title: string,
   description: string,
-  companyID: number
+  companie_id: number
+}
+
+interface data {
+  email: string,
+  name: string,
+  number_employes: number,
+  city: string,
+  postal_code: number,
+  contact: string,
+  website: string
 }
 export default AdvertDetail;

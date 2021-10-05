@@ -35,7 +35,15 @@ app.post('/admin/test', (req, res) => {
         return res.status(200).send(check(token, 'user'))
     })
 })
+app.get('/company', (req, res) => {
+    if (!req.query.id) return res.status(406).send('id_not_provided')
 
+    db.query('SELECT * FROM companies WHERE id = ?', [req.query.id], (error, response) => {
+        if (error) throw error
+        console.log(response)
+        res.status(200).send({...response[0]})
+    })
+})
 app.get('/adverts', (req, response) => {
     db.query('SELECT * FROM advertisements where published=1 order by date desc', (err, res) => {
         if (err) throw err

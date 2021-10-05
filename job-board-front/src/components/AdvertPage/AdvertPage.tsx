@@ -29,6 +29,7 @@ const AdvertPage = () => {
 
 
   const handleSelect = (i: number) => {
+    console.log(data[i])
     setSelected(data[i])
   }
   return (<div id={classes.page}>
@@ -54,7 +55,7 @@ interface advert {
 }
 interface data {
   title: string,
-  companyID: number,
+  companie_id: number,
   description: string
   }
 export default AdvertPage;
