@@ -4,6 +4,8 @@ import styles from './AdvertDetail.module.css';
 import { Building, Envelope, Geo, Link45deg, Mailbox, People, Person } from 'react-bootstrap-icons';
 import ReactMarkdown from 'react-markdown';
 import { Spinner } from 'react-bootstrap';
+import axios from 'axios';
+import getUserToken from '../../functions/getUserToken';
 
 const AdvertDetail = (props: {
   data: dataProps
@@ -15,14 +17,17 @@ const AdvertDetail = (props: {
 
   useEffect(() => {
     if (!data) {
-      setData({
-        email: 'Jean.Ive@gmail.com',
-        name: "google",
-        number_employes: 369,
-        city: "Marseille",
-        postal_code: 13003,
-        contact: "M. Ive Jean"
-      })
+      console.log(props.data.companie_id)
+      axios.get('http://localhost:5000/company?id='+props.data.companie_id, {
+        headers: {
+          'content-type': 'application/json',
+        "authorization": "Bearer " + getUserToken()
+        }
+      }).then(res => {
+        setData(res.data)
+        console.log(res)
+      }).catch(err => console.error(err.response))
+      
     }
   })
 
@@ -53,10 +58,10 @@ const AdvertDetail = (props: {
           <ReactMarkdown children={props.data.description} />
         </p>
         <div className={styles.detailFooter}>
-          <span className={styles.labelIcon}>
+        {data.website &&   <span className={styles.labelIcon}>
             <Link45deg size={"25px"} />
-            <a href="http://google.com" target="_blank" rel="noopener noreferrer">Website</a>
-          </span>
+            <a href={data.website} target="_blank" >Website</a>
+          </span>}
           <h5 className={styles.contactTitle}>Contact</h5>
           <div className={styles.contactSection}>
             <span className={styles.labelIcon}>
@@ -80,7 +85,7 @@ const AdvertDetail = (props: {
 interface dataProps {
   title: string,
   description: string,
-  companyID: number
+  companie_id: number
 }
 
 interface data {
@@ -89,6 +94,7 @@ interface data {
   number_employes: number,
   city: string,
   postal_code: number,
-  contact: string
+  contact: string,
+  website: string
 }
 export default AdvertDetail;

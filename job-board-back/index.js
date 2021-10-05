@@ -40,6 +40,7 @@ app.get('/company', (req, res) => {
 
     db.query('SELECT * FROM companies WHERE id = ?', [req.query.id], (error, response) => {
         if (error) throw error
+        console.log(response)
         res.status(200).send({...response[0]})
     })
 })
