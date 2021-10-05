@@ -9,7 +9,7 @@ const saltRounds = 10;
 var jwt = require('jsonwebtoken');
 const token = require('./middleware/handleToken')
 const { sign, check } = require('./functions/token')
-const {get} = require('./functions/user')
+const { get } = require('./functions/user')
 // const handleUser = require('./middleware/handleUser')
 
 //middleware
@@ -67,13 +67,13 @@ app.post('/login', (req, response) => {
 
 
 app.get('/applied', (req, res) => {
-   
+
     const id = req.query.id
     if (!id) return res.status(406).send('missing_field');
     db.query('SELECT * FROM advertisements inner join applied on advertisements.id = applied.advertisement_id WHERE people_id = ?', [id], (error, response) => {
         if (error) throw error;
         if (response.length === 0)
-        return res.status(200).send(response.map(el => el))
+            return res.status(200).send(response.map(el => el))
     })
 
 })
@@ -82,9 +82,9 @@ app.get('/applied', (req, res) => {
 
 app.get('/user', (req, res) => {
     const user = get(req)
-console.log(user)
+    console.log(user)
     if (user) {
-        db.query('SELECT * FROM people WHERE email = ?', [
+        db.query('SELECT id, first_name , name, email, phone ,city, postal_code, address, gender FROM people WHERE email = ?', [
             user.email
         ], (error, response) => {
             if (error) throw error
@@ -124,8 +124,6 @@ app.put('/user', (req, res) => {
         picture,
         gender
     } = req.body;
-
-
     const prepare = [
         name,
         firstName,

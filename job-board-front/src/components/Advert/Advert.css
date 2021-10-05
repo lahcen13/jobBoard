@@ -5,8 +5,7 @@
     background:WHITE;
     filter: drop-shadow(0 0 0.3rem rgb(185, 185, 185));
     margin: 2%;
-    max-width: 200px;
-    min-width: 350px;
+    width: 90%;
     
   
     /* min-width: 30%; */

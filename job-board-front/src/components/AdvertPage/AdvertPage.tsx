@@ -4,9 +4,11 @@ import axios from "axios";
 import Advert from '../Advert/Advert';
 import getUserToken from '../../functions/getUserToken'
 import Navbar from '../Navbar/Navbar';
+import AdvertDetail from '../AdvertDetail/AdvertDetail'
 
 const AdvertPage = () => {
   const [data, setData] = useState<any>(null)
+  const [selected, setSelected] = useState<data | null>(null)
   const token: string = getUserToken()
   useEffect(() => {
     if (!data) {
@@ -18,25 +20,30 @@ const AdvertPage = () => {
       })
         .then(res => {
           if (res.data.length > 0) {
-
+            console.log(res.data)
             setData(res.data)
           }
         }).catch(err => console.error(err))
     }
   })
+
+
+  const handleSelect = (i: number) => {
+    setSelected(data[i])
+  }
   return (<div id={classes.page}>
     <Navbar />
-    <div className={classes.AdvertPage}>
-    
-    <div id={classes.filterBlock}>
-    <h5 style={{textAlign: "center"}}>Filter</h5>
+   
+    <div className={classes.advertPage}>
+    <div className={classes.filter}>
+      
+      </div>
+      <div className={classes.advertContainer}>
+      {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i}  title={el.title} description={el.description} published={el.published} date={el.date} />)}
+      </div>
 
-    </div>
-    <div id={classes.advertContainer}>
-    {data && data.map((el: advert, i: number) => <Advert key={i} title={el.title} description={el.description} published={el.published} date={el.date} />)}
-    </div>
-  </div>
-  </div>)
+     {selected && <AdvertDetail data={selected} />}
+      </div></div>)
 };
 
 interface advert {
@@ -45,5 +52,9 @@ interface advert {
   published: boolean,
   date: string
 }
-
+interface data {
+  title: string,
+  companyID: number,
+  description: string
+  }
 export default AdvertPage;

@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies&display=swap');
+
+.AdvertDetail {
+    overflow-x: hidden;
+    font-family: "Rowdies";
+    width: 45vw;
+    height: 100vh;
+    background-color: white;
+    box-shadow: 1px 1px 3px black;
+    position: absolute;
+    right: 0;
+    top: 0;
+    overflow-y: scroll;
+}
+
+
+.title {
+    text-align: center;
+    padding: 3%;
+}
+
+.detailHeader {
+    padding-left: 5%;
+    padding-right: 5%;
+    /* background-color:red ; */
+    color: rgba(0, 0, 0, 0.521);
+    height: 15%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.labelIcon {
+
+    display: flex;
+}
+
+.stretch {
+    width: 100%;
+}
+.paragraph {
+    padding: 2%;
+}
+
+.row {
+    width: 100%;
+    /* height: 20px; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.labelIcon p {
+    /* height: 2%; */
+    /* line-height: 0.2; */
+    width: auto;
+  margin-left: 5px;
+}
+
+.detailFooter {
+    padding-left: 10%;
+    width: 100%;
+    height: 40%;
+}
+
+.contactTitle {
+    color: rgba(0, 0, 0, 0.521);
+    margin-top: 2%;
+    padding-left: 10%;
+    width: min-content;
+}
+
+.contactSection {
+    color: rgba(0, 0, 0, 0.521);
+   width: min-content;
+    padding-top: 3%;
+   margin: auto;
+  
+}
+
+.contactSection span {
+   margin-left: auto;
+   margin-right: auto;
+    justify-self: center;
+    align-self: center;
+}
+.center {
+    text-align: center;
+    justify-content: center;
+}
+
+.button {
+    /* margin: auto; */
+    width: 30vw;
+    height: 10vh;
+    background-color: #0D6EFD;
+    border: none;
+    box-shadow: 1px 1px 3px black;
+    color: white;
+}
+
+.buttonContainer {
+    padding-top: 10%;
+    width: min-content;
+    margin: auto;
+}
