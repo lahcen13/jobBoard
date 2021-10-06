@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from "axios";
 import getUserToken from '../../functions/getUserToken';
 import AdvertDetail from '../AdvertDetail/AdvertDetail';
+import { getUser } from '../../functions/session';
 
 
 const UserProfilApplied = () => {
@@ -15,7 +16,7 @@ const UserProfilApplied = () => {
 
   useEffect(() => {
     if (!data && current === null) {
-      axios.get('http://localhost:5000/applied?id=15', {
+      axios.get('http://localhost:5000/applied?id='+getUser().id, {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Authorization': 'Bearer ' + token
@@ -51,7 +52,7 @@ const UserProfilApplied = () => {
 
   return <div className="col-sm-5  col-md-5 ">
     {
-      !current ? renderDefault() : <AdvertDetail close={() => setCurrent(null)} data={current}></AdvertDetail>
+      !current ? renderDefault() : <AdvertDetail canClose interact={() => setCurrent(null)} data={current}></AdvertDetail>
     }
   </div>
 

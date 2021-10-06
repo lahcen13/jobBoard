@@ -98,6 +98,16 @@
     color: white;
 }
 
+.closeButton {
+    font-size: 1.5em;
+    width: 20vw;
+    height: 10vh;
+    background-color: rgb(219, 76, 76);
+    border: none;
+    box-shadow: 1px 1px 3px black;
+    color: white;
+}
+
 .buttonContainer {
     padding-top: 10%;
     width: min-content;
