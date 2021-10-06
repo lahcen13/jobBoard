@@ -32,7 +32,19 @@ const UserProfilAbout = (props: any) => {
     }).then(res => {
       setData(res.data)
     }).catch(err => {
-      console.error(err)
+      switch (err.response.data) {
+        case "email_exist":
+          setNoti({
+            bg: 'danger',
+            show: true,
+            head: 'Error',
+            body: 'This user is already registered'
+          })
+          break;
+
+        default:
+          break;
+      }
     })
   }
 
@@ -65,6 +77,11 @@ const UserProfilAbout = (props: any) => {
       }
     })
   }
+  const closeNotification = () => {
+    setNoti({ ...noti, show: false })
+
+  }
+
 
 
   return <div className="col-sm-12  col-md-4">
@@ -136,7 +153,9 @@ const UserProfilAbout = (props: any) => {
         <div className="col-sm-5 col-md-5">
           <Button onClick={() => onClick()} className={styles.submit}>Submit</Button>
         </div>
-
+        <div className="col-sm-5 col-md-5">
+          {noti && <Notification time={4000} changeState={() => closeNotification()} bg={noti.bg} isShown={noti.show} header={noti.head} body={noti.body} />}
+        </div>
       </div>
     </div>
   </div>

@@ -12,6 +12,11 @@
     transition: 0.2s !important;
     transform: scale(1.2)!important;
 }
+
+.icon{
+    color: black!important;
+}
+
 #svgPower:hover{
 
     transition: 0.2s !important;

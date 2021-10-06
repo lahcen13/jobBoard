@@ -6,9 +6,6 @@ import { set } from '../../functions/session'
 import Alert from '../Alert/Alert';
 
 
-
-
-
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" })
   const [showAlert, setShowAlert] = useState(false);
