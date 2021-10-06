@@ -62,7 +62,7 @@ app.post('/login', (req, response) => {
             bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
                 if (result) {
                     var token = sign(res[0].role, res[0].id, res[0].email)
-                    response.status(200).send(token);
+                    response.status(200).send({token: token, user: {id: res[0].id, email: res[0].email}});
                 } else {
                     response.status(401).send("wrong_password")
                 }
@@ -70,6 +70,18 @@ app.post('/login', (req, response) => {
         } else {
             response.status(401).send("wrong_email")
         }
+    })
+})
+
+app.post('/applied', (req, res) => {
+    if (!req.body.firstName || !req.body.lastName || !req.body.motivation || !req.body.userID || !req.body.advertID) {
+       return res.status(406).send('missing_field')
+    }
+
+    const prepare = [req.body.motivation, req.body.advertID, req.body.userID, req.body.firstName, req.body.lastName]
+    db.query("INSERT INTO applied (motivation_people, advertisement_id, people_id, first_name, last_name) VALUES (?, ?, ?, ?, ?)", prepare, (err, result) => {
+        if (err) throw err;
+        res.status(200).send('success');
     })
 })
 

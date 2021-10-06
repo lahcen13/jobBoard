@@ -7,17 +7,19 @@ import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import getUserToken from '../../functions/getUserToken';
 
+
 const AdvertDetail = (props: {
-  data: dataProps
+  data: dataProps,
+  application: Function
 }) => {
 
   const [data, setData] = useState<data | null>(null)
+  
 
 
 
   useEffect(() => {
-    if (!data) {
-      console.log(props.data.companie_id)
+    if (!data) {     
       axios.get('http://localhost:5000/company?id='+props.data.companie_id, {
         headers: {
           'content-type': 'application/json',
@@ -30,6 +32,8 @@ const AdvertDetail = (props: {
       
     }
   })
+
+ 
 
  
 
@@ -74,7 +78,8 @@ const AdvertDetail = (props: {
             </span>
           </div>
           <div className={styles.buttonContainer}>
-            <input className={styles.button} type="button" value="Apply" />
+            <input onClick={() => props.application()} className={styles.button} type="button" value="Apply" />
+            
           </div>
         </div></div> : <Spinner animation="border" role="status">
         <span className="visually-hidden">Loading...</span>
