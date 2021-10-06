@@ -7,9 +7,11 @@ import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import getUserToken from '../../functions/getUserToken';
 
+
 const AdvertDetail = (props: {
   data: dataProps,
-  close?: Function
+  close?: Function,
+  application?: Function
 }) => {
 
   const [data, setData] = useState<data | null>(null)

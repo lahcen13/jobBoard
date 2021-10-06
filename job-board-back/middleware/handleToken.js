@@ -3,6 +3,7 @@ const { check, getPayload } = require('../functions/token');
 module.exports = (req, res, next, arr) => {
     if (arr.includes(req.path)) return next()
 const token = req.headers.authorization.split(' ')[1]
+console.log('TOOOOOKEN', token)
 const decoded = getPayload(token)
 
 if (decoded.role === 'user' && req.path.startsWith('/admin')) return res.status(401).send('admin_reserved')
