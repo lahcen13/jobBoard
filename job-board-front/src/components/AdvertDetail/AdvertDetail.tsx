@@ -8,78 +8,81 @@ import axios from 'axios';
 import getUserToken from '../../functions/getUserToken';
 
 const AdvertDetail = (props: {
-  data: dataProps
+  data: dataProps,
+  close?: Function
 }) => {
 
   const [data, setData] = useState<data | null>(null)
-
-
-
   useEffect(() => {
     if (!data) {
       console.log(props.data.companie_id)
-      axios.get('http://localhost:5000/company?id='+props.data.companie_id, {
+      axios.get('http://localhost:5000/company?id=' + props.data.companie_id, {
         headers: {
           'content-type': 'application/json',
-        "authorization": "Bearer " + getUserToken()
+          "authorization": "Bearer " + getUserToken()
         }
       }).then(res => {
         setData(res.data)
         console.log(res)
       }).catch(err => console.error(err.response))
-      
+
     }
   })
 
- 
 
- 
-  return   data ?  <div className={styles.AdvertDetail}><h3 className={styles.title}>{props.data.title}</h3>
-        <div className={styles.detailHeader}>
-          <div className={styles.row}>
-            <span className={styles.labelIcon}>
-              <Building size={"25px"} />
-              <p>{data.name}</p>
-            </span>
-            <span className={styles.labelIcon}>
-              <People size={"25px"} />
-              <p>{data.number_employes}</p>
-            </span>
+  const handleClose = () => {
+    if (props.close) {
+      props.close();
+    }
+  }
 
-          </div>
-          <div className={styles.row}>
-            <span className={styles.labelIcon + " " + styles.stretch}>
-              <Geo size={"25px"} />
-              <p>{data.city}, {data.postal_code}</p>
-            </span>
-          </div>
-        </div>
-        <p className={styles.paragraph}>
-          <ReactMarkdown children={props.data.description} />
-        </p>
-        <div className={styles.detailFooter}>
-        {data.website &&   <span className={styles.labelIcon}>
-            <Link45deg size={"25px"} />
-            <a href={data.website} target="_blank" >Website</a>
-          </span>}
-          <h5 className={styles.contactTitle}>Contact</h5>
-          <div className={styles.contactSection}>
-            <span className={styles.labelIcon}>
-              <Envelope size={"25px"} />
-              <p>{data.email}</p>
-            </span>
-            <span className={styles.labelIcon}>
-              <Person size={"25px"} />
-              <p>{data.contact}</p>
-            </span>
-          </div>
-          <div className={styles.buttonContainer}>
-            <input className={styles.button} type="button" value="Apply" />
-          </div>
-        </div></div> : <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-  
+  return data ? <div className={styles.AdvertDetail}><h3 className={styles.title}>{props.data.title}</h3>
+    <div className={styles.detailHeader}>
+      <div className={styles.row}>
+        <span className={styles.labelIcon}>
+          <Building size={"25px"} />
+          <p>{data.name}</p>
+        </span>
+        <span className={styles.labelIcon}>
+          <People size={"25px"} />
+          <p>{data.number_employes}</p>
+        </span>
+
+      </div>
+      <div className={styles.row}>
+        <span className={styles.labelIcon + " " + styles.stretch}>
+          <Geo size={"25px"} />
+          <p>{data.city}, {data.postal_code}</p>
+        </span>
+      </div>
+    </div>
+    <p className={styles.paragraph}>
+      <ReactMarkdown children={props.data.description} />
+    </p>
+    <div className={styles.detailFooter}>
+      {data.website && <span className={styles.labelIcon}>
+        <Link45deg size={"25px"} />
+        <a href={data.website} target="_blank" >Website</a>
+      </span>}
+      <h5 className={styles.contactTitle}>Contact</h5>
+      <div className={styles.contactSection}>
+        <span className={styles.labelIcon}>
+          <Envelope size={"25px"} />
+          <p>{data.email}</p>
+        </span>
+        <span className={styles.labelIcon}>
+          <Person size={"25px"} />
+          <p>{data.contact}</p>
+        </span>
+      </div>
+      <div className={styles.buttonContainer}>
+        <input className={styles.button} type="button" value="Apply" />
+      </div>
+      <div onClick={() => handleClose()}>return</div>
+    </div></div> : <Spinner animation="border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </Spinner>
+
 };
 
 interface dataProps {

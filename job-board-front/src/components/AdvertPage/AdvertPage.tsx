@@ -12,7 +12,7 @@ const AdvertPage = () => {
   const token: string = getUserToken()
   useEffect(() => {
     if (!data) {
-      axios.get('http://localhost:5000/adverts', {
+      axios.get('http://localhost:5000/user', {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Authorization': 'Bearer ' + token
@@ -34,17 +34,17 @@ const AdvertPage = () => {
   }
   return (<div id={classes.page}>
     <Navbar />
-   
+
     <div className={classes.advertPage}>
-    <div className={classes.filter}>
-      
+      <div className={classes.filter}>
+
       </div>
       <div className={classes.advertContainer}>
-      {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i}  title={el.title} description={el.description} published={el.published} date={el.date} />)}
+        {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i} title={el.title} description={el.description} published={el.published} date={el.date} />)}
       </div>
 
-     {selected && <AdvertDetail data={selected} />}
-      </div></div>)
+      {selected && <AdvertDetail data={selected} />}
+    </div></div>)
 };
 
 interface advert {
@@ -57,5 +57,5 @@ interface data {
   title: string,
   companie_id: number,
   description: string
-  }
+}
 export default AdvertPage;
