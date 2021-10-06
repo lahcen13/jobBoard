@@ -1,29 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Popup.module.css';
 import { InputGroup, FormControl, Button, ButtonGroup } from 'react-bootstrap';
-const Popup = () => {
+const Popup = (props: props) => {
+  const [data, setData] = useState<object>({
+    firstName: "",
+    lastName: "",
+    text: ""
+  })
+
+  const update = (e: any) => {
+    setData({...data, [e.target.name]: e.target.value})
+  }
+  
   return (
     <div className={styles.popup}>
       <h3>Submit your application</h3>
       <div className={styles.row}>
       <InputGroup  className={styles.input}>
-        <FormControl name="firstName" className="center-text" placeholder="First name" />
+        <FormControl onChange={(e: any) => update(e)} name="firstName" className="center-text" placeholder="First name" />
       </InputGroup>
       <InputGroup  className={styles.input}>
-        <FormControl name="lastName" className="center-text" placeholder="Last name" />
+        <FormControl onChange={(e: any) => update(e)} name="lastName" className="center-text" placeholder="Last name" />
       </InputGroup>
       </div>
       <InputGroup  className={styles.input + " " + styles.textAera}>
-        <FormControl as="textarea" name="lastName"  placeholder="Last name" />
+        <FormControl onChange={(e: any) => update(e)} as="textarea" name="lastName"  placeholder="Last name" />
       </InputGroup>
       <InputGroup  className={styles.input + " " + styles.textAera}>
        <div className={styles.buttonGroup}>
-        <Button>Submit</Button>
-        <Button className={styles.cancelButton}>Cancel</Button>
+        <Button onClick={() => props.valid(data)}>Submit</Button>
+        <Button onClick={() => props.cancel()} className={styles.cancelButton}>Cancel</Button>
        </div>
       </InputGroup>
   </div>
   )
 };
+
+
+
+interface props {
+  valid: Function,
+  cancel: Function
+}
 
 export default Popup;

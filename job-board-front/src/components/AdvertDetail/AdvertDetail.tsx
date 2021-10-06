@@ -9,11 +9,12 @@ import getUserToken from '../../functions/getUserToken';
 
 
 const AdvertDetail = (props: {
-  data: dataProps
+  data: dataProps,
+  application: Function
 }) => {
 
   const [data, setData] = useState<data | null>(null)
-  const [pop, setPop] = useState<Boolean>(false)
+  
 
 
 
@@ -78,7 +79,7 @@ const AdvertDetail = (props: {
             </span>
           </div>
           <div className={styles.buttonContainer}>
-            <input onClick={() => setPop(true)} className={styles.button} type="button" value="Apply" />
+            <input onClick={() => props.application()} className={styles.button} type="button" value="Apply" />
             
           </div>
         </div></div> : <Spinner animation="border" role="status">

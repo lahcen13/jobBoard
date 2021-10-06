@@ -10,6 +10,7 @@ import Popup from '../Popup/Popup'
 const AdvertPage = () => {
   const [data, setData] = useState<any>(null)
   const [selected, setSelected] = useState<data | null>(null)
+  const [pop, setPop] = useState<boolean>(false)
   const token: string = getUserToken()
   useEffect(() => {
     if (!data) {
@@ -33,20 +34,30 @@ const AdvertPage = () => {
     console.log(data[i])
     setSelected(data[i])
   }
+
+
+
+  const onValid = (data: object) => {
+
+  }
+
+  const onCancel = () => {
+    setPop(false)
+  }
   return (<div id={classes.page}>
     <Navbar />
-   
+
     <div className={classes.advertPage}>
-    <div className={classes.filter}>
-      
+      <div className={classes.filter}>
+
       </div>
       <div className={classes.advertContainer}>
-      {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i}  title={el.title} description={el.description} published={el.published} date={el.date} />)}
+        {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i} title={el.title} description={el.description} published={el.published} date={el.date} />)}
       </div>
 
-     {selected && <AdvertDetail data={selected} />}
-     <Popup />
-      </div></div>)
+      {selected && <AdvertDetail application={() => setPop(true)} data={selected} />}
+      {pop && <Popup valid={(data: object) => onValid(data)} cancel={() => onCancel()} />}
+    </div></div>)
 };
 
 interface advert {
@@ -59,5 +70,5 @@ interface data {
   title: string,
   companie_id: number,
   description: string
-  }
+}
 export default AdvertPage;
