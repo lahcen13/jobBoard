@@ -17,7 +17,8 @@ const AdvertPage = () => {
   const token: string = getUserToken()
   useEffect(() => {
     if (!data) {
-      axios.get('http://localhost:5000/user', {
+      console.log('teet')
+      axios.get('http://localhost:5000/adverts', {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Authorization': 'Bearer ' + token
