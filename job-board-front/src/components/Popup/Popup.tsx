@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './Popup.module.css';
 import { InputGroup, FormControl, Button, ButtonGroup } from 'react-bootstrap';
 const Popup = (props: props) => {
-  const [data, setData] = useState<object>({
+  const [data, setData] = useState<popupData>({
     firstName: "",
     lastName: "",
     text: ""
@@ -24,7 +24,7 @@ const Popup = (props: props) => {
       </InputGroup>
       </div>
       <InputGroup  className={styles.input + " " + styles.textAera}>
-        <FormControl onChange={(e: any) => update(e)} as="textarea" name="lastName"  placeholder="Last name" />
+        <FormControl onChange={(e: any) => update(e)} as="textarea" name="text"  placeholder="Last name" />
       </InputGroup>
       <InputGroup  className={styles.input + " " + styles.textAera}>
        <div className={styles.buttonGroup}>
@@ -37,7 +37,11 @@ const Popup = (props: props) => {
 };
 
 
-
+interface popupData {
+  firstName: string,
+  lastName: string,
+  text: string
+}
 interface props {
   valid: Function,
   cancel: Function
