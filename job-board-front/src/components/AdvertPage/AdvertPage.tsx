@@ -77,7 +77,7 @@ const AdvertPage = () => {
         {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i} title={el.title} description={el.description} published={el.published} date={el.date} />)}
       </div>
 
-      {selected && <AdvertDetail application={() => setPop(true)} data={selected} />}
+      {selected && <AdvertDetail interact={() => setPop(true)} data={selected} />}
       {pop && <Popup valid={(data: popupData) => onValid(data)} cancel={() => onCancel()} />}
       <Notification bg="success" header="Success" body="You successfully applied to this advert" changeState={() => setNoti(false)} isShown={noti} time={4000} />
     </div></div>)
