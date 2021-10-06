@@ -15,7 +15,6 @@ const UserProfilApplied = () => {
 
 
   useEffect(() => {
-
     if (!data && current === null) {
       axios.get('http://localhost:5000/applied?id='+getUser().id, {
         headers: {
