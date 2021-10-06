@@ -10,8 +10,8 @@ import getUserToken from '../../functions/getUserToken';
 
 const AdvertDetail = (props: {
   data: dataProps,
-  close?: Function,
-  application?: Function
+  canClose?: boolean,
+  interact: Function
 }) => {
 
   const [data, setData] = useState<data | null>(null)
@@ -32,10 +32,10 @@ const AdvertDetail = (props: {
   })
 
 
-  const handleClose = () => {
-    if (props.close) {
-      props.close();
-    }
+  const handleInteract = () => {
+  
+      props.interact()
+    
   }
 
   return data ? <div className={styles.AdvertDetail}><h3 className={styles.title}>{props.data.title}</h3>
@@ -78,9 +78,8 @@ const AdvertDetail = (props: {
         </span>
       </div>
       <div className={styles.buttonContainer}>
-        <input className={styles.button} type="button" value="Apply" />
+        <input onClick={() => props.interact()} className={!props.canClose ? styles.button : styles.closeButton} type="button" value={props.canClose ? "Close" : "Apply"} />
       </div>
-      <div onClick={() => handleClose()}>return</div>
     </div></div> : <Spinner animation="border" role="status">
     <span className="visually-hidden">Loading...</span>
   </Spinner>

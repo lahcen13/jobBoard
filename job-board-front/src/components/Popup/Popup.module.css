@@ -42,11 +42,15 @@
     width: 100%;
 }
 
+
+
 .buttonGroup button {
     border: none;
     height: 50px;
     width: 35%;
 }
+
+
 
 .cancelButton {
     background-color: rgb(231, 67, 76);
