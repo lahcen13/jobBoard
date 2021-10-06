@@ -1,26 +1,61 @@
 import React from 'react';
 import styles from './UserProfilApplied.module.css';
-import Advert from '../UserProfilAdvert/UserProfilAdvert';
+import AppliedAdvert from '../UserProfilAdvert/UserProfilAdvert';
+import { useEffect, useState } from 'react';
+import axios from "axios";
+import getUserToken from '../../functions/getUserToken';
+import AdvertDetail from '../AdvertDetail/AdvertDetail';
 
-const UserProfilApplied = () => (
-  <div className="col-sm-5  col-md-5 ">
 
+const UserProfilApplied = () => {
+  const [data, setData] = useState<any>(null)
+  const [current, setCurrent] = useState<any>(null)
+  const token: string = getUserToken();
+
+
+  useEffect(() => {
+
+    if (!data && current === null) {
+      axios.get('http://localhost:5000/applied?id=15', {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(res => {
+        setData(res.data)
+        console.log(res.data)
+      }).catch(err => console.log('success'))
+    }
+  })
+  const handleClick = (el: any) => {
+    setCurrent({ companie_id: el.idCompanie, description: el.description, title: el.title })
+  }
+
+
+  const renderDefault = () => (
     <div className="UserProfilColumn rounded ">
       <div className="col-sm-12  col-md-12">
         <div className="row justify-content-between">
           <h4> Last applied</h4>
-          <div className={styles.scroll}>
-            <Advert title="developpement" companyName="google" time="4" ></Advert>
-            <Advert title="developpement" companyName="google" time="4" ></Advert>
-            <Advert title="developpement" companyName="google" time="4" ></Advert>
-            <Advert title="developpement" companyName="google" time="4" ></Advert>
-            <Advert title="developpement" companyName="google" time="4" ></Advert>
+          <div className={current ? " " : styles.scroll}>
+            {data && data.map((el: any, i: number) => {
+              var event = new Date(el.date);
+              return (<AppliedAdvert onClick={() => handleClick(el)} title={el.title} name={el.name} date={event.toLocaleDateString()} />)
+            })}
           </div>
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
+  )
+
+
+
+  return <div className="col-sm-5  col-md-5 ">
+    {
+      !current ? renderDefault() : <AdvertDetail close={() => setCurrent(null)} data={current}></AdvertDetail>
+    }
   </div>
 
-);
+};
 
 export default UserProfilApplied;

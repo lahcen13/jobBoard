@@ -35,8 +35,10 @@ const UserProfilAbout = (props: any) => {
       console.error(err)
     })
   }
+
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
+    console.log(data)
   }
 
   const onClick = () => {
@@ -113,8 +115,8 @@ const UserProfilAbout = (props: any) => {
         <div className="col-sm-12 col-md-12">
           <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="gender" >
             <Form.Label>Gender</Form.Label>
-            <Form.Select name='Gender' aria-label="Gender">
-              <option value="1"></option>
+            <Form.Select name='gender' required>
+              <option value={data.gender ? data.gender : ''}>Enter your gender</option>
               <option value="Female">Female</option>
               <option value="Male">Male</option>
               <option value="Other">Other</option>

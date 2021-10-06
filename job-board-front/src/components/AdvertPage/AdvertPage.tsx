@@ -7,7 +7,7 @@ import Navbar from '../Navbar/Navbar';
 import AdvertDetail from '../AdvertDetail/AdvertDetail'
 import Popup from '../Popup/Popup'
 import Notification from '../Notification/Notification'
-import {getUser} from '../../functions/session'
+import { getUser } from '../../functions/session'
 
 const AdvertPage = () => {
   const [data, setData] = useState<any>(null)
@@ -17,6 +17,7 @@ const AdvertPage = () => {
   const token: string = getUserToken()
   useEffect(() => {
     if (!data) {
+      console.log('teet')
       axios.get('http://localhost:5000/adverts', {
         headers: {
           'Access-Control-Allow-Origin': '*',
@@ -47,19 +48,19 @@ const AdvertPage = () => {
         "authorization": "Bearer " + getUserToken()
       }
     }
-   if (selected) {
-    axios.post('http://localhost:5000/applied', {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      motivation: data.text,
-      advertID: selected.id,
-      userID: getUser().id
-    }, header).then(res => {
-      setPop(false)
-      setNoti(true)
-    })
-    .catch(err => console.error(err))
-   }
+    if (selected) {
+      axios.post('http://localhost:5000/applied', {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        motivation: data.text,
+        advertID: selected.id,
+        userID: getUser().id
+      }, header).then(res => {
+        setPop(false)
+        setNoti(true)
+      })
+        .catch(err => console.error(err))
+    }
   }
 
   const onCancel = () => {
@@ -78,7 +79,7 @@ const AdvertPage = () => {
 
       {selected && <AdvertDetail application={() => setPop(true)} data={selected} />}
       {pop && <Popup valid={(data: popupData) => onValid(data)} cancel={() => onCancel()} />}
-      <Notification bg="success" header="Success" body="You successfully applied to this advert" changeState={() => setNoti(false)} isShown={noti} time={4000}/>
+      <Notification bg="success" header="Success" body="You successfully applied to this advert" changeState={() => setNoti(false)} isShown={noti} time={4000} />
     </div></div>)
 };
 

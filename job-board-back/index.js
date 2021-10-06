@@ -41,10 +41,11 @@ app.get('/company', (req, res) => {
     db.query('SELECT * FROM companies WHERE id = ?', [req.query.id], (error, response) => {
         if (error) throw error
         console.log(response)
-        res.status(200).send({...response[0]})
+        res.status(200).send({ ...response[0] })
     })
 })
 app.get('/adverts', (req, response) => {
+
     db.query('SELECT * FROM advertisements where published=1 order by date desc', (err, res) => {
         if (err) throw err
         response.status(200).send(res)
@@ -87,15 +88,14 @@ app.post('/applied', (req, res) => {
 
 
 app.get('/applied', (req, res) => {
-
+    console.log('oook')
     const id = req.query.id
     if (!id) return res.status(406).send('missing_field');
-    db.query('SELECT * FROM advertisements inner join applied on advertisements.id = applied.advertisement_id WHERE people_id = ?', [id], (error, response) => {
+    db.query('SELECT  companies.id as "idCompanie", advertisements.id, advertisements.title, advertisements.description, advertisements.date, companies.name  FROM advertisements inner join applied on advertisements.id = applied.advertisement_id inner join companies on companies.id=advertisements.companie_id WHERE people_id = ?', [id], (error, response) => {
         if (error) throw error;
-        if (response.length === 0)
-            return res.status(200).send(response.map(el => el))
+        if (response.length === 0) return res.status(404).send('no_data')
+        return res.status(200).send(response.map(el => el))
     })
-
 })
 
 //USER RELATED REQUESTS
