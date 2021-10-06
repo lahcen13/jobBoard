@@ -23,8 +23,8 @@ const Login = () => {
       headers: { 'content-type': 'application/json' }
     }).then(res => {
       if (res.data) {
-
-        set(res.data, checked)
+        console.log(res.data)
+        set(res.data.token, checked, res.data.user)
         window.location.href = '/adverts';
 
       } else if (res.data == 'wrong_password' || res.data == 'wrong_email') {

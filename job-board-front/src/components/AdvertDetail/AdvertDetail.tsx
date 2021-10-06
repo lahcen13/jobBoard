@@ -19,8 +19,7 @@ const AdvertDetail = (props: {
 
 
   useEffect(() => {
-    if (!data) {
-      console.log(props.data.companie_id)
+    if (!data) {     
       axios.get('http://localhost:5000/company?id='+props.data.companie_id, {
         headers: {
           'content-type': 'application/json',

@@ -7,6 +7,7 @@ import Navbar from '../Navbar/Navbar';
 import AdvertDetail from '../AdvertDetail/AdvertDetail'
 import Popup from '../Popup/Popup'
 import Notification from '../Notification/Notification'
+import {getUser} from '../../functions/session'
 
 const AdvertPage = () => {
   const [data, setData] = useState<any>(null)
@@ -52,7 +53,7 @@ const AdvertPage = () => {
       lastName: data.lastName,
       motivation: data.text,
       advertID: selected.id,
-      userID: 23
+      userID: getUser().id
     }, header).then(res => {
       setPop(false)
       setNoti(true)
