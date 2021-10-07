@@ -11,6 +11,8 @@ import Visitorpage from './components/Visitor-page/Visitor-page';
 import AdvertPage from './components/AdvertPage/AdvertPage.tsx'
 import UserProfil from './components/UserProfil/UserProfil';
 import Register from './components/Register/Register';
+import Admin from './components/Admin/Admin';
+
 import authGuard from "./middleware/auth-gard"
 
 
@@ -37,9 +39,13 @@ const Middleware = () => {
         <AdvertPage />
       </Route>
 
-      <Route path="/UserProfil">
+      <Route path="/userProfil">
         <UserProfil />
       </Route>
+      <Route path="/admin">
+        <Admin />
+      </Route>
+
 
 
 
