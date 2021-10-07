@@ -1,5 +1,5 @@
 
-.Navbar{
+.navbar{
     position: sticky!important;
 	top: 0!important;
     z-index: 1000!important;
@@ -9,17 +9,21 @@
 
 
 
-.photo{
+.userPic{
     margin-left:15px;
 }
-.photo:hover{
+.userPic:hover{
     transition: 0.4s;
     transform: scale(1.3);
 
 }
 
-.logoCloche:hover{
+.bell:hover{
     transition: 0.4s;
     transform: scale(1.3);
+}
+
+.unRegisteredRedirects {
+    color: white;
 }
 
