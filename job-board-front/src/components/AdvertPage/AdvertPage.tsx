@@ -48,6 +48,8 @@ const AdvertPage = () => {
 
 
   const onValid = (data: popupData) => {
+    const file = new FormData()
+    if (data.file) file.append('file', data.file)
     
     const header = {
       headers: {
@@ -56,11 +58,13 @@ const AdvertPage = () => {
       }
     }
     if (selected) {
-      console.log('dssssssss')
       axios.post('http://localhost:5000/applied', {
         firstName: data.firstName,
         lastName: data.lastName,
         motivation: data.text,
+        file: file,
+        email: data.email,
+        phone: data.phone,
         advertID: selected.id,
         userID: getUser().id
       }, header).then(res => {
@@ -105,7 +109,10 @@ const AdvertPage = () => {
 interface popupData {
   firstName: string,
   lastName: string,
-  text: string
+  text: string,
+  file: File | null,
+  phone: string,
+  email: string
 }
 interface data {
   title: string,
