@@ -76,7 +76,15 @@ const AdvertPage = () => {
           time: 4000
         })
       })
-        .catch(err => console.error(err))
+        .catch(err => {
+          if (err.response.data === 'already_applied') setNoti({
+            bg: "danger",
+            header: "Fail",
+            body :"You already applied to this advertisment",
+            isShown: true,
+            time: 4000
+          })
+        })
     }
   }
 
