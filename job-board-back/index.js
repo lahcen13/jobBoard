@@ -75,15 +75,31 @@ app.post('/login', (req, response) => {
 })
 
 app.post('/applied', (req, res) => {
-    if (!req.body.firstName || !req.body.lastName || !req.body.motivation || !req.body.userID || !req.body.advertID) {
+    if (!req.body.firstName || !req.body.lastName || !req.body.motivation || !req.body.advertID || !req.body.file || !req.body.email || !req.body.phone ) {
        return res.status(406).send('missing_field')
     }
 
-    const prepare = [req.body.motivation, req.body.advertID, req.body.userID, req.body.firstName, req.body.lastName]
-    db.query("INSERT INTO applied (motivation_people, advertisement_id, people_id, first_name, last_name) VALUES (?, ?, ?, ?, ?)", prepare, (err, result) => {
-        if (err) throw err;
-        res.status(200).send('success');
+   
+
+    const user = [
+         req.body.firstName,
+         req.body.lastName,
+         req.body.file,
+         req.body.email,
+         req.body.phone
+    ]
+
+    db.query("INSERT INTO people (first_name, name, cv, email, phone) VALUES (?, ?, ?, ?, ?)", user, (error, result) => {
+        if (error) throw error
+    const userID = result.insertID
     })
+
+
+    const application = {
+        motivation: req.body.motivation
+    }
+
+ 
 })
 
 
