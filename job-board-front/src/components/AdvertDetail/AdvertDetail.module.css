@@ -39,6 +39,7 @@
     width: 100%;
 }
 .paragraph {
+    text-align: justify;
     padding: 2%;
 }
 
