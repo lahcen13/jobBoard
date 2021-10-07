@@ -3,6 +3,9 @@ import styles from './Popup.module.css';
 import { InputGroup, FormControl, Button, ButtonGroup } from 'react-bootstrap';
 import { CloudUpload, FileText, Person, Upload } from 'react-bootstrap-icons';
 import Notification from '../Notification/Notification';
+import { getUser } from '../../functions/session';
+import axios from 'axios';
+import getUserToken from '../../functions/getUserToken';
 const Popup = (props: props) => {
   const [data, setData] = useState<popupData>({
     firstName: "",
@@ -13,6 +16,8 @@ const Popup = (props: props) => {
     file: null
   })
 
+  const [disabled, setDisabled] = useState(false)
+
 
 
 
@@ -22,7 +27,28 @@ const Popup = (props: props) => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
 
-  useEffect(() => console.log(data))
+  useEffect(() => {
+    if(getUser() && !disabled) {
+      axios.get('http://localhost:5000/user', {
+        headers: {
+          'content-type': 'application/json',
+          "authorization": "Bearer " + getUserToken()
+        }
+      })
+      .then(res => {
+        
+        setData({
+          text: data.text,
+          file: {name: res.data.cv},
+          firstName: res.data.first_name,
+          lastName: res.data.name,
+          email: res.data.email,
+          phone: res.data.phone
+        })
+        setDisabled(true)
+      }).catch(err => console.error(err))
+    }
+  })
 
 
 
@@ -65,10 +91,10 @@ const Popup = (props: props) => {
         <Person width="70px" height="70px" />
       </div>
       <div className={styles.body}>
-        <input value={data.firstName} onChange={(e) => update(e)} placeholder="First name" className={styles.input} type="text" name="firstName" />
-        <input value={data.lastName} onChange={(e) => update(e)} placeholder="Last name" className={styles.input} type="text" name="lastName" />
-        <input value={data.email} onChange={(e) => update(e)} placeholder="Email" className={styles.input} type="email" name="email" />
-        <input value={data.phone} onChange={(e) => update(e)} placeholder="Phone number" className={styles.input} type="tel" name="phone" />
+        <input disabled={disabled} value={data.firstName} onChange={(e) => update(e)} placeholder="First name" className={styles.input} type="text" name="firstName" />
+        <input disabled={disabled} value={data.lastName} onChange={(e) => update(e)} placeholder="Last name" className={styles.input} type="text" name="lastName" />
+        <input disabled={disabled} value={data.email} onChange={(e) => update(e)} placeholder="Email" className={styles.input} type="email" name="email" />
+        <input disabled={disabled} value={data.phone} onChange={(e) => update(e)} placeholder="Phone number" className={styles.input} type="tel" name="phone" />
 
       </div>
       <div className={styles.footer}>
@@ -94,10 +120,10 @@ const Popup = (props: props) => {
           <textarea value={data.text} onChange={(e) => update(e)} name="text" />
         </label>
 
-        <label className={styles.fileInput}>
+        <label  className={styles.fileInput}>
           {data.file ? data.file.name.substring(0, 10) : "Upload File"}
           <CloudUpload width="30px" height="30px" className={styles.icon} />
-          <input  accept="application/pdf" onChange={(e: any) => handleFile(e)} hidden type="file" />
+          <input disabled={disabled}  accept="application/pdf" onChange={(e: any) => handleFile(e)} hidden type="file" />
         </label>
 
       </div>
@@ -122,7 +148,7 @@ interface popupData {
   firstName: string,
   lastName: string,
   text: string,
-  file: File | null,
+  file: any,
   phone: string,
   email: string
 }

@@ -179,7 +179,7 @@ app.get('/applied', (req, res) => {
 app.get('/user', (req, res) => {
     const user = get(req)
     if (user) {
-        db.query('SELECT id, first_name , name, email, phone ,city, postal_code, address, gender FROM people WHERE email = ?', [
+        db.query('SELECT id, first_name , name, email, phone ,city, postal_code, address, gender, cv FROM people WHERE email = ?', [
             user.email
         ], (error, response) => {
             if (error) throw error
