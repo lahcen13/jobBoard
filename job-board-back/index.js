@@ -14,7 +14,7 @@ const { get } = require('./functions/user')
 
 //middleware
 app.use(cors())
-app.use((req, res, next) => token(req, res, next, ['/login', '/register']))
+app.use((req, res, next) => token(req, res, next, ['/login', '/register', '/adverts']))
 // app.use((req, res, next) => handleUser(req, res, next, db, ['/login', '/register']))
 app.use(express.json())
 //-------
