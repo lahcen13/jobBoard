@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
 const token = require('./middleware/handleToken')
-const { sign, check } = require('./functions/token')
+const { sign, check, getToken } = require('./functions/token')
 const { get } = require('./functions/user')
 // const handleUser = require('./middleware/handleUser')
 
@@ -83,7 +83,14 @@ app.post('/applied', (req, res) => {
 
 
 
-    db.query('SELECT COUNT(*), id FROM people WHERE email = ?', [req.body.email], (err, result) => {
+    db.query('SELECT COUNT(*), id, password_ FROM people WHERE email = ?', [req.body.email], (err, result) => {
+        if (err) {
+            console.error(err)
+        }
+        if (result[0].password_ && check(getToken(req)) === 'no_permission')  {
+            return res.status(401).send('need_connexion')
+        }
+        console.log(result)
         const id = result[0].id
 
         const apply = (id) => {
