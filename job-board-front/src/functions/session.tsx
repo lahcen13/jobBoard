@@ -20,7 +20,7 @@ const get = ():null | string => {
 
 const getUser = () => {
     const session = get()
-    return session && JSON.parse(session).user
+    return session ? JSON.parse(session).user : undefined
   
 }
 
