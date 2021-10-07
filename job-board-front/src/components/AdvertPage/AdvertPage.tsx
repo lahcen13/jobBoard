@@ -12,7 +12,13 @@ import { getUser } from '../../functions/session'
 const AdvertPage = () => {
   const [data, setData] = useState<any>(null)
   const [selected, setSelected] = useState<any>(null)
-  const [noti, setNoti] = useState<boolean>(false)
+  const [noti, setNoti] = useState<notif>({
+    bg: "success",
+    header: "Oops",
+    body: "Please, fill all the fields",
+    isShown: false,
+    time: 4000
+  })
   const [pop, setPop] = useState<boolean>(false)
   const token: string = getUserToken()
   useEffect(() => {
@@ -42,6 +48,7 @@ const AdvertPage = () => {
 
 
   const onValid = (data: popupData) => {
+    
     const header = {
       headers: {
         'content-type': 'application/json',
@@ -49,6 +56,7 @@ const AdvertPage = () => {
       }
     }
     if (selected) {
+      console.log('dssssssss')
       axios.post('http://localhost:5000/applied', {
         firstName: data.firstName,
         lastName: data.lastName,
@@ -57,10 +65,21 @@ const AdvertPage = () => {
         userID: getUser().id
       }, header).then(res => {
         setPop(false)
-        setNoti(true)
+        setNoti({
+          bg: "success",
+          header: "Success",
+          body: "You successfully applied",
+          isShown: true,
+          time: 4000
+        })
       })
         .catch(err => console.error(err))
     }
+  }
+
+
+  const handleNoti = (data: notif) => {
+    setNoti(data)
   }
 
   const onCancel = () => {
@@ -78,8 +97,8 @@ const AdvertPage = () => {
       </div>
 
       {selected && <AdvertDetail interact={() => setPop(true)} data={selected} />}
-      {pop && <Popup valid={(data: popupData) => onValid(data)} cancel={() => onCancel()} />}
-      <Notification bg="success" header="Success" body="You successfully applied to this advert" changeState={() => setNoti(false)} isShown={noti} time={4000} />
+      {pop && <Popup callBack={(d: notif) => handleNoti(d)} valid={(data: popupData) => onValid(data)} cancel={() => onCancel()} />}
+      <Notification changeState={() => setNoti({ ...noti, isShown: false })} {...noti} />
     </div></div>)
 };
 
@@ -93,4 +112,6 @@ interface data {
   companie_id: number,
   description: string
 }
+
+interface notif { bg: string, header: string, body: string, isShown: boolean, time: number }
 export default AdvertPage;
