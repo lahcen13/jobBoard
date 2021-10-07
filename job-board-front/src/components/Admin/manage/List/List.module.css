@@ -1,0 +1,33 @@
+.margin{
+    margin:10px;
+}
+.list{
+    width:100%;
+    background-color: #3484FA;
+    margin-bottom:2vh;
+    height: 10vh;
+    display:flex;
+    align-items: center;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.list svg:hover{
+    transition: 0.2s;
+    transform: scale(1.2)!important;
+    cursor:pointer;
+}
+h3{
+    width: 100%;
+    text-align: center;
+    font-family: "Rowdies";
+    color:white;
+}
+.BoxA{
+    width:48%;
+    background-color: #ffffff;
+    Height:98%;
+    position:relative;
+    padding:5%;
+    overflow-y: scroll;
+}

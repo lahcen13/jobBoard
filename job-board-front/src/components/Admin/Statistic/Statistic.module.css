@@ -1,0 +1,45 @@
+.ParentA{
+    display: flex;
+    justify-content: space-between;
+    height:35vh;
+    padding-top: 5vh;
+}
+.box{ 
+    width:30%;
+    background-color: #0d6efd;
+    Height:100%;
+    padding: 10px;
+    position:relative;
+ 
+}
+
+.h3{
+    font-family: "Rowdies";
+    color:white;
+
+}
+.h1{
+    font-family: "Rowdies";
+    color:white;
+    width:100%;
+    font-size: 3VW; 
+    text-align: center;
+}
+.Button{
+    position:absolute; 
+    width: 15vw;
+    bottom:1vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 7vh;
+    font-family: "Rowdies";
+    background-color: #3484FA;
+    box-shadow:9px 7px 27px 3px rgba(0,0,0,0.45);
+    border: none;
+    color:rgb(212, 211, 211);
+}
+.Button:hover{
+    transition: 0.2;
+    color:rgb(255, 255, 255);
+    background-color: #3075dd;
+}

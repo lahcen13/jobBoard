@@ -4,23 +4,25 @@ import { Person } from "react-bootstrap-icons";
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { controleEmail, controleName } from '../../functions/FormControle.js';
-import Notification from "../Notification/Notification";
+
 import axios from 'axios';
 import Alert from '../Alert/Alert';
-import getUserToken from '../../functions/getUserToken'
+import getUserToken from '../../functions/getUserToken';
+
+import { getUser } from '../../functions/session'
 
 
 
+const UserProfilAbout = (props: { notif: Function }) => {
+  const [data, setData] = useState({ first_name: "", name: "", email: "", phone: "", city: "", postal_code: "", address: "", gender: "", id: getUser().id });
+  // const [showAlertName, setShowAlertName] = useState(false);
+  // const [showAlertlastName, setShowAlertlastName] = useState(false);
+  // const [showAlertEmail, setShowAlertEmail] = useState(false);
+  // const [ShowAlertCity, setShowAlertCity] = useState(false);
 
-const UserProfilAbout = (props: any) => {
-  const [data, setData] = useState({ first_name: "", name: "", email: "", phone: "", city: "", postal_code: "", address: "", gender: "" });
-  const [showAlertName, setShowAlertName] = useState(false);
-  const [showAlertlastName, setShowAlertlastName] = useState(false);
-  const [showAlertEmail, setShowAlertEmail] = useState(false);
-  const [ShowAlertCity, setShowAlertCity] = useState(false);
   const [email, setEmail] = useState("hah@gmail.Com");
   const [showAlertMailExist, setShowAlertMailExist] = useState(false);
-  const [noti, setNoti] = useState<any>(null)
+
   const token: string = getUserToken()
 
   if (!data.email) {
@@ -32,7 +34,7 @@ const UserProfilAbout = (props: any) => {
     }).then(res => {
       setData(res.data)
     }).catch(err => {
-      console.error(err)
+
     })
   }
 
@@ -41,6 +43,8 @@ const UserProfilAbout = (props: any) => {
     console.log(data)
   }
 
+
+
   const onClick = () => {
     axios.put('http://localhost:5000/user', data, {
       headers: {
@@ -48,16 +52,34 @@ const UserProfilAbout = (props: any) => {
         "authorization": "Bearer " + getUserToken()
       }
     }).then(res => {
-      console.log('success')
+      props.notif({
+        bg: 'success',
+        show: true,
+        head: 'Error',
+        body: 'Your data has been updated with success'
+      })
     }).catch(err => {
-      console.log("error")
-      console.error(err.response)
-
+      switch (err.response.data) {
+        case "email_exist":
+          props.notif({
+            bg: 'danger',
+            show: true,
+            head: 'Error',
+            body: 'This user is already registered'
+          })
+          break;
+        default:
+          break;
+      }
     })
   }
 
 
+
+
+
   return <div className="col-sm-12  col-md-4">
+
     <div className="UserProfilColumn rounded">
       <div className="row">
         <div className="col-sm-12  col-md-12">
@@ -68,7 +90,7 @@ const UserProfilAbout = (props: any) => {
             <Form.Label>First name</Form.Label>
             <Form.Control name='first_name' type="text" value={data.first_name} />
           </Form.Group>
-          <div>{showAlertName && <Alert class=" bg-warning" text="Incorrect name" />}</div>
+          {/* <div>{showAlertName && <Alert class=" bg-warning" text="Incorrect name" />}</div> */}
 
         </div>
         <div className="col-sm-5 col-md-6">
@@ -76,14 +98,14 @@ const UserProfilAbout = (props: any) => {
             <Form.Label>Last name</Form.Label>
             <Form.Control name='name' type="text" value={data.name} />
           </Form.Group>
-          <div>{showAlertlastName && <Alert class=" bg-warning" text="Incorrect Lastname" />}</div>
+          {/* <div>{showAlertlastName && <Alert class=" bg-warning" text="Incorrect Lastname" />}</div> */}
         </div>
         <div className="col-sm-5  col-md-6">
           <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control name='email' type="email" value={data.email} />
           </Form.Group>
-          <div>{showAlertEmail && <Alert class=" bg-warning" text="Incorrect email" />}</div>
+          {/* <div>{showAlertEmail && <Alert class=" bg-warning" text="Incorrect email" />}</div> */}
         </div>
         <div className="col-sm-5  col-md-6">
           <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="formBasicEmail">
@@ -96,7 +118,7 @@ const UserProfilAbout = (props: any) => {
             <Form.Label>City</Form.Label>
             <Form.Control name='city' type="text" value={data.city ? data.city : ""} />
           </Form.Group>
-          <div>{ShowAlertCity && <Alert class=" bg-warning" text="Wrong password or email adress" />}</div>
+          {/* <div>{ShowAlertCity && <Alert class=" bg-warning" text="Wrong password or email adress" />}</div> */}
 
         </div>
         <div className="col-sm-5 col-md-6">
@@ -126,7 +148,9 @@ const UserProfilAbout = (props: any) => {
         <div className="col-sm-5 col-md-5">
           <Button onClick={() => onClick()} className={styles.submit}>Submit</Button>
         </div>
+        <div className="col-sm-5 col-md-5">
 
+        </div>
       </div>
     </div>
   </div>

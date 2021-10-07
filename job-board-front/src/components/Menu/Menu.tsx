@@ -4,6 +4,7 @@ import classes from './Menu.module.css';
 import { ReactComponent as Person } from '../../assets/svgs/person.svg'
 import { ReactComponent as Power } from '../../assets/svgs/power.svg'
 import { remove } from '../../functions/session'
+import { Link } from 'react-router-dom';
 
 const Menu = (props: any) => {
   const menu = useRef<HTMLDivElement>(null)
@@ -21,7 +22,7 @@ const Menu = (props: any) => {
   })
   return (
     <div ref={menu} className={`${classes.menu} ${className}`}>
-      <Person className={classes.icon} />
+      <Link to="/userProfil"> <Person className={classes.icon} /> </Link>
       <Power onClick={() => onClick()} className={classes.icon} />
     </div>
   )
