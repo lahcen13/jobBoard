@@ -75,31 +75,52 @@ app.post('/login', (req, response) => {
 })
 
 app.post('/applied', (req, res) => {
-    if (!req.body.firstName || !req.body.lastName || !req.body.motivation || !req.body.advertID || !req.body.file || !req.body.email || !req.body.phone ) {
-       return res.status(406).send('missing_field')
+    if (!req.body.firstName || !req.body.lastName || !req.body.motivation || !req.body.advertID || !req.body.file || !req.body.email || !req.body.phone) {
+        return res.status(406).send('missing_field')
     }
 
-   
 
-    const user = [
-         req.body.firstName,
-         req.body.lastName,
-         req.body.file,
-         req.body.email,
-         req.body.phone
-    ]
 
-    db.query("INSERT INTO people (first_name, name, cv, email, phone) VALUES (?, ?, ?, ?, ?)", user, (error, result) => {
-        if (error) throw error
-    const userID = result.insertID
+
+
+    db.query('SELECT COUNT(*), id FROM people WHERE email = ?', [req.body.email], (err, result) => {
+        const id = result[0].id
+
+        const apply = (id) => {
+            return db.query('SELECT COUNT(*) FROM applied WHERE people_id = ? AND advertisement_id = ?', [id, req.body.advertID], (err, resultSelectApply) => {
+                if (err) throw err
+                if (resultSelectApply[0]['COUNT(*)'] !== 0) return res.status(406).send('already_applied')
+                return db.query('INSERT INTO applied (people_id, advertisement_id, motivation_people) VALUES (?, ?, ?)', [id, req.body.advertID, req.body.motivation], (err, insertApply) => {
+                    if (err) throw err
+                    if (insertApply) return res.status(200).send('success')
+                })
+            })
+        }
+        if (err) throw err
+        if (result[0]["COUNT(*)"] !== 0) {
+            db.query('UPDATE people SET phone = ?, name = ?, first_name = ?, cv = ? WHERE email = ?', [req.body.phone, req.body.lastName, req.body.firstName, req.body.cv, req.body.email], (err, updateResult) => {
+                if (err) throw err
+                return apply(id)
+            })
+        } else {
+            db.query('INSERT INTO people (email, name, first_name, cv, phone) VALUES (?, ?, ?, ?, ?)', [req.body.email, req.body.lastName, req.body.firstName, req.body.file, req.body.phone], (err, insertResult) => {
+                if (err) throw err
+                return apply(insertResult.insertId)
+            })
+        }
     })
+
+    // db.query("INSERT INTO people (first_name, name, cv, email, phone) VALUES (?, ?, ?, ?, ?)", user, (error, result) => {
+    //     if (error) throw error
+    // const userID = result.insertID
+    // })
 
 
     const application = {
         motivation: req.body.motivation
     }
 
- 
+
 })
 
 
