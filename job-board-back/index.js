@@ -35,6 +35,31 @@ app.post('/admin/test', (req, res) => {
         return res.status(200).send(check(token, 'user'))
     })
 })
+
+app.post('/admin/user', (req, res) => {
+    db.query('SELECT id, concat(name," ",first_name) as `list_user` FROM `people` ', (error, response) => {
+        if (error) throw error
+        response.status(200).send(res)
+    })
+})
+
+app.post('/admin/adverts', (req, res) => {
+    db.query('SELECT id, title FROM `people` ', (error, response) => {
+        if (error) throw error
+        response.status(200).send(res)
+    })
+})
+app.post('/admin/companies', (req, res) => {
+    db.query('SELECT  id, name FROM `companies` ', (error, response) => {
+        if (error) throw error
+        response.status(200).send(res)
+    })
+})
+
+
+
+
+
 app.get('/company', (req, res) => {
     if (!req.query.id) return res.status(406).send('id_not_provided')
 

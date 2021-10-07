@@ -2,9 +2,7 @@ import React from 'react';
 import styles from './SelectedUser.module.css';
 
 const SelectedUser = () => (
-  <div className={styles.SelectedUser}>
-    SelectedUser Component
-  </div>
+  <div className={styles.BoxC} > HOHO</div>
 );
 
 export default SelectedUser;
