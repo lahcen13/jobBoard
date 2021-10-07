@@ -131,6 +131,7 @@ app.delete('/user', (req, res) => {
 
 app.put('/user', (req, res) => {
     const {
+        id,
         name,
         first_name,
         email,
@@ -150,13 +151,18 @@ app.put('/user', (req, res) => {
         phone,
         gender
     ]
-    const queryString = `UPDATE people SET name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? WHERE email ='${req.body.email}'`
-    db.query(queryString, prepare, (error, results) => {
-        if (error) throw error
-        return res.status(200).send('data_updated')
+    db.query(`select email from  people where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, userList) => {
+        if (err) throw err
+        if (userList.length == 0) {
+            const queryString = `UPDATE people SET name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? WHERE email ='${req.body.email}'`
+            db.query(queryString, prepare, (error, results) => {
+                if (error) throw error
+                res.status(200).send("success");
+            })
+        } else {
+            res.status(406).send('email_exist');
+        }
     })
-
-
 })
 
 app.post('/register', (req, response) => {

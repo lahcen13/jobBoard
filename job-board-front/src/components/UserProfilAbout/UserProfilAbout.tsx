@@ -4,23 +4,25 @@ import { Person } from "react-bootstrap-icons";
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { controleEmail, controleName } from '../../functions/FormControle.js';
-import Notification from "../Notification/Notification";
+
 import axios from 'axios';
 import Alert from '../Alert/Alert';
 import getUserToken from '../../functions/getUserToken';
 
+import { getUser } from '../../functions/session'
 
 
 
-const UserProfilAbout = (props: any) => {
-  const [data, setData] = useState({ first_name: "", name: "", email: "", phone: "", city: "", postal_code: "", address: "", gender: "" });
+const UserProfilAbout = (props: { notif: Function }) => {
+  const [data, setData] = useState({ first_name: "", name: "", email: "", phone: "", city: "", postal_code: "", address: "", gender: "", id: getUser().id });
   // const [showAlertName, setShowAlertName] = useState(false);
   // const [showAlertlastName, setShowAlertlastName] = useState(false);
   // const [showAlertEmail, setShowAlertEmail] = useState(false);
   // const [ShowAlertCity, setShowAlertCity] = useState(false);
+
   const [email, setEmail] = useState("hah@gmail.Com");
   const [showAlertMailExist, setShowAlertMailExist] = useState(false);
-  const [noti, setNoti] = useState<any>(null)
+
   const token: string = getUserToken()
 
   if (!data.email) {
@@ -32,19 +34,7 @@ const UserProfilAbout = (props: any) => {
     }).then(res => {
       setData(res.data)
     }).catch(err => {
-      switch (err.response.data) {
-        case "email_exist":
-          setNoti({
-            bg: 'danger',
-            show: true,
-            head: 'Error',
-            body: 'This user is already registered'
-          })
-          break;
 
-        default:
-          break;
-      }
     })
   }
 
@@ -53,6 +43,8 @@ const UserProfilAbout = (props: any) => {
     console.log(data)
   }
 
+
+
   const onClick = () => {
     axios.put('http://localhost:5000/user', data, {
       headers: {
@@ -60,31 +52,34 @@ const UserProfilAbout = (props: any) => {
         "authorization": "Bearer " + getUserToken()
       }
     }).then(res => {
-      console.log('success')
+      props.notif({
+        bg: 'success',
+        show: true,
+        head: 'Error',
+        body: 'Your data has been updated with success'
+      })
     }).catch(err => {
       switch (err.response.data) {
         case "email_exist":
-          setNoti({
+          props.notif({
             bg: 'danger',
             show: true,
             head: 'Error',
             body: 'This user is already registered'
           })
           break;
-
         default:
           break;
       }
     })
   }
-  const closeNotification = () => {
-    setNoti({ ...noti, show: false })
 
-  }
+
 
 
 
   return <div className="col-sm-12  col-md-4">
+
     <div className="UserProfilColumn rounded">
       <div className="row">
         <div className="col-sm-12  col-md-12">
@@ -154,7 +149,7 @@ const UserProfilAbout = (props: any) => {
           <Button onClick={() => onClick()} className={styles.submit}>Submit</Button>
         </div>
         <div className="col-sm-5 col-md-5">
-          {noti && <Notification time={4000} changeState={() => closeNotification()} bg={noti.bg} isShown={noti.show} header={noti.head} body={noti.body} />}
+
         </div>
       </div>
     </div>
