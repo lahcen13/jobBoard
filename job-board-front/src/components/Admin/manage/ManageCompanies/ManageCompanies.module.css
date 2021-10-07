@@ -6,3 +6,9 @@
     height: 50vh;
 
 }
+
+@media screen and (max-width: 560px ) {
+    .ParentsB{
+        display: none!important;
+    }
+}

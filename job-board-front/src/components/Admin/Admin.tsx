@@ -13,7 +13,7 @@ const Admin = () => {
     <Navbar />
     <div className={'container ' + styles.container} >
       <Statistic Users={342} Adverts={32} Companies={12} />
-      <ManageUser></ManageUser>
+      <ManageAdverts></ManageAdverts>
     </div>
   </div >
 };
