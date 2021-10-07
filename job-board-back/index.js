@@ -14,7 +14,7 @@ const { get } = require('./functions/user')
 
 //middleware
 app.use(cors())
-app.use((req, res, next) => token(req, res, next, ['/login', '/register', '/adverts']))
+app.use((req, res, next) => token(req, res, next, ['/login', '/register', '/adverts', '/company', '/applied']))
 // app.use((req, res, next) => handleUser(req, res, next, db, ['/login', '/register']))
 app.use(express.json())
 //-------
@@ -89,8 +89,15 @@ app.post('/applied', (req, res) => {
         }
         if (result[0].password_ && check(getToken(req)) === 'no_permission')  {
             return res.status(401).send('need_connexion')
+            
         }
-        console.log(result)
+
+        if(check(getToken(req)) !== 'no_permission') {
+            if (get(req).email !== req.body.email) return res.status(401).send('wrong_email')
+        }
+
+        
+        
         const id = result[0].id
 
         const apply = (id) => {

@@ -65,7 +65,6 @@ const AdvertPage = () => {
         email: data.email,
         phone: data.phone,
         advertID: selected.id,
-        userID: getUser().id
       }, header).then(res => {
         setPop(false)
         setNoti({
@@ -77,10 +76,24 @@ const AdvertPage = () => {
         })
       })
         .catch(err => {
+          if (err.response.data === 'need_connexion') setNoti({
+            bg: "danger",
+            header: "Fail",
+            body :"You need to be connected with this email",
+            isShown: true,
+            time: 4000
+          })
           if (err.response.data === 'already_applied') setNoti({
             bg: "danger",
             header: "Fail",
             body :"You already applied to this advertisment",
+            isShown: true,
+            time: 4000
+          })
+          if (err.response.data === 'wrong_email') setNoti({
+            bg: "danger",
+            header: "Fail",
+            body :"You are not submiting with your own email",
             isShown: true,
             time: 4000
           })
