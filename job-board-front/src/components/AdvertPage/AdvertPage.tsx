@@ -48,9 +48,8 @@ const AdvertPage = () => {
 
 
   const onValid = (data: popupData) => {
-    const file = new FormData()
-    if (data.file) file.append('file', data.file)
-    
+
+
     const header = {
       headers: {
         'content-type': 'application/json',
@@ -62,7 +61,7 @@ const AdvertPage = () => {
         firstName: data.firstName,
         lastName: data.lastName,
         motivation: data.text,
-        file: file,
+        file: "myCV.pdf",
         email: data.email,
         phone: data.phone,
         advertID: selected.id,
@@ -110,7 +109,7 @@ interface popupData {
   firstName: string,
   lastName: string,
   text: string,
-  file: File | null,
+  file: File ,
   phone: string,
   email: string
 }
