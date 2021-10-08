@@ -19,9 +19,9 @@ const UserProfilAbout = (props: { notif: Function }) => {
   // const [showAlertlastName, setShowAlertlastName] = useState(false);
   // const [showAlertEmail, setShowAlertEmail] = useState(false);
   // const [ShowAlertCity, setShowAlertCity] = useState(false);
-
-  const [email, setEmail] = useState("hah@gmail.Com");
+  const [email, setEmail] = useState(getUser().email);
   const [showAlertMailExist, setShowAlertMailExist] = useState(false);
+
 
   const token: string = getUserToken()
 
@@ -42,8 +42,6 @@ const UserProfilAbout = (props: { notif: Function }) => {
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data)
   }
-
-
 
   const onClick = () => {
     axios.put('http://localhost:5000/user', data, {
