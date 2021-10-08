@@ -16,8 +16,9 @@ const AdvertDetail = (props: {
 
   const [data, setData] = useState<data | null>(null)
   useEffect(() => {
+    console.log(props.data)
     if (!data) {
-      console.log(props.data.companie_id)
+      
       axios.get('http://localhost:5000/company?id=' + props.data.companie_id, {
         headers: {
           'content-type': 'application/json',

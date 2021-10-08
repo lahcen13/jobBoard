@@ -79,21 +79,21 @@ const AdvertPage = () => {
           if (err.response.data === 'need_connexion') setNoti({
             bg: "danger",
             header: "Fail",
-            body :"You need to be connected with this email",
+            body: "You need to be connected with this email",
             isShown: true,
             time: 4000
           })
           if (err.response.data === 'already_applied') setNoti({
             bg: "danger",
             header: "Fail",
-            body :"You already applied to this advertisment",
+            body: "You already applied to this advertisment",
             isShown: true,
             time: 4000
           })
           if (err.response.data === 'wrong_email') setNoti({
             bg: "danger",
             header: "Fail",
-            body :"You are not submiting with your own email",
+            body: "You are not submiting with your own email",
             isShown: true,
             time: 4000
           })
@@ -113,14 +113,11 @@ const AdvertPage = () => {
     <Navbar />
 
     <div className={classes.advertPage}>
-      <div className={classes.filter}>
-
-      </div>
       <div className={classes.advertContainer}>
-        {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i} title={el.title} description={el.description} published={el.published} date={el.date} />)}
+        {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i} title={el.title} short={el.short_description} description={el.description} published={el.published} date={el.date} />)}
       </div>
 
-      {selected && <AdvertDetail interact={() => setPop(true)} data={selected} />}
+      {data && <AdvertDetail interact={() => setPop(true)} data={!selected ? data[0]: selected} />}
       {pop && <Popup callBack={(d: notif) => handleNoti(d)} valid={(data: popupData) => onValid(data)} cancel={() => onCancel()} />}
       <Notification changeState={() => setNoti({ ...noti, isShown: false })} {...noti} />
     </div></div>)
@@ -130,7 +127,7 @@ interface popupData {
   firstName: string,
   lastName: string,
   text: string,
-  file: File ,
+  file: File,
   phone: string,
   email: string
 }
