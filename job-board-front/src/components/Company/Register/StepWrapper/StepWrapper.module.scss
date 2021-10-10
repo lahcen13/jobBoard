@@ -1,9 +1,41 @@
+@use 'src/var.module' as var;
+
+
 .StepWrapper {
     height: 70%;
     width: 100%;
 }
 
-.Form {
-    width: 50%;
-    height: 100%;
+
+.inputs {
+    margin-top: 4vh;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    input {
+        border: none;
+        background-color: var.$secondary;
+        margin: 1vw;
+        width: 46%;
+        height: 7vh;
+        text-align: center;
+    }
+}
+
+
+.buttonWrapper {
+    padding-top: 4%;
+    display: flex;
+    justify-content: center;
+    
+    .confirmButton {
+        margin: auto;
+        height: 11vh;
+        background-color: var.$primary;
+        color: var.$primaryText;
+        font-size: 8vw;
+        border: none;
+        width: 80%;
+    }
 }
