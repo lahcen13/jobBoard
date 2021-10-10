@@ -3,9 +3,10 @@ import styles from './SelectedUser.module.css';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 
-const SelectedUser = () => {
+const SelectedUser = (props: any) => {
 
   const [data, setData] = useState({ id: "", first_name: "", name: "", email: "", phone: "", city: "", postal_code: "", address: "", gender: "", birth_date: "", role: "", cv: "", picture: "" });
+  console.log(props.id)
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data)
