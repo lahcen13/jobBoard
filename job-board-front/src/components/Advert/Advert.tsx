@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/Button';
 
 
 const Advert = (props: props) => {
-console.log(props)
   return <div className="Advert rounded">
     <div className="container">
       <h4 id="titleAdvert">{props.title}</h4>

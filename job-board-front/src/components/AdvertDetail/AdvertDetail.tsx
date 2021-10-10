@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './AdvertDetail.module.css';
 
-import { Building, Envelope, Geo, Link45deg, Mailbox, People, Person } from 'react-bootstrap-icons';
+import { Building, Envelope, Geo, Link45deg, Mailbox, People, Person, Reply } from 'react-bootstrap-icons';
 import ReactMarkdown from 'react-markdown';
 import { Spinner } from 'react-bootstrap';
 import axios from 'axios';
@@ -12,13 +12,15 @@ const AdvertDetail = (props: {
   data: dataProps,
   canClose?: boolean,
   interact: Function
+  display: boolean
 }) => {
 
   const [data, setData] = useState<data | null>(null)
+  const [display, setDisplay] = useState<boolean>(true)
   useEffect(() => {
     console.log(props.data)
     if (!data) {
-      
+
       axios.get('http://localhost:5000/company?id=' + props.data.companie_id, {
         headers: {
           'content-type': 'application/json',
@@ -33,13 +35,19 @@ const AdvertDetail = (props: {
   })
 
 
-  const handleInteract = () => {
-  
-      props.interact()
+  const displayClass = () => {
     
+    if (!display) {
+      console.log('DISPLAY FALSE')
+      return styles.none
+    }
+
+    if (!display) return setDisplay(true)
+    if (props.display) return styles.display
+    return styles.none
   }
 
-  return data ? <div className={styles.AdvertDetail}><h3 className={styles.title}>{props.data.title}</h3>
+  return data ? <div className={styles.advertDetail}><Reply className={styles.icon} width="30px" height="30px" onClick={() => setDisplay(false)} /><h3 className={styles.title}>{props.data.title}</h3>
     <div className={styles.detailHeader}>
       <div className={styles.row}>
         <span className={styles.labelIcon}>
@@ -84,13 +92,12 @@ const AdvertDetail = (props: {
     </div></div> : <Spinner animation="border" role="status">
     <span className="visually-hidden">Loading...</span>
   </Spinner>
-
 };
 
 interface dataProps {
   title: string,
   description: string,
-  companie_id: number
+  companie_id: number,
 }
 
 interface data {
@@ -101,5 +108,9 @@ interface data {
   postal_code: number,
   contact: string,
   website: string
+}
+
+AdvertDetail.defaultProps = {
+  display: false
 }
 export default AdvertDetail;
