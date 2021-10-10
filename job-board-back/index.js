@@ -28,43 +28,47 @@ db.connect((err) => {
 
 app.get('/admin/user', (req, res) => {
     if (req.query.list) {
-        db.query('SELECT id, concat(name," ",first_name) as `full_name` FROM `people` ', (error, response) => {
-            if (error) throw error
-            res.status(200).send(response)
-        })
+        sql = 'id, concat(name," ",first_name) as `full_name`'
     } else {
-        db.query('SELECT count(*) as "count_people" FROM `people` ', (error, response) => {
-            if (error) throw error
-            res.status(200).send(response)
-        })
+        sql = 'count(*) as `count_people`'
     }
+
+    db.query(`SELECT ${sql} FROM people `, (error, response) => {
+        if (error) throw error
+        res.status(200).send(response)
+    })
+
 })
 
 app.get('/admin/adverts', (req, res) => {
     if (req.query.list) {
-        db.query('SELECT id, title as "full_name" FROM advertisements', (error, response) => {
-            if (error) throw error
-            res.status(200).send(response)
-        })
+        sql = 'id, title as `full_name` '
     } else {
-        db.query('SELECT count(*) as "count_adverts" FROM `advertisements` ', (error, response) => {
-            if (error) throw error
-            res.status(200).send(response)
-        })
+        sql = 'count(*) as `count_adverts`'
     }
+    db.query(`SELECT ${sql} FROM advertisements `, (error, response) => {
+        if (error) throw error
+        res.status(200).send(response)
+    })
 })
 app.get('/admin/companies', (req, res) => {
     if (req.query.list) {
-        db.query('SELECT  id, name as "full_name" FROM `companies` ', (error, response) => {
-            if (error) throw error
-            res.status(200).send(response)
-        })
+        sql = 'id, name as `full_name` '
     } else {
-        db.query('SELECT count(*) as "count_companies" FROM `companies` ', (error, response) => {
-            if (error) throw error
-            res.status(200).send(response)
-        })
+        sql = 'count(*) as `count_companies` '
+
     }
+    db.query(`SELECT ${sql} FROM companies `, (error, response) => {
+        if (error) throw error
+        res.status(200).send(response)
+    })
+})
+
+app.get('/admin/delete', (req, res) => {
+    db.query(`delete from ${req.query.table} where id='${req.query.id}' `, (error, response) => {
+        if (error) throw error
+        res.status(200).send(response)
+    })
 })
 
 

@@ -3,12 +3,14 @@ import styles from './SelectedAdverts.module.css';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 
-const SelectedAdverts = () => {
+const SelectedAdverts = (props: any) => {
   const [data, setData] = useState({ id: "", title: "", description: "", activity: "", salary: "", date: "", published: "" });
+  console.log(props.id)
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data)
   }
+
   return <div className={styles.BoxC}>
     <div className="row">
       <div className="col-sm-12 col-md-6">
@@ -57,8 +59,6 @@ const SelectedAdverts = () => {
         </Form.Group>
         {/* <div>{showAlertlastName && <Alert class=" bg-warning" text="Incorrect Lastname" />}</div> */}
       </div>
-
-
       <div className="col-sm-5 col-md-5">
         <Button className={styles.submit}>Submit</Button>
       </div>

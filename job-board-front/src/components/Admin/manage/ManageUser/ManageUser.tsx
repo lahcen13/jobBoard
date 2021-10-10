@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import List from '../List/List';
 import styles from './ManageUser.module.css';
 import SelectedUser from './SelectedUser/SelectedUser';
 
 const ManageUser = () => {
+  const [IdUser, setIdUser] = useState<any>(null)
   return <div className={styles.ParentsB}>
-    <List list={"user"} ></List>
-    <SelectedUser></SelectedUser>
+    <List list={"user"} id={(data: any) => setIdUser(data)} ></List>
+    <SelectedUser id={IdUser} />
   </div>
 };
 
