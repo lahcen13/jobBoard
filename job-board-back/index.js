@@ -25,34 +25,45 @@ db.connect((err) => {
 })
 
 
-app.post('/admin/test', (req, res) => {
-    const userEmail = req.body.email
-    db.query('SELECT email, role, id FROM people WHERE email = ?', [userEmail], (error, response) => {
-        if (error) throw error
-        const user = response[0]
-        const token = sign(user.role, user.id, user.email)
-        return res.status(200).send(check(token, 'user'))
-    })
+app.get('/admin/user', (req, res) => {
+    if (req.query.list) {
+        db.query('SELECT id, concat(name," ",first_name) as `full_name` FROM `people` ', (error, response) => {
+            if (error) throw error
+            res.status(200).send(response)
+        })
+    } else {
+        db.query('SELECT count(*) as "count_people" FROM `people` ', (error, response) => {
+            if (error) throw error
+            res.status(200).send(response)
+        })
+    }
 })
 
-app.post('/admin/user', (req, res) => {
-    db.query('SELECT id, concat(name," ",first_name) as `list_user` FROM `people` ', (error, response) => {
-        if (error) throw error
-        response.status(200).send(res)
-    })
+app.get('/admin/adverts', (req, res) => {
+    if (req.query.list) {
+        db.query('SELECT id, title as "full_name" FROM advertisements', (error, response) => {
+            if (error) throw error
+            res.status(200).send(response)
+        })
+    } else {
+        db.query('SELECT count(*) as "count_adverts" FROM `advertisements` ', (error, response) => {
+            if (error) throw error
+            res.status(200).send(response)
+        })
+    }
 })
-
-app.post('/admin/adverts', (req, res) => {
-    db.query('SELECT id, title FROM `people` ', (error, response) => {
-        if (error) throw error
-        response.status(200).send(res)
-    })
-})
-app.post('/admin/companies', (req, res) => {
-    db.query('SELECT  id, name FROM `companies` ', (error, response) => {
-        if (error) throw error
-        response.status(200).send(res)
-    })
+app.get('/admin/companies', (req, res) => {
+    if (req.query.list) {
+        db.query('SELECT  id, name as "full_name" FROM `companies` ', (error, response) => {
+            if (error) throw error
+            res.status(200).send(response)
+        })
+    } else {
+        db.query('SELECT count(*) as "count_companies" FROM `companies` ', (error, response) => {
+            if (error) throw error
+            res.status(200).send(response)
+        })
+    }
 })
 
 
@@ -64,7 +75,6 @@ app.get('/company', (req, res) => {
 
     db.query('SELECT * FROM companies WHERE id = ?', [req.query.id], (error, response) => {
         if (error) throw error
-        console.log(response)
         res.status(200).send({ ...response[0] })
     })
 })
@@ -82,8 +92,6 @@ app.post('/login', (req, response) => {
     }
     db.query(`SELECT * FROM people WHERE email="${req.body.email}"`, (err, res) => {
         if (res.length > 0) {
-            console.log(req.body.password);
-            console.log(res[0]['password_']);
             bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
                 if (result) {
                     var token = sign(res[0].role, res[0].id, res[0].email)
@@ -111,17 +119,17 @@ app.post('/applied', (req, res) => {
         if (err) {
             console.error(err)
         }
-        if (result[0].password_ && check(getToken(req)) === 'no_permission')  {
+        if (result[0].password_ && check(getToken(req)) === 'no_permission') {
             return res.status(401).send('need_connexion')
-            
+
         }
 
-        if(check(getToken(req)) !== 'no_permission') {
+        if (check(getToken(req)) !== 'no_permission') {
             if (get(req).email !== req.body.email) return res.status(401).send('wrong_email')
         }
 
-        
-        
+
+
         const id = result[0].id
 
         const apply = (id) => {
@@ -163,7 +171,6 @@ app.post('/applied', (req, res) => {
 
 
 app.get('/applied', (req, res) => {
-    console.log('oook')
     const id = req.query.id
     if (!id) return res.status(406).send('missing_field');
     db.query('SELECT  companies.id as "idCompanie", advertisements.id, advertisements.title, advertisements.description, advertisements.date, companies.name  FROM advertisements inner join applied on advertisements.id = applied.advertisement_id inner join companies on companies.id=advertisements.companie_id WHERE people_id = ?', [id], (error, response) => {

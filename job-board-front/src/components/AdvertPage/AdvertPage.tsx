@@ -25,7 +25,6 @@ const AdvertPage = () => {
   useEffect(() => {
     if (displayDetails) setDetails(false)
     if (!data) {
-      console.log('teet')
       axios.get('http://localhost:5000/adverts', {
         headers: {
           'Access-Control-Allow-Origin': '*',
@@ -40,7 +39,6 @@ const AdvertPage = () => {
         }).catch(err => console.error(err))
     }
   })
-
 
   const handleSelect = (i: number) => {
     
