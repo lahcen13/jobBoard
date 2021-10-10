@@ -25,6 +25,19 @@ db.connect((err) => {
     console.log('Database connected')
 })
 
+app.get('/admin/select', (req, res) => {
+    if (req.query.table == 'advertisements') {
+        sql = "title, published, salary, date, description, activity"
+    } else if (req.query.table == 'companies') {
+        sql = "name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities"
+    } else {
+        sql = "first_name, name, email, phone, city, postal_code,address, gender, birth_date, role,cv, picture"
+    }
+    db.query(`SELECT ${sql} FROM ${req.query.table} where id='${req.query.id}' `, (error, response) => {
+        if (error) throw error
+        res.status(200).send(response)
+    })
+})
 
 app.get('/admin/user', (req, res) => {
     if (req.query.list) {
@@ -32,13 +45,17 @@ app.get('/admin/user', (req, res) => {
     } else {
         sql = 'count(*) as `count_people`'
     }
-
     db.query(`SELECT ${sql} FROM people `, (error, response) => {
         if (error) throw error
         res.status(200).send(response)
     })
+})
+
+app.post('/admin/update/user', (req, res) => {
 
 })
+
+
 
 app.get('/admin/adverts', (req, res) => {
     if (req.query.list) {
@@ -51,6 +68,8 @@ app.get('/admin/adverts', (req, res) => {
         res.status(200).send(response)
     })
 })
+
+
 app.get('/admin/companies', (req, res) => {
     if (req.query.list) {
         sql = 'id, name as `full_name` '
@@ -71,10 +90,6 @@ app.get('/admin/delete', (req, res) => {
     })
 })
 
-
-
-
-
 app.get('/company', (req, res) => {
     if (!req.query.id) return res.status(406).send('id_not_provided')
 
@@ -83,13 +98,40 @@ app.get('/company', (req, res) => {
         res.status(200).send({ ...response[0] })
     })
 })
-app.get('/adverts', (req, response) => {
 
+app.put('/company/update', (req, res) => {
+    const { name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities } = req.body;
+    const prepare = [name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities]
+    db.query(`select email from  companies where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, emails) => {
+        if (err) throw err
+        if (emails.length == 0) {
+            const queryString = `UPDATE companies SET name = ? , contact_name = ? , number_employes = ? , website = ? , email = ? , phone = ? , city = ? , postal_code = ?, address = ?, activities = ?  WHERE id ='${req.body.id}'`
+            db.query(queryString, prepare, (error, results) => {
+                if (error) throw error
+                res.status(200).send("success");
+            })
+        } else {
+            res.status(406).send('email_exist');
+        }
+    })
+})
+
+app.get('/adverts', (req, response) => {
     db.query('SELECT * FROM advertisements where published=1 order by date desc', (err, res) => {
         if (err) throw err
         response.status(200).send(res)
     })
 })
+app.put('/adverts/update', (req, res) => {
+    const { title, published, salary, date, description, activity } = req.body;
+    const prepare = [title, published, salary, date, description, activity]
+    const queryString = `UPDATE advertisements SET title = ? , published = ? , salary = ? , date = ? , description = ? , activity = ? WHERE id ='${req.body.id}'`
+    db.query(queryString, prepare, (error, results) => {
+        if (error) throw error
+        res.status(200).send("success");
+    })
+})
+
 
 app.post('/login', (req, response) => {
     if (!req.body || !req.body.password || !req.body.email) {
@@ -115,11 +157,6 @@ app.post('/applied', (req, res) => {
     if (!req.body.firstName || !req.body.lastName || !req.body.motivation || !req.body.advertID || !req.body.file || !req.body.email || !req.body.phone) {
         return res.status(406).send('missing_field')
     }
-
-
-
-
-
     db.query('SELECT COUNT(*), id, password_ FROM people WHERE email = ?', [req.body.email], (err, result) => {
         if (err) {
             console.error(err)
@@ -128,15 +165,10 @@ app.post('/applied', (req, res) => {
             return res.status(401).send('need_connexion')
 
         }
-
         if (check(getToken(req)) !== 'no_permission') {
             if (get(req).email !== req.body.email) return res.status(401).send('wrong_email')
         }
-
-
-
         const id = result[0].id
-
         const apply = (id) => {
             return db.query('SELECT COUNT(*) FROM applied WHERE people_id = ? AND advertisement_id = ?', [id, req.body.advertID], (err, resultSelectApply) => {
                 if (err) throw err
@@ -226,7 +258,7 @@ app.put('/user', (req, res) => {
         postal_code,
         city,
         phone,
-        gender
+        gender,
     } = req.body;
     const prepare = [
         name,
@@ -236,7 +268,8 @@ app.put('/user', (req, res) => {
         postal_code,
         city,
         phone,
-        gender
+        gender,
+        role
     ]
     db.query(`select email from  people where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, userList) => {
         if (err) throw err
