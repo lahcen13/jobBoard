@@ -12,7 +12,7 @@ import AdvertPage from './components/AdvertPage/AdvertPage.tsx'
 import UserProfil from './components/UserProfil/UserProfil';
 import Register from './components/Register/Register';
 import Admin from './components/Admin/Admin';
-
+import CompanyRegister from './components/Company/Register/Register.tsx'
 import authGuard from "./middleware/auth-gard"
 
 
@@ -44,6 +44,10 @@ const Middleware = () => {
       </Route>
       <Route path="/admin">
         <Admin />
+      </Route>
+
+      <Route path="/company/register">
+        <CompanyRegister />
       </Route>
 
 

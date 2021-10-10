@@ -12,6 +12,7 @@ import { getUser } from '../../functions/session'
 const AdvertPage = () => {
   const [data, setData] = useState<any>(null)
   const [selected, setSelected] = useState<any>(null)
+  const [displayDetails, setDetails] = useState<boolean>(false)
   const [noti, setNoti] = useState<notif>({
     bg: "success",
     header: "Oops",
@@ -22,6 +23,7 @@ const AdvertPage = () => {
   const [pop, setPop] = useState<boolean>(false)
   const token: string = getUserToken()
   useEffect(() => {
+    if (displayDetails) setDetails(false)
     if (!data) {
       axios.get('http://localhost:5000/adverts', {
         headers: {
@@ -39,8 +41,9 @@ const AdvertPage = () => {
   })
 
   const handleSelect = (i: number) => {
-    console.log(data[i])
-    setSelected(data[i])
+    
+  setSelected(data[i])
+  setDetails(true)
   }
 
 
@@ -107,18 +110,16 @@ const AdvertPage = () => {
   const onCancel = () => {
     setPop(false)
   }
+
   return (<div id={classes.page}>
     <Navbar />
 
     <div className={classes.advertPage}>
-      <div className={classes.filter}>
-
-      </div>
       <div className={classes.advertContainer}>
-        {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i} title={el.title} description={el.description} published={el.published} date={el.date} />)}
+        {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i} title={el.title} short={el.short_description} description={el.description} published={el.published} date={el.date} />)}
       </div>
 
-      {selected && <AdvertDetail interact={() => setPop(true)} data={selected} />}
+      {data && <AdvertDetail display={(displayDetails)} interact={() => setPop(true)} data={!selected ? data[0]: selected} />}
       {pop && <Popup callBack={(d: notif) => handleNoti(d)} valid={(data: popupData) => onValid(data)} cancel={() => onCancel()} />}
       <Notification changeState={() => setNoti({ ...noti, isShown: false })} {...noti} />
     </div></div>)

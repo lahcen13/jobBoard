@@ -10,7 +10,6 @@ var jwt = require('jsonwebtoken');
 const token = require('./middleware/handleToken')
 const { sign, check, getToken } = require('./functions/token')
 const { get } = require('./functions/user')
-// const handleUser = require('./middleware/handleUser')
 
 //middleware
 app.use(cors())

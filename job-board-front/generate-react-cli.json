@@ -1,11 +1,11 @@
 {
   "usesTypeScript": true,
   "usesCssModule": true,
-  "cssPreprocessor": "css",
+  "cssPreprocessor": "scss",
   "testLibrary": "None",
   "component": {
     "default": {
-      "path": "src/components",
+      "path": "src/components/Company/Register",
       "withStyle": true,
       "withTest": false,
       "withStory": false,
