@@ -3,8 +3,9 @@ import styles from './SelectedCompanies.module.css';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 
-const SelectedCompanies = () => {
+const SelectedCompanies = (props: any) => {
   const [data, setData] = useState({ id: "", name: "", contact_name: "", number_employes: "", website: "", email: "", phone: "", city: "", postal_code: "", address: "", activities: "" });
+  console.log(props.id)
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data)
