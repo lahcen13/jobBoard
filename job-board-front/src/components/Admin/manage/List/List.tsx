@@ -15,17 +15,21 @@ const List = (props: any) => {
   }
 
   const deleteFromTable = (param: any) => {
+  
     axios.get(`http://localhost:5000/admin/delete?table=${deleteTable}&id=${param}`, {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Authorization': 'Bearer ' + token
       }
     }).then(res => {
+      
       console.log("deleted with success")
+      setData(data.filter((el: any) => el.id !== param))
     }).catch(err => console.error(err))
   }
 
   useEffect(() => {
+
     if (deleteStatus.status == true) {
       deleteFromTable(deleteStatus.id);
       setDeleteStatus({ status: false, id: "" })
