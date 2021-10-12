@@ -30,6 +30,21 @@
     border: none;
     color:rgb(212, 211, 211);
 }
+
+.ButtonSmall {
+    position:absolute; 
+    width: 50%;
+    bottom:1vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 7vh;
+    font-family: "Rowdies";
+    background-color: #3484FA;
+    box-shadow:9px 7px 27px 3px rgba(0,0,0,0.45);
+    border: none;
+    color:rgb(212, 211, 211);
+    display: none;
+}
 .Button:hover{
     transition: 0.2;
     color:rgb(255, 255, 255);
@@ -50,6 +65,13 @@
     .h1{
         font-size: 5VW; 
     }
+    .Button {
+        display: none;
+    }
+
+    .ButtonSmall {
+        display: initial;
+    }
 }
 
 
@@ -65,4 +87,6 @@
         Height:100%;
         padding: 10px;
     }
+
+   
 }

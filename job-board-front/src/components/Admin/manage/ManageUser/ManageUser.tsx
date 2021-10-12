@@ -7,6 +7,7 @@ const ManageUser = () => {
   const [IdUser, setIdUser] = useState<any>(null)
   return <div className={styles.ParentsB}>
     <List list={"user"} id={(data: any) => setIdUser(data)} ></List>
+    <span className={styles.gap}></span>
     <SelectedUser id={IdUser} />
   </div>
 };

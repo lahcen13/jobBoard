@@ -21,9 +21,10 @@ const Admin = () => {
     <Navbar />
     <div className={'container ' + styles.container} >
       <Statistic render={(p: string) => render(p)} />
-      {show == 'user' ? <ManageUser /> : ""}
-      {show == 'adverts' ? <ManageAdverts /> : ""}
-      {show == 'companies' ? <ManageCompanies /> : ""}
+      <div className={styles.small}>
+        {show == 'user' ? <ManageUser /> : ""}
+        {show == 'adverts' ? <ManageAdverts /> : ""}
+        {show == 'companies' ? <ManageCompanies /> : ""}</div>
     </div>
   </div >
 };

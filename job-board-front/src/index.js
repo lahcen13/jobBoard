@@ -14,6 +14,12 @@ import Register from './components/Register/Register';
 import Admin from './components/Admin/Admin';
 import CompanyRegister from './components/Company/Register/Register.tsx'
 import authGuard from "./middleware/auth-gard"
+import { getUser } from './functions/session';
+import ManageUser from './components/Admin/manage/ManageUser/ManageUser';
+import ManageAdverts from './components/Admin/manage/ManageAdverts/ManageAdverts';
+import ManageCompanies from './components/Admin/manage/ManageCompanies/ManageCompanies';
+import jwt from 'jwt-decode'
+import getUserToken from './functions/getUserToken';
 
 
 const Middleware = () => {
@@ -42,10 +48,21 @@ const Middleware = () => {
       <Route path="/userProfil">
         <UserProfil />
       </Route>
-      <Route path="/admin">
+      {console.log(jwt(getUserToken()).role)}
+      {jwt(getUserToken()).role === 'admin' && <><Route exact path="/admin">
         <Admin />
       </Route>
-
+      <Route path="/admin/users">
+        <ManageUser />
+      </Route>
+      <Route path="/admin/adverts">
+        <ManageAdverts />
+      </Route>
+      <Route path="/admin/companies">
+        <ManageCompanies />
+      </Route>
+</>
+      }
       <Route path="/company/register">
         <CompanyRegister />
       </Route>
