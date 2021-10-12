@@ -13,7 +13,7 @@ const { get } = require('./functions/user')
 
 //middleware
 app.use(cors())
-app.use((req, res, next) => token(req, res, next, ['/login', '/register/user', '/register/user', '/adverts', '/company', '/applied']))
+app.use((req, res, next) => token(req, res, next, ['/login', '/sectors', '/register/user', '/register/company', '/adverts', '/company', '/applied']))
 // app.use((req, res, next) => handleUser(req, res, next, db, ['/login', '/register']))
 app.use(express.json())
 //-------
@@ -289,7 +289,7 @@ app.post('/register/user', (req, response) => {
 
 
 app.post('/register/company', (req, response) => {
-    if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
+    if (!req.body || !req.body.name || !req.body.sector || !req.body.password || !req.body.email || !req.body.address || !req.body.postal_code || !req.body.number_employes || !req.body.phone || !req.body.website || !req.body.city || !req.body.siret) {
         return response.status(406).send('field_missing')
     }
     db.query(`select email from companies where email="${req.body.email}"`, (err, res) => {
@@ -297,7 +297,7 @@ app.post('/register/company', (req, response) => {
         if (res.length == 0) {
             const myPlaintextPassword = req.body.password;
             bcrypt.hash(myPlaintextPassword, saltRounds, function (err, hash) {
-                db.query(`insert into companies (name, password_, email, contact_name, activities, address, postal_code, city, siret, number_employes, website, phone)  values ("${req.body.name}","${hash}","${req.body.email}" ,"${req.body.contactName}" ,"${req.body.activities}" , "${req.body.address}" , "${req.body.postalCode}" ,"${req.body.city}" ,"${req.body.siret}","${req.body.siret}","${req.body.numberEmployes}","${req.body.website}","${req.body.phone}" )`, (err, res) => {
+                db.query(`insert into companies (name, password_, email, contact_name, sector, address, postal_code, city, siret, number_employes, website, phone)  values ("${req.body.name}","${hash}","${req.body.email}" ,"${req.body.contactName}" ,"${req.body.sector}" , "${req.body.address}" , "${req.body.postal_code}" ,"${req.body.city}" ,"${req.body.siret}","${req.body.number_employes}","${req.body.website}","${req.body.phone}" )`, (err, res) => {
                     if (err) throw err
                     response.status(200).send('success');
                 })
