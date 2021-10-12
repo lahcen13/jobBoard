@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
 const token = require('./middleware/handleToken')
-const { sign, check, getToken } = require('./functions/token')
+const { sign, check, getToken, getPayload } = require('./functions/token')
 const { get } = require('./functions/user')
 
 //middleware
@@ -26,11 +26,11 @@ db.connect((err) => {
 
 app.get('/admin/select', (req, res) => {
     if (req.query.table == 'advertisements') {
-        sql = "title, published, salary, date, description, activity"
+        sql = "id, title, published, salary, date, description, activity"
     } else if (req.query.table == 'companies') {
-        sql = "name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities"
+        sql = "id, name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities"
     } else {
-        sql = "first_name, name, email, phone, city, postal_code,address, gender, birth_date, role,cv, picture"
+        sql = "id, first_name, name, email, phone, city, postal_code,address, gender, birth_date, role,cv, picture"
     }
     db.query(`SELECT ${sql} FROM ${req.query.table} where id='${req.query.id}' `, (error, response) => {
         if (error) throw error
@@ -53,8 +53,6 @@ app.get('/admin/user', (req, res) => {
 app.post('/admin/update/user', (req, res) => {
 
 })
-
-
 
 app.get('/admin/adverts', (req, res) => {
     if (req.query.list) {
@@ -248,35 +246,20 @@ app.delete('/user', (req, res) => {
 
 
 app.put('/user', (req, res) => {
-    const {
-        id,
-        name,
-        first_name,
-        email,
-        address,
-        postal_code,
-        city,
-        phone,
-        gender,
-    } = req.body;
-    const prepare = [
-        name,
-        first_name,
-        email,
-        address,
-        postal_code,
-        city,
-        phone,
-        gender,
-        role
-    ]
+    const { birth_date, name, first_name, email, address, postal_code, city, phone, gender, role, cv, picture, id } = req.body;
+    const prepare = [birth_date, name, first_name, email, address, postal_code, city, phone, gender, role, cv, picture]
+    var Role = getPayload(getToken(req)).role;
     db.query(`select email from  people where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, userList) => {
         if (err) throw err
         if (userList.length == 0) {
-            const queryString = `UPDATE people SET name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? WHERE email ='${req.body.email}'`
+            if (Role == "user") {
+                var queryString = `UPDATE people SET birth_date= ? , name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? WHERE email ='${req.body.email}'`;
+            } else {
+                var queryString = `UPDATE people SET birth_date= ? ,name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? , role = ?, cv= ? , picture= ?  WHERE id ='${req.body.id}'`;
+            }
             db.query(queryString, prepare, (error, results) => {
                 if (error) throw error
-                res.status(200).send("success");
+                res.status(200).send("role changed");
             })
         } else {
             res.status(406).send('email_exist');
@@ -284,7 +267,7 @@ app.put('/user', (req, res) => {
     })
 })
 
-app.post('/register', (req, response) => {
+app.post('/register/user', (req, response) => {
     if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
         return response.status(406).send('field_missing')
     }
@@ -303,6 +286,29 @@ app.post('/register', (req, response) => {
         }
     })
 })
+
+
+app.post('/register/company', (req, response) => {
+    if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
+        return response.status(406).send('field_missing')
+    }
+    db.query(`select email from companies where email="${req.body.email}"`, (err, res) => {
+        if (err) throw err
+        if (res.length == 0) {
+            const myPlaintextPassword = req.body.password;
+            bcrypt.hash(myPlaintextPassword, saltRounds, function (err, hash) {
+                db.query(`insert into companies (name, password_, email, contact_name, activities, address, postal_code, city, siret, number_employes, website, phone)  values ("${req.body.name}","${hash}","${req.body.email}" ,"${req.body.contactName}" ,"${req.body.activities}" , "${req.body.address}" , "${req.body.postalCode}" ,"${req.body.city}" ,"${req.body.siret}","${req.body.siret}","${req.body.numberEmployes}","${req.body.website}","${req.body.phone}" )`, (err, res) => {
+                    if (err) throw err
+                    response.status(200).send('success');
+                })
+            });
+        } else {
+            response.status(406).send('email_exist');
+        }
+    })
+})
+
+
 
 
 
@@ -334,4 +340,10 @@ app.get('/filter', (req, response) => {
 
 app.listen(PORT, () => {
     console.log('App listening on PORT: ' + PORT);
+})
+app.get('/sector', (req, response) => {
+    db.query('SELECT * FROM sector ', (err, res) => {
+        if (err) throw err
+        response.status(200).send(res)
+    })
 })

@@ -30,8 +30,6 @@ const SelectedUser = (props: any) => {
           date.getMonth() + 1,
           date.getFullYear()
         ];
-
-
         var month = datevalues[1] >= 10 ? datevalues[1] : '0' + datevalues[1];
         var jour = datevalues[0] >= 10 ? datevalues[0] : '0' + datevalues[0];
         console.log('date est :' + datevalues[2] + '-' + month + '-' + jour);

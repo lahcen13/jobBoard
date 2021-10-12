@@ -75,7 +75,7 @@ const Register = () => {
   }
 
   const submit = () => {
-    axios.post('http://localhost:5000/register', data, {
+    axios.post('http://localhost:5000/register/user', data, {
       headers: {
         'content-type': 'application/json'
       }
