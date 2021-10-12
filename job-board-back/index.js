@@ -292,7 +292,7 @@ app.post('/register/company', (req, response) => {
     if (!req.body || !req.body.name || !req.body.sector || !req.body.password || !req.body.email || !req.body.address || !req.body.postal_code || !req.body.number_employes || !req.body.phone || !req.body.website || !req.body.city || !req.body.siret) {
         return response.status(406).send('field_missing')
     }
-    db.query(`select email from companies where email="${req.body.email}"`, (err, res) => {
+    db.query(`select email, siret from companies where email="${req.body.email}" OR siret="${req.body.siret}"`, (err, res) => {
         if (err) throw err
         if (res.length == 0) {
             const myPlaintextPassword = req.body.password;
@@ -303,7 +303,12 @@ app.post('/register/company', (req, response) => {
                 })
             });
         } else {
-            response.status(406).send('email_exist');
+            if (req.body.siret === res[0].siret) {
+                response.status(406).send('siret_exist');
+            }
+            if (req.body.email === res[0].email) {
+                response.status(406).send('email_exist');
+            }
         }
     })
 })
