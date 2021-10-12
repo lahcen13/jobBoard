@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './StepWrapper.module.scss';
 import inputWatcher from './inputWatcher'
 const StepWrapper = () => {
@@ -18,7 +18,19 @@ const StepWrapper = () => {
     cContactName: "",
   })
 
+  const [selected, setSelected] = useState<select>({ id: null, value: "Select your activity sector" })
+  const [selectShown, setShown] = useState<boolean>(true)
   const [step, setStep] = useState(1)
+  const [sectors, setSectors] = useState(null)
+
+  useEffect(() => { 
+
+  })
+
+  const handleSelect = (d: any) => {
+    setShown(false)
+    setSelected(d)
+  }
 
   const handleChange = (e: any) => {
     setData({ ...inputData, [e.target.name]: e.target.value })
@@ -89,17 +101,30 @@ const StepWrapper = () => {
 
   const last = () => {
 
-    return <div className={styles.stepWrapper}>
-      <div >
-        <select>
-          <option>Agriculture, Forestry, Fishery</option>
-          <option>Arts, entertainment and recreation</option>
-          <option>Hospitality and Tourism</option>
-        </select>
 
-        <input className={styles.confirmFinal} type='button' value="Let's go !" />
+    const submit = () => {
+      if (!selected.id) return
+    }
+    return <>
+
+      <div className={styles.selectorWrapper}>
+        <div onClick={() => setShown(true)} className={styles.selected}>
+          <p>{selected.value}</p>
+
+        </div>
+        {selectShown && <div className={styles.selector}>
+          <span onClick={() => handleSelect({ id: 1, value: "Wood cutting" })} className={styles.item}>Wood cutter</span>
+          <span onClick={() => handleSelect({ id: 1, value: "High tech" })} className={styles.item}>High tech</span>
+          <span onClick={() => handleSelect({ id: 1, value: "chilling" })} className={styles.item}>chilling</span>
+          <span onClick={() => handleSelect({ id: 1, value: "cooking" })} className={styles.item}>cooking</span>
+          <span onClick={() => handleSelect({ id: 1, value: "selling" })} className={styles.item}>Selling</span>
+
+        </div>}
       </div>
-    </div>
+
+
+      <input onClick={() => submit()} disabled={selected.id ? false: true} className={styles.confirmFinal} type='button' value="Let's go !" />
+    </>
   }
 
   const handleStep = () => {
@@ -122,11 +147,15 @@ const StepWrapper = () => {
   }
   return <div className={styles.StepWrapper}>
     <div className={styles.Form}>
-      {handleStep()}
+      {last()}
     </div>
   </div>
 };
 
+interface select {
+  id: number | null,
+  value: string
+}
 interface company {
   cName: string,
   cEmail: string,

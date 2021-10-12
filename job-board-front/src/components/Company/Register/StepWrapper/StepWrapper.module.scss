@@ -4,39 +4,68 @@
     height: 80vh;
     width: 100%;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 
-    // select {
-    //     height: 8vh;
-    //     text-align: center;
-    //    color: var.$primaryText;
-    //     border: none;
-    //     padding: 3%;
-    //     font-size: 2em;
-    //     // -webkit-appearance: none;
-    //     width: 50vw;
-    //     option {
-    //         // width: 50vw;
-    //         background-color: white;
-    //         color: var.$secondaryText;
-    //        height: 10px;
-    //        p {
-    //         height: 10px;
-    //        }
-    //     }
-     
-    // }   
-     
+
+    .selectorWrapper {
+        margin: auto;
+        width: 100vw;
+    }
+
+
+    .selected {
+        padding: 3%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 10vh;
+        background-color: var.$primary;
+        color: var.$primaryText;
+        text-align: center;
+      
+    }
+
+    .selector {
+        
+        bottom: -19vh;
+        border: 1px solid rgba(0, 0, 0, 0.521);
+        text-align: center;
+        width: 100%;
+        height: auto;
+        max-height: 40vh;
+        background-color: white;
+        color: var.$secondaryText;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 1000;
+        overflow-y: scroll;
+        .item {
+            padding: 2%;
+        }
+        .item:hover {
+            background-color: rgb(238, 235, 235);
+        }
+    }
 
     .confirmFinal {
+        margin: auto;
         margin-top: 3%;
         margin-left: auto;
         margin-right: auto;
-        height: 6vh;
+        height: 9vh;
         background-color: var.$primary;
         color: var.$primaryText;
         font-size: 3vw;
         border: none;
-        width: 40%;
+        width: 100%;
+    }
+
+    .confirmFinal:disabled {
+        background-color: var.$buttonDisabledPrimary;
     }
 }
 
@@ -70,7 +99,6 @@
         font-size: 6vw;
         border: none;
         width: 80%;
-     
     }
 
     .confirmButton:disabled {
@@ -79,7 +107,7 @@
 }
 
 .errorContainer {
-    border: 1px solid #F8A300;
+    border: 1px solid #f8a300;
     color: red;
     text-align: center;
     background-color: #ecc891;
@@ -90,18 +118,10 @@
     margin-right: auto;
     p {
         font-size: 3vw;
-        
     }
 }
 
-
-
-
-
-
 @media (min-width: 600px) {
-
-  
     .StepWrapper {
         height: 80vh;
         width: 100vw;
@@ -111,18 +131,73 @@
         padding-left: 2%;
         padding-right: 2%;
         justify-content: center;
+
+
+    .selectorWrapper {
+        margin: auto;
+        width: 70vw;
+    }
+
+
+    .selected {
+        padding: 3%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 10vh;
+        background-color: var.$primary;
+        color: var.$primaryText;
+        text-align: center;
+      
+    }
+
+    .selector {
+        
+        bottom: -19vh;
+        border: 1px solid rgba(0, 0, 0, 0.521);
+        text-align: center;
+        width: 100%;
+        height: auto;
+        max-height: 40vh;
+        background-color: white;
+        color: var.$secondaryText;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 1000;
+        overflow-y: scroll;
+        .item {
+            padding: 2%;
+        }
+        .item:hover {
+            background-color: rgb(238, 235, 235);
+        }
+    }
+
+    .confirmFinal {
+        margin: auto;
+        margin-top: 3%;
+        margin-left: auto;
+        margin-right: auto;
+        height: 9vh;
+        background-color: var.$primary;
+        color: var.$primaryText;
+        font-size: 3vw;
+        border: none;
+        width: 100%;
+    }
     }
     .inputsWrapper {
-       width: 50vw;
-       height: 40%;
-       display: flex;
-       justify-content: center;
-       flex-direction: column;
-       
+        width: 50vw;
+        height: 40%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
     }
     .inputs {
         margin-top: 5vh;
-        
+
         margin: none;
         flex-wrap: nowrap;
         flex-direction: column;
@@ -138,12 +213,12 @@
             text-align: center;
         }
     }
-    
+
     .buttonWrapper {
         padding-top: 4%;
         display: flex;
         justify-content: center;
-    
+
         .confirmButton {
             margin: auto;
             height: 8vh;
@@ -156,25 +231,20 @@
     }
     .errorContainer {
         margin: 0;
-        border: 1px solid #F8A300;
+        border: 1px solid #f8a300;
         color: red;
         text-align: center;
         background-color: #ecc891;
         height: fit-content;
         width: 50%;
-       
+
         p {
             font-size: 1.6vw;
-            
         }
     }
 }
 
-
-
 @media (min-width: 1500px) {
-
-  
     .StepWrapper {
         height: 80vh;
         width: 100vw;
@@ -184,20 +254,74 @@
         padding-left: 2%;
         padding-right: 2%;
         justify-content: center;
+
+    .selectorWrapper {
+        margin: auto;
+        width: 50vw;
+    }
+
+
+    .selected {
+        padding: 3%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 10vh;
+        background-color: var.$primary;
+        color: var.$primaryText;
+        text-align: center;
+      
+    }
+
+    .selector {
+        
+        bottom: -19vh;
+        border: 1px solid rgba(0, 0, 0, 0.521);
+        text-align: center;
+        width: 100%;
+        height: auto;
+        max-height: 40vh;
+        background-color: white;
+        color: var.$secondaryText;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 1000;
+        overflow-y: scroll;
+        .item {
+            padding: 2%;
+        }
+        .item:hover {
+            background-color: rgb(238, 235, 235);
+        }
+    }
+
+    .confirmFinal {
+        margin: auto;
+        margin-top: 3%;
+        margin-left: auto;
+        margin-right: auto;
+        height: 9vh;
+        background-color: var.$primary;
+        color: var.$primaryText;
+        font-size: 3vw;
+        border: none;
+        width: 100%;
+    }
     }
     .inputsWrapper {
-       width: 50vw;
-       height: 40%;
-       display: flex;
-       justify-content: center;
-       flex-direction: column;
-       
+        width: 50vw;
+        height: 40%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
     }
     .inputs {
         margin-top: 5vh;
-       display: flex;
-       flex-wrap: wrap;
-       flex-direction: row;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
         width: 100%;
         input {
             border: none;
@@ -208,12 +332,12 @@
             text-align: center;
         }
     }
-    
+
     .buttonWrapper {
         padding-top: 4%;
         display: flex;
         justify-content: center;
-    
+
         .confirmButton {
             margin: auto;
             height: 7vh;
@@ -226,16 +350,15 @@
     }
     .errorContainer {
         margin: 0;
-        border: 1px solid #F8A300;
+        border: 1px solid #f8a300;
         color: red;
         text-align: center;
         background-color: #ecc891;
         height: fit-content;
         width: 50%;
-       
+
         p {
             font-size: 2.5vw;
-            
         }
     }
 }
