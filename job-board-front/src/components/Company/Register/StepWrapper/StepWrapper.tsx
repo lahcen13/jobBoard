@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './StepWrapper.module.scss';
 import inputWatcher from './inputWatcher'
 import axios from 'axios';
+import Notification from '../../../Notification/Notification';
 const StepWrapper = () => {
 
   const [inputData, setData] = useState<company>({
@@ -23,9 +24,19 @@ const StepWrapper = () => {
   const [selectShown, setShown] = useState<boolean>(true)
   const [step, setStep] = useState(1)
   const [sectors, setSectors] = useState<Array<Object> | null>(null)
+  const [noti, setNoti] = useState<notif>({
+    bg: "success",
+    header: "Oops",
+    body: "Please, fill all the fields",
+    isShown: false,
+    time: 4000
+  })
 
   useEffect(() => {
-    axios.get('http://localhost:5000/sectors').then(res => setSectors(res.data))
+    if (!sectors) {
+
+      axios.get('http://localhost:5000/sectors').then(res => setSectors(res.data))
+    }
   })
 
   const handleSelect = (d: any) => {
@@ -121,10 +132,32 @@ const StepWrapper = () => {
         contactName: inputData.cContactName
       }).then(res => {
         console.log('successfully registered')
-      }).catch(err => console.error(err))
+      }).catch(err => {
+        if (err.response.data === 'email_exist') {
+          setNoti({
+            bg: "danger",
+            header: "Error",
+            body: "The email you specified is already used",
+            isShown: true,
+            time: 4000
+          })
+          
+        }
+
+        if (err.response.data === 'siret_exist') {
+          setNoti({
+            bg: "danger",
+            header: "Error",
+            body: "The siret you specified is already used",
+            isShown: true,
+            time: 4000
+          })
+          
+        }
+      })
     }
     return <>
-
+      <Notification changeState={() => setNoti({ ...noti, isShown: false })} {...noti} />
       <div className={styles.selectorWrapper}>
         <div onClick={() => setShown(true)} className={styles.selected}>
           <p>{selected.name}</p>
@@ -185,4 +218,6 @@ interface company {
   cConfirmPassword: string,
   cContactName: string
 }
+
+interface notif { bg: string, header: string, body: string, isShown: boolean, time: number }
 export default StepWrapper;
