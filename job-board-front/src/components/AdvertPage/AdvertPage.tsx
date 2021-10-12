@@ -34,6 +34,7 @@ const AdvertPage = () => {
         .then(res => {
           if (res.data.length > 0) {
             console.log(res.data)
+            setSelected(res.data[0])
             setData(res.data)
           }
         }).catch(err => console.error(err))
@@ -49,8 +50,7 @@ const AdvertPage = () => {
 
 
   const onValid = (data: popupData) => {
-
-
+    
     const header = {
       headers: {
         'content-type': 'application/json',
@@ -58,6 +58,7 @@ const AdvertPage = () => {
       }
     }
     if (selected) {
+      console.log('VALIDA')
       axios.post('http://localhost:5000/applied', {
         firstName: data.firstName,
         lastName: data.lastName,

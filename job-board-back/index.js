@@ -129,11 +129,32 @@ app.put('/adverts/update', (req, res) => {
     })
 })
 
+app.post('/company/login', (req, response) => {
+    if (!req.body || !req.body.password || !req.body.email) {
+        response.status(406).send('field_missing')
+    }
+    
+    db.query(`SELECT * FROM companies WHERE email="${req.body.email}"`, (err, res) => {
+        if (res.length > 0) {
+            bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
+                if (result) {
+                    var token = sign('company', res[0].id, res[0].email)
+                    response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
+                } else {
+                    response.status(401).send("wrong_password")
+                }
+            });
+        } else {
+            response.status(401).send("wrong_email")
+        }
+    })
+})
 
 app.post('/login', (req, response) => {
     if (!req.body || !req.body.password || !req.body.email) {
         response.status(406).send('field_missing')
     }
+
     db.query(`SELECT * FROM people WHERE email="${req.body.email}"`, (err, res) => {
         if (res.length > 0) {
             bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
