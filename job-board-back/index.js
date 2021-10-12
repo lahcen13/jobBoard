@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
 const token = require('./middleware/handleToken')
-const { sign, check, getToken } = require('./functions/token')
+const { sign, check, getToken, getPayload } = require('./functions/token')
 const { get } = require('./functions/user')
 
 //middleware
@@ -24,6 +24,19 @@ db.connect((err) => {
     console.log('Database connected')
 })
 
+app.get('/admin/select', (req, res) => {
+    if (req.query.table == 'advertisements') {
+        sql = "id, title, published, salary, date, description, activity"
+    } else if (req.query.table == 'companies') {
+        sql = "id, name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities"
+    } else {
+        sql = "id, first_name, name, email, phone, city, postal_code,address, gender, birth_date, role,cv, picture"
+    }
+    db.query(`SELECT ${sql} FROM ${req.query.table} where id='${req.query.id}' `, (error, response) => {
+        if (error) throw error
+        res.status(200).send(response)
+    })
+})
 
 app.get('/admin/user', (req, res) => {
     if (req.query.list) {
@@ -31,11 +44,13 @@ app.get('/admin/user', (req, res) => {
     } else {
         sql = 'count(*) as `count_people`'
     }
-
     db.query(`SELECT ${sql} FROM people `, (error, response) => {
         if (error) throw error
         res.status(200).send(response)
     })
+})
+
+app.post('/admin/update/user', (req, res) => {
 
 })
 
@@ -50,6 +65,8 @@ app.get('/admin/adverts', (req, res) => {
         res.status(200).send(response)
     })
 })
+
+
 app.get('/admin/companies', (req, res) => {
     if (req.query.list) {
         sql = 'id, name as `full_name` '
@@ -70,10 +87,6 @@ app.get('/admin/delete', (req, res) => {
     })
 })
 
-
-
-
-
 app.get('/company', (req, res) => {
     if (!req.query.id) return res.status(406).send('id_not_provided')
 
@@ -82,13 +95,40 @@ app.get('/company', (req, res) => {
         res.status(200).send({ ...response[0] })
     })
 })
-app.get('/adverts', (req, response) => {
 
+app.put('/company/update', (req, res) => {
+    const { name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities } = req.body;
+    const prepare = [name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities]
+    db.query(`select email from  companies where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, emails) => {
+        if (err) throw err
+        if (emails.length == 0) {
+            const queryString = `UPDATE companies SET name = ? , contact_name = ? , number_employes = ? , website = ? , email = ? , phone = ? , city = ? , postal_code = ?, address = ?, activities = ?  WHERE id ='${req.body.id}'`
+            db.query(queryString, prepare, (error, results) => {
+                if (error) throw error
+                res.status(200).send("success");
+            })
+        } else {
+            res.status(406).send('email_exist');
+        }
+    })
+})
+
+app.get('/adverts', (req, response) => {
     db.query('SELECT * FROM advertisements where published=1 order by date desc', (err, res) => {
         if (err) throw err
         response.status(200).send(res)
     })
 })
+app.put('/adverts/update', (req, res) => {
+    const { title, published, salary, date, description, activity } = req.body;
+    const prepare = [title, published, salary, date, description, activity]
+    const queryString = `UPDATE advertisements SET title = ? , published = ? , salary = ? , date = ? , description = ? , activity = ? WHERE id ='${req.body.id}'`
+    db.query(queryString, prepare, (error, results) => {
+        if (error) throw error
+        res.status(200).send("success");
+    })
+})
+
 
 app.post('/login', (req, response) => {
     if (!req.body || !req.body.password || !req.body.email) {
@@ -114,11 +154,6 @@ app.post('/applied', (req, res) => {
     if (!req.body.firstName || !req.body.lastName || !req.body.motivation || !req.body.advertID || !req.body.file || !req.body.email || !req.body.phone) {
         return res.status(406).send('missing_field')
     }
-
-
-
-
-
     db.query('SELECT COUNT(*), id, password_ FROM people WHERE email = ?', [req.body.email], (err, result) => {
         if (err) {
             console.error(err)
@@ -127,15 +162,10 @@ app.post('/applied', (req, res) => {
             return res.status(401).send('need_connexion')
 
         }
-
         if (check(getToken(req)) !== 'no_permission') {
             if (get(req).email !== req.body.email) return res.status(401).send('wrong_email')
         }
-
-
-
         const id = result[0].id
-
         const apply = (id) => {
             return db.query('SELECT COUNT(*) FROM applied WHERE people_id = ? AND advertisement_id = ?', [id, req.body.advertID], (err, resultSelectApply) => {
                 if (err) throw err
@@ -216,34 +246,20 @@ app.delete('/user', (req, res) => {
 
 
 app.put('/user', (req, res) => {
-    const {
-        id,
-        name,
-        first_name,
-        email,
-        address,
-        postal_code,
-        city,
-        phone,
-        gender
-    } = req.body;
-    const prepare = [
-        name,
-        first_name,
-        email,
-        address,
-        postal_code,
-        city,
-        phone,
-        gender
-    ]
+    const { birth_date, name, first_name, email, address, postal_code, city, phone, gender, role, cv, picture, id } = req.body;
+    const prepare = [birth_date, name, first_name, email, address, postal_code, city, phone, gender, role, cv, picture]
+    var Role = getPayload(getToken(req)).role;
     db.query(`select email from  people where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, userList) => {
         if (err) throw err
         if (userList.length == 0) {
-            const queryString = `UPDATE people SET name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? WHERE email ='${req.body.email}'`
+            if (Role == "user") {
+                var queryString = `UPDATE people SET birth_date= ? , name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? WHERE email ='${req.body.email}'`;
+            } else {
+                var queryString = `UPDATE people SET birth_date= ? ,name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? , role = ?, cv= ? , picture= ?  WHERE id ='${req.body.id}'`;
+            }
             db.query(queryString, prepare, (error, results) => {
                 if (error) throw error
-                res.status(200).send("success");
+                res.status(200).send("role changed");
             })
         } else {
             res.status(406).send('email_exist');
@@ -251,7 +267,7 @@ app.put('/user', (req, res) => {
     })
 })
 
-app.post('/register', (req, response) => {
+app.post('/register/user', (req, response) => {
     if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
         return response.status(406).send('field_missing')
     }
@@ -270,6 +286,29 @@ app.post('/register', (req, response) => {
         }
     })
 })
+
+
+app.post('/register/company', (req, response) => {
+    if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.email) {
+        return response.status(406).send('field_missing')
+    }
+    db.query(`select email from companies where email="${req.body.email}"`, (err, res) => {
+        if (err) throw err
+        if (res.length == 0) {
+            const myPlaintextPassword = req.body.password;
+            bcrypt.hash(myPlaintextPassword, saltRounds, function (err, hash) {
+                db.query(`insert into companies (name, password_, email, contact_name, activities, address, postal_code, city, siret, number_employes, website, phone)  values ("${req.body.name}","${hash}","${req.body.email}" ,"${req.body.contactName}" ,"${req.body.activities}" , "${req.body.address}" , "${req.body.postalCode}" ,"${req.body.city}" ,"${req.body.siret}","${req.body.siret}","${req.body.numberEmployes}","${req.body.website}","${req.body.phone}" )`, (err, res) => {
+                    if (err) throw err
+                    response.status(200).send('success');
+                })
+            });
+        } else {
+            response.status(406).send('email_exist');
+        }
+    })
+})
+
+
 
 
 
@@ -301,4 +340,10 @@ app.get('/filter', (req, response) => {
 
 app.listen(PORT, () => {
     console.log('App listening on PORT: ' + PORT);
+})
+app.get('/sector', (req, response) => {
+    db.query('SELECT * FROM sector ', (err, res) => {
+        if (err) throw err
+        response.status(200).send(res)
+    })
 })

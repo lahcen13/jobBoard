@@ -1,21 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import styles from './SelectedCompanies.module.css';
 import Form from 'react-bootstrap/Form';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
+import axios from "axios";
+import getUserToken from '../../../../../functions/getUserToken';
+
 
 const SelectedCompanies = (props: any) => {
-  const [data, setData] = useState({ id: "", name: "", contact_name: "", number_employes: "", website: "", email: "", phone: "", city: "", postal_code: "", address: "", activities: "" });
-  console.log(props.id)
+  const [data, setData] = useState({ name: "", contact_name: "", number_employes: "", website: "", email: "", phone: "", city: "", postal_code: "", address: "", activities: "", id: "" });
+  const token: string = getUserToken()
+  const [id, setId] = useState<any>(null)
+
+  useEffect(() => {
+    console.log(data)
+    if (id !== props.id) {
+      axios.get(`http://localhost:5000/admin/select?table=companies&id=${props.id}`, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(res => {
+        setId(res.data[0].id)
+        setData(res.data[0]);
+      }).catch(err => console.error(err))
+    }
+  })
+
+  const updateDB = () => {
+    axios.put('http://localhost:5000/company/update', data, {
+      headers: {
+        'content-type': 'application/json',
+        "authorization": "Bearer " + getUserToken()
+      }
+    }).then(res => {
+      console.log("success")
+    }).catch(err => {
+      console.log("error ")
+    })
+  }
+
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data)
   }
-  return <div className={styles.BoxC}>
+  
+  return data ? (<div className={styles.BoxC}>
     <div className="row">
       <div className="col-sm-12 col-md-6">
         <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="name">
           <Form.Label>Name</Form.Label>
-          <Form.Control name='name' type="text" value={data.name} />
+          <Form.Control name='name' type="text" value={data.name ? data.name : ""} />
         </Form.Group>
         {/* <div>{showAlertlastName && <Alert class=" bg-warning" text="Incorrect Lastname" />}</div> */}
       </div>
@@ -74,16 +108,19 @@ const SelectedCompanies = (props: any) => {
         </Form.Group>
       </div>
       <div className="col-sm-12 col-md-12">
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label>Activites</Form.Label>
-          <Form.Control as="textarea" rows={3} name="activities" value={data.activities} />
+          <Form.Control as="textarea" rows={3} name="activities" value={data.activities ? data.activities : ""} />
         </Form.Group>
       </div>
+      
       <div className="col-sm-5 col-md-5">
-        <Button className={styles.submit}>Submit</Button>
+        <Button onClick={() => updateDB()} className={styles.submit}>Submit</Button>
       </div>
     </div>
-  </div>
+  </div>) : <> <Spinner animation="border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </Spinner> </>;
 };
 
 export default SelectedCompanies;

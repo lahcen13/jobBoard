@@ -4,11 +4,9 @@ import { Person } from "react-bootstrap-icons";
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { controleEmail, controleName } from '../../functions/FormControle.js';
-
 import axios from 'axios';
 import Alert from '../Alert/Alert';
 import getUserToken from '../../functions/getUserToken';
-
 import { getUser } from '../../functions/session'
 
 
