@@ -13,7 +13,7 @@ const { get } = require('./functions/user')
 
 //middleware
 app.use(cors())
-app.use((req, res, next) => token(req, res, next, ['/login', '/register', '/adverts', '/company', '/applied']))
+app.use((req, res, next) => token(req, res, next, ['/login', '/register/user', '/register/user', '/adverts', '/company', '/applied']))
 // app.use((req, res, next) => handleUser(req, res, next, db, ['/login', '/register']))
 app.use(express.json())
 //-------
@@ -338,12 +338,14 @@ app.get('/filter', (req, response) => {
     })
 })
 
-app.listen(PORT, () => {
-    console.log('App listening on PORT: ' + PORT);
-})
-app.get('/sector', (req, response) => {
+app.get('/sectors', (req, response) => {
     db.query('SELECT * FROM sector ', (err, res) => {
         if (err) throw err
         response.status(200).send(res)
     })
 })
+
+app.listen(PORT, () => {
+    console.log('App listening on PORT: ' + PORT);
+})
+

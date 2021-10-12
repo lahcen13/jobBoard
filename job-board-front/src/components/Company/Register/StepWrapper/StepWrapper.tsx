@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './StepWrapper.module.scss';
 import inputWatcher from './inputWatcher'
+import axios from 'axios';
 const StepWrapper = () => {
 
   const [inputData, setData] = useState<company>({
@@ -24,7 +25,7 @@ const StepWrapper = () => {
   const [sectors, setSectors] = useState(null)
 
   useEffect(() => { 
-
+    axios.get('http://localhost:5000/sectors').then(res => console.log(res))
   })
 
   const handleSelect = (d: any) => {
