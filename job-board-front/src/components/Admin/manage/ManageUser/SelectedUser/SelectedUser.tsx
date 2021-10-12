@@ -2,11 +2,58 @@ import React, { useState, useEffect } from 'react';
 import styles from './SelectedUser.module.css';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
+import axios from "axios";
+import getUserToken from '../../../../../functions/getUserToken';
 
 const SelectedUser = (props: any) => {
 
   const [data, setData] = useState({ id: "", first_name: "", name: "", email: "", phone: "", city: "", postal_code: "", address: "", gender: "", birth_date: "", role: "", cv: "", picture: "" });
+  const token: string = getUserToken()
+  const [id, setId] = useState<any>(null)
+
   console.log(props.id)
+
+  useEffect(() => {
+    console.log(data)
+    if (id !== props.id) {
+      axios.get(`http://localhost:5000/admin/select?table=people&id=${props.id}`, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(res => {
+        setData(res.data[0]);
+        setId(res.data[0].id)
+        var date = new Date(res.data[0].birth_date)
+        var datevalues = [
+          date.getDate(),
+          date.getMonth() + 1,
+          date.getFullYear()
+        ];
+
+
+        var month = datevalues[1] >= 10 ? datevalues[1] : '0' + datevalues[1];
+        var jour = datevalues[0] >= 10 ? datevalues[0] : '0' + datevalues[0];
+        console.log('date est :' + datevalues[2] + '-' + month + '-' + jour);
+        setData({ ...res.data[0], birth_date: datevalues[2] + '-' + month + '-' + jour })
+
+      }).catch(err => console.error(err))
+    }
+  })
+
+  const updateDB = () => {
+    axios.put('http://localhost:5000/user', data, {
+      headers: {
+        'content-type': 'application/json',
+        "authorization": "Bearer " + getUserToken()
+      }
+    }).then(res => {
+      console.log("success")
+    }).catch(err => {
+      console.log("error ")
+    })
+  }
+
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data)
@@ -63,7 +110,7 @@ const SelectedUser = (props: any) => {
       <div className="col-sm-12 col-md-12">
         <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="postalCode">
           <Form.Label>Birth date</Form.Label>
-          <Form.Control name='birth_date' type="text" value={data.birth_date ? data.birth_date : ""} />
+          <Form.Control name='birth_date' type="date" value={data.birth_date ? data.birth_date : ""} />
         </Form.Group>
       </div>
       <div className="col-sm-12 col-md-6">
@@ -97,7 +144,7 @@ const SelectedUser = (props: any) => {
         </Form.Group>
       </div>
       <div className="col-sm-5 col-md-5">
-        <Button className={styles.submit}>Submit</Button>
+        <Button className={styles.submit} onClick={() => updateDB()} >Submit</Button>
       </div>
     </div>
   </div>
