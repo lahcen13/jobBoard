@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './StepWrapper.module.scss';
 import inputWatcher from './inputWatcher'
+import axios from 'axios';
+import Notification from '../../../Notification/Notification';
 const StepWrapper = () => {
 
   const [inputData, setData] = useState<company>({
@@ -18,16 +20,27 @@ const StepWrapper = () => {
     cContactName: "",
   })
 
-  const [selected, setSelected] = useState<select>({ id: null, value: "Select your activity sector" })
+  const [selected, setSelected] = useState<select>({ id: null, name: "Select your activity sector" })
   const [selectShown, setShown] = useState<boolean>(true)
   const [step, setStep] = useState(1)
-  const [sectors, setSectors] = useState(null)
+  const [sectors, setSectors] = useState<Array<Object> | null>(null)
+  const [noti, setNoti] = useState<notif>({
+    bg: "success",
+    header: "Oops",
+    body: "Please, fill all the fields",
+    isShown: false,
+    time: 4000
+  })
 
-  useEffect(() => { 
+  useEffect(() => {
+    if (!sectors) {
 
+      axios.get('http://localhost:5000/sectors').then(res => setSectors(res.data))
+    }
   })
 
   const handleSelect = (d: any) => {
+    console.log(d)
     setShown(false)
     setSelected(d)
   }
@@ -104,26 +117,61 @@ const StepWrapper = () => {
 
     const submit = () => {
       if (!selected.id) return
+      axios.post('http://localhost:5000/register/company', {
+        name: inputData.cName,
+        sector: selected.id,
+        password: inputData.cPassword,
+        email: inputData.cEmail,
+        address: inputData.cAddress,
+        postal_code: inputData.cPostal,
+        number_employes: inputData.cNumOfEmployees,
+        phone: inputData.cPhone,
+        website: inputData.cWebsite,
+        city: inputData.cCity,
+        siret: inputData.cSiret,
+        contactName: inputData.cContactName
+      }).then(res => {
+        console.log('successfully registered')
+      }).catch(err => {
+        if (err.response.data === 'email_exist') {
+          setNoti({
+            bg: "danger",
+            header: "Error",
+            body: "The email you specified is already used",
+            isShown: true,
+            time: 4000
+          })
+          
+        }
+
+        if (err.response.data === 'siret_exist') {
+          setNoti({
+            bg: "danger",
+            header: "Error",
+            body: "The siret you specified is already used",
+            isShown: true,
+            time: 4000
+          })
+          
+        }
+      })
     }
     return <>
-
+      <Notification changeState={() => setNoti({ ...noti, isShown: false })} {...noti} />
       <div className={styles.selectorWrapper}>
         <div onClick={() => setShown(true)} className={styles.selected}>
-          <p>{selected.value}</p>
+          <p>{selected.name}</p>
 
         </div>
         {selectShown && <div className={styles.selector}>
-          <span onClick={() => handleSelect({ id: 1, value: "Wood cutting" })} className={styles.item}>Wood cutter</span>
-          <span onClick={() => handleSelect({ id: 1, value: "High tech" })} className={styles.item}>High tech</span>
-          <span onClick={() => handleSelect({ id: 1, value: "chilling" })} className={styles.item}>chilling</span>
-          <span onClick={() => handleSelect({ id: 1, value: "cooking" })} className={styles.item}>cooking</span>
-          <span onClick={() => handleSelect({ id: 1, value: "selling" })} className={styles.item}>Selling</span>
+          {sectors && sectors.map((el: any) => <span onClick={() => handleSelect(el)} className={styles.item}>{el.name}</span>)}
+
 
         </div>}
       </div>
 
 
-      <input onClick={() => submit()} disabled={selected.id ? false: true} className={styles.confirmFinal} type='button' value="Let's go !" />
+      <input onClick={() => submit()} disabled={selected.id ? false : true} className={styles.confirmFinal} type='button' value="Let's go !" />
     </>
   }
 
@@ -147,14 +195,14 @@ const StepWrapper = () => {
   }
   return <div className={styles.StepWrapper}>
     <div className={styles.Form}>
-      {last()}
+      {handleStep()}
     </div>
   </div>
 };
 
 interface select {
   id: number | null,
-  value: string
+  name: string
 }
 interface company {
   cName: string,
@@ -170,4 +218,6 @@ interface company {
   cConfirmPassword: string,
   cContactName: string
 }
+
+interface notif { bg: string, header: string, body: string, isShown: boolean, time: number }
 export default StepWrapper;

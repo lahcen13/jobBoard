@@ -11,6 +11,7 @@ const ManageAdverts = () => {
   })
   return <div className={styles.ParentsB}>
     <List list={"adverts"} id={(data: any) => setIdAdvert(data)}></List>
+    <span className={styles.gap}></span>
     <SelectedAdverts id={IdAdvert}></SelectedAdverts>
   </div>
 };
