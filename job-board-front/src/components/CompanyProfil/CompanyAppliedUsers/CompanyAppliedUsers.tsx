@@ -30,10 +30,10 @@ const CompanyAppliedUsers = (props: any) => {
   return <>
     <div className={"col-sm-12 " + styles.closbutton}><CloseButton onClick={() => onClick()} /> </div>
     <div className={styles.CompanyAppliedUsers + " rounded " + styles.scroll} >
-      <div className={"row"}>
+      <div className={"row " + styles.flex}>
         <h2> Interessted users :</h2>
         {data && data.map((el: any, i: number) => {
-          return <div className="row">
+          return <div className={"row " + styles.center}>
             <div className={styles.box}>
               <div className="col-sm-12 ">
                 <h4><b>{el.name} {el.first_name}</b></h4>
@@ -44,12 +44,12 @@ const CompanyAppliedUsers = (props: any) => {
                 <p>{el.motivation_people} </p>
                 <br></br>
               </div>
-              <div className={"row justify-content-between " + styles.button}>
-                <div className="col-sm-5 ">
-                  <button type="button" className="btn btn-primary">Download CV</button>
+              <div className={"row justify-content-between " + styles.buttonMargin}>
+                <div className="col-sm-6 ">
+                  <button type="button" className={"btn btn-primary " + styles.btn}>Download CV</button>
                 </div>
-                <div className="col-sm-4 ">
-                  <button type="button" className="btn btn-success">Contact </button>
+                <div className="col-sm-6 ">
+                  <button type="button" className={"btn btn-success " + styles.btn}>Contact </button>
                 </div>
               </div>
             </div>
