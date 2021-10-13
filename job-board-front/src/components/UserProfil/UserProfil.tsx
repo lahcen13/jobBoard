@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styles from './UserProfil.module.css';
 import Navbar from '../Navbar/Navbar';
-
 import UserProfilImage from "../UserProfilImg/UserProfilImg";
 import UserProfilAbout from "../UserProfilAbout/UserProfilAbout";
 import UserProfilApplied from "../UserProfilApplied/UserProfilApplied";

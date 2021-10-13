@@ -145,7 +145,6 @@ const UserProfilAbout = (props: { notif: Function }) => {
           <Button onClick={() => onClick()} className={styles.submit}>Submit</Button>
         </div>
         <div className="col-sm-5 col-md-5">
-
         </div>
       </div>
     </div>
