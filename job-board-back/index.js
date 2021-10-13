@@ -28,7 +28,7 @@ app.get('/admin/select', (req, res) => {
     if (req.query.table == 'advertisements') {
         sql = "id, title, published, salary, date, description, activity"
     } else if (req.query.table == 'companies') {
-        sql = "id, name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities"
+        sql = "id, name, contact_name, number_employes, website, email, phone, city, postal_code, address"
     } else {
         sql = "id, first_name, name, email, phone, city, postal_code,address, gender, birth_date, role,cv, picture"
     }
@@ -94,15 +94,19 @@ app.get('/company', (req, res) => {
 })
 
 app.put('/company/update', (req, res) => {
-    const { siret, name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities, password } = req.body;
-    const prepare = [siret, name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities, password]
+    const { siret, name, contact_name, number_employes, website, email, phone, city, postal_code, address, password_ } = req.body;
+    var prepare = [siret, name, contact_name, number_employes, website, email, phone, city, postal_code, address,]
+
     db.query(`select email from  companies where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, emails) => {
         if (err) throw err
         if (emails.length == 0) {
-            const queryString = `UPDATE companies SET siret = ?,name = ? , contact_name = ? , number_employes = ? , website = ? , email = ? , phone = ? , city = ? , postal_code = ?, address = ?, activities = ?, password_= ?  WHERE id ='${req.body.id}'`
-            db.query(queryString, prepare, (error, results) => {
-                if (error) throw error
-                res.status(200).send("success");
+            bcrypt.hash(req.body.password_, saltRounds, function (err, hash) {
+
+                const queryString = `UPDATE companies SET siret = ?,name = ? , contact_name = ? , number_employes = ? , website = ? , email = ? , phone = ? , city = ? , postal_code = ?, address = ?, password_= '${hash}'  WHERE id ='${req.body.id}'`
+                db.query(queryString, prepare, (error, results) => {
+                    if (error) throw error
+                    res.status(200).send("success");
+                })
             })
         } else {
             res.status(406).send('email_exist');
@@ -119,6 +123,13 @@ app.get('/company/adverts', (req, res) => {
 
 app.get('/company/adverts/delete', (req, res) => {
     db.query(`delete from advertisements where id="${req.query.id}"`, (err, response) => {
+        if (err) throw err
+        res.status(200).send(response);
+    })
+})
+
+app.get('/company/adverts/user', (req, res) => {
+    db.query(`select people.id , people.name, people.first_name, people.cv , applied.motivation_people from applied inner join people on people.id=applied.people_id where advertisement_id="${req.query.id}"`, (err, response) => {
         if (err) throw err
         res.status(200).send(response);
     })
@@ -330,6 +341,7 @@ app.post('/register/company', (req, response) => {
         if (res.length == 0) {
             const myPlaintextPassword = req.body.password;
             bcrypt.hash(myPlaintextPassword, saltRounds, function (err, hash) {
+
                 db.query(`insert into companies (name, password_, email, contact_name, sector, address, postal_code, city, siret, number_employes, website, phone)  values ("${req.body.name}","${hash}","${req.body.email}" ,"${req.body.contactName}" ,"${req.body.sector}" , "${req.body.address}" , "${req.body.postal_code}" ,"${req.body.city}" ,"${req.body.siret}","${req.body.number_employes}","${req.body.website}","${req.body.phone}" )`, (err, res) => {
                     if (err) throw err
                     response.status(200).send('success');

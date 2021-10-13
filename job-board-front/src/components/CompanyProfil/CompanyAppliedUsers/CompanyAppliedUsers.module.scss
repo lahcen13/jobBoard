@@ -1,0 +1,77 @@
+.CompanyAppliedUsers {
+    border-radius: 1%;
+    left:50%;
+    top:53%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    height:70vh;
+    width:50%;
+    background-color: rgb(255, 255, 255);
+    -webkit-box-shadow: -1px 8px 16px -4px #000000; 
+    box-shadow: -1px 8px 16px -4px #000000;
+    padding:3%;
+    
+}
+.box{
+    width:100%;
+    height:fit-content;
+    min-height: 10vh;
+    padding:4%;
+    margin-top:4vh;
+    border-radius: 3px;
+    box-shadow: 0px 0px 4px #555;
+   
+}
+.flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.center{
+    
+}
+.box:hover{
+    box-shadow: 0px 0px 9px #555;
+    
+}
+
+.scroll{
+    overflow-y: scroll;
+}
+
+.buttonMargin{
+    margin-top:3vh;
+}
+.btn{
+    margin-top:1vh;
+   
+}
+
+.closbutton{
+    left:67%;
+    position:absolute;
+    z-index: 300;
+}
+
+
+@media screen and (min-width: 600px) {
+    .CompanyAppliedUsers {
+        width:60%;
+    }
+}
+@media screen and (max-width: 572px)  {
+    .buttonMargin{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn{
+       width:40vw;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .CompanyAppliedUsers {
+        width:  90%;
+    }
+  }

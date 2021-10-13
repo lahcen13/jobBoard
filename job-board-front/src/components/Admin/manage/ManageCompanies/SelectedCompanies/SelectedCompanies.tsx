@@ -7,7 +7,7 @@ import getUserToken from '../../../../../functions/getUserToken';
 
 
 const SelectedCompanies = (props: any) => {
-  const [data, setData] = useState({ name: "", contact_name: "", number_employes: "", website: "", email: "", phone: "", city: "", postal_code: "", address: "", activities: "", id: "" });
+  const [data, setData] = useState({ name: "", contact_name: "", number_employes: "", website: "", email: "", phone: "", city: "", postal_code: "", address: "", id: "" });
   const token: string = getUserToken()
   const [id, setId] = useState<any>(null)
 
@@ -43,7 +43,7 @@ const SelectedCompanies = (props: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data)
   }
-  
+
   return data ? (<div className={styles.BoxC}>
     <div className="row">
       <div className="col-sm-12 col-md-6">
@@ -107,13 +107,6 @@ const SelectedCompanies = (props: any) => {
           <Form.Control name='address' type="text" value={data.address ? data.address : ""} />
         </Form.Group>
       </div>
-      <div className="col-sm-12 col-md-12">
-        <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="exampleForm.ControlTextarea1">
-          <Form.Label>Activites</Form.Label>
-          <Form.Control as="textarea" rows={3} name="activities" value={data.activities ? data.activities : ""} />
-        </Form.Group>
-      </div>
-      
       <div className="col-sm-5 col-md-5">
         <Button onClick={() => updateDB()} className={styles.submit}>Submit</Button>
       </div>

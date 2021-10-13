@@ -18,9 +18,7 @@ const SelectedAdverts = (props: any) => {
 
   useEffect(() => {
     console.log(data)
-
     if (id !== props.id) {
-
       axios.get(`http://localhost:5000/admin/select?table=advertisements&id=${props.id}`, {
         headers: {
           'Access-Control-Allow-Origin': '*',
@@ -46,7 +44,6 @@ const SelectedAdverts = (props: any) => {
   }, [props.id])
 
   const updateDB = () => {
-
     axios.put('http://localhost:5000/adverts/update', data, {
       headers: {
         'content-type': 'application/json',
@@ -97,13 +94,6 @@ const SelectedAdverts = (props: any) => {
         <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="contact_name">
           <Form.Label>Description</Form.Label>
           <Form.Control as="textarea" rows={3} name='description' value={data.description} />
-        </Form.Group>
-        {/* <div>{showAlertlastName && <Alert class=" bg-warning" text="Incorrect Lastname" />}</div> */}
-      </div>
-      <div className="col-sm-12 col-md-12">
-        <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="contact_name">
-          <Form.Label>Activities</Form.Label>
-          <Form.Control as="textarea" rows={2} name='activity' type="text" value={data.activity} />
         </Form.Group>
         {/* <div>{showAlertlastName && <Alert class=" bg-warning" text="Incorrect Lastname" />}</div> */}
       </div>
