@@ -28,6 +28,32 @@ const Middleware = () => {
     // authGuard()
   })
 
+
+  const admin = () => {
+    const token = getUserToken()
+    if (token) {
+      const role = jwt(token).role
+      if (role === 'admin') {
+        return (
+          <>
+            <Route exact path="/admin">
+              <Admin />
+            </Route>
+            <Route path="/admin/users">
+              <ManageUser />
+            </Route>
+            <Route path="/admin/adverts">
+              <ManageAdverts />
+            </Route>
+            <Route path="/admin/companies">
+              <ManageCompanies />
+            </Route>
+          </>
+        )
+      }
+    }
+  }
+
   return <React.StrictMode>
     {authGuard()}
     <Router>
@@ -48,21 +74,7 @@ const Middleware = () => {
       <Route path="/userProfil">
         <UserProfil />
       </Route>
-      {console.log(jwt(getUserToken()).role)}
-      {jwt(getUserToken()).role === 'admin' && <><Route exact path="/admin">
-        <Admin />
-      </Route>
-      <Route path="/admin/users">
-        <ManageUser />
-      </Route>
-      <Route path="/admin/adverts">
-        <ManageAdverts />
-      </Route>
-      <Route path="/admin/companies">
-        <ManageCompanies />
-      </Route>
-</>
-      }
+      {admin()}
       <Route path="/company/register">
         <CompanyRegister />
       </Route>
