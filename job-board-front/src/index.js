@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Visitorpage from './components/Visitor-page/Visitor-page';
 import AdvertPage from './components/AdvertPage/AdvertPage.tsx'
 import UserProfil from './components/UserProfil/UserProfil';
+import CompanyProfil from './components/CompanyProfil/CompanyProfil';
 import Register from './components/Register/Register';
 import Admin from './components/Admin/Admin';
 import CompanyRegister from './components/Company/Register/Register.tsx'
@@ -41,6 +42,9 @@ const Middleware = () => {
 
       <Route path="/userProfil">
         <UserProfil />
+      </Route>
+      <Route path="/companyProfil">
+        <CompanyProfil />
       </Route>
       <Route path="/admin">
         <Admin />

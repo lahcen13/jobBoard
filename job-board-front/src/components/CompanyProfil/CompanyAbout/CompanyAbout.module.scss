@@ -1,0 +1,8 @@
+@use "src/var.module" as var;
+.box {
+    height:70vh;
+    overflow: auto;
+    background-color: white;
+    margin-bottom:10vh;
+    padding:5%;
+}
