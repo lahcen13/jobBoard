@@ -13,10 +13,7 @@ import { getUser } from '../../functions/session'
 
 const UserProfilAbout = (props: { notif: Function }) => {
   const [data, setData] = useState({ first_name: "", name: "", email: "", phone: "", city: "", postal_code: "", address: "", gender: "", id: getUser().id });
-  // const [showAlertName, setShowAlertName] = useState(false);
-  // const [showAlertlastName, setShowAlertlastName] = useState(false);
-  // const [showAlertEmail, setShowAlertEmail] = useState(false);
-  // const [ShowAlertCity, setShowAlertCity] = useState(false);
+
   const [email, setEmail] = useState(getUser().email);
   const [showAlertMailExist, setShowAlertMailExist] = useState(false);
 
