@@ -8,6 +8,7 @@ const ManageCompanies = () => {
 
   return <div className={styles.ParentsB}>
     <List list={"companies"} id={(data: any) => setIdCompanie(data)}></List>
+    <span className={styles.gap}></span>
     <SelectedCompanies id={IdCompanie}></SelectedCompanies>
   </div>
 };

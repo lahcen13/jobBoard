@@ -56,18 +56,21 @@ const Statistic = (props: any) => {
       <h3 className={styles.h3} > Users</h3>
       <h1 className={styles.h1}> {data.count_people}  <People /></h1>
       <Button onClick={() => props.render('user')} className={styles.Button} > Manage </Button>
+      <Button onClick={() => window.location.href = '/admin/users'} className={styles.ButtonSmall} > Manage </Button>
     </div>
 
     <div className={styles.box}>
       <h3 className={styles.h3} > Adverts </h3>
       <h1 className={styles.h1}>{data.count_adverts}  <PencilSquare /> </h1>
       <Button onClick={() => props.render('adverts')} className={styles.Button} > Manage </Button>
+      <Button onClick={() => window.location.href = '/admin/adverts'} className={styles.ButtonSmall} > Manage </Button>
     </div>
 
     <div className={styles.box}>
       <h3 className={styles.h3} > Companies</h3>
       <h1 className={styles.h1}> {data.count_companies}  <Building /></h1>
       <Button onClick={() => props.render('companies')} className={styles.Button} > Manage </Button>
+      <Button onClick={() => window.location.href = '/admin/companies'} className={styles.ButtonSmall} > Manage </Button>
     </div>
   </div>
 };
