@@ -12,7 +12,7 @@ import { getUser } from '../../../functions/session'
 
 
 const CompanyAbout = (props: { notif: Function }) => {
-  const [data, setData] = useState({ siret: "", password_: "", name: "", contact_name: "", number_employes: "", website: "", email: "", phone: "", city: "", postal_code: "", address: "", activities: "" });
+  const [data, setData] = useState({ id: "", siret: "", password_: "", name: "", contact_name: "", number_employes: "", website: "", email: "", phone: "", city: "", postal_code: "", address: "" });
   // const [showAlertName, setShowAlertName] = useState(false);
   // const [showAlertlastName, setShowAlertlastName] = useState(false);
   // const [showAlertEmail, setShowAlertEmail] = useState(false);
@@ -24,17 +24,16 @@ const CompanyAbout = (props: { notif: Function }) => {
   const token: string = getUserToken()
 
   useEffect(() => {
-    if (!data.siret) {
+    if (!data.id) {
       axios.get('http://localhost:5000/company?id=1', {
         headers: {
           'content-type': 'application/json',
           "authorization": "Bearer " + getUserToken()
         }
       }).then(res => {
-        console.log("suuuuuuccccessssssssss")
+        console.log(res.data)
         setData(res.data)
       }).catch(err => {
-
       })
     }
   })
@@ -95,7 +94,7 @@ const CompanyAbout = (props: { notif: Function }) => {
           <div className="col-sm-12 col-md-6">
             <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="name">
               <Form.Label>password</Form.Label>
-              <Form.Control name='password' type="password" value={data.password_} />
+              <Form.Control name='password_' type="password" value={data.password_} />
             </Form.Group>
             {/* <div>{showAlertlastName && <Alert class=" bg-warning" text="Incorrect Lastname" />}</div> */}
           </div>
@@ -153,12 +152,7 @@ const CompanyAbout = (props: { notif: Function }) => {
               <Form.Control name='address' type="text" value={data.address ? data.address : ""} />
             </Form.Group>
           </div>
-          <div className="col-sm-12 col-md-12">
-            <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Activites</Form.Label>
-              <Form.Control as="textarea" rows={3} name="activities" value={data.activities ? data.activities : ""} />
-            </Form.Group>
-          </div>
+
 
           <div className="col-sm-5 col-md-5">
             <Button onClick={() => onClick()} className={styles.submit}>Submit</Button>
