@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import AdvertPage from '../AdvertPage/AdvertPage';
+import Footer from '../Footer/Footer'
 
 const Visitorpage = () => (
 

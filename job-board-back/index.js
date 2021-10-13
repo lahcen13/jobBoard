@@ -51,7 +51,6 @@ app.get('/admin/user', (req, res) => {
 })
 
 app.post('/admin/update/user', (req, res) => {
-
 })
 
 app.get('/admin/adverts', (req, res) => {
@@ -65,7 +64,6 @@ app.get('/admin/adverts', (req, res) => {
         res.status(200).send(response)
     })
 })
-
 
 app.get('/admin/companies', (req, res) => {
     if (req.query.list) {
@@ -89,7 +87,6 @@ app.get('/admin/delete', (req, res) => {
 
 app.get('/company', (req, res) => {
     if (!req.query.id) return res.status(406).send('id_not_provided')
-
     db.query('SELECT * FROM companies WHERE id = ?', [req.query.id], (error, response) => {
         if (error) throw error
         res.status(200).send({ ...response[0] })
@@ -97,12 +94,12 @@ app.get('/company', (req, res) => {
 })
 
 app.put('/company/update', (req, res) => {
-    const { name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities } = req.body;
-    const prepare = [name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities]
+    const { siret, name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities, password } = req.body;
+    const prepare = [siret, name, contact_name, number_employes, website, email, phone, city, postal_code, address, activities, password]
     db.query(`select email from  companies where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, emails) => {
         if (err) throw err
         if (emails.length == 0) {
-            const queryString = `UPDATE companies SET name = ? , contact_name = ? , number_employes = ? , website = ? , email = ? , phone = ? , city = ? , postal_code = ?, address = ?, activities = ?  WHERE id ='${req.body.id}'`
+            const queryString = `UPDATE companies SET siret = ?,name = ? , contact_name = ? , number_employes = ? , website = ? , email = ? , phone = ? , city = ? , postal_code = ?, address = ?, activities = ?, password_= ?  WHERE id ='${req.body.id}'`
             db.query(queryString, prepare, (error, results) => {
                 if (error) throw error
                 res.status(200).send("success");
@@ -112,6 +109,20 @@ app.put('/company/update', (req, res) => {
         }
     })
 })
+app.get('/company/adverts', (req, res) => {
+    db.query(`select * from  advertisements where companie_id="${req.query.id}"`, (err, response) => {
+        if (err) throw err
+        res.status(200).send(response);
+
+    })
+})
+
+app.get('/company/adverts/delete', (req, res) => {
+    db.query(`delete from advertisements where id="${req.query.id}"`, (err, response) => {
+        if (err) throw err
+        res.status(200).send(response);
+    })
+})
 
 app.get('/adverts', (req, response) => {
     db.query('SELECT * FROM advertisements where published=1 order by date desc', (err, res) => {
@@ -119,6 +130,7 @@ app.get('/adverts', (req, response) => {
         response.status(200).send(res)
     })
 })
+
 app.put('/adverts/update', (req, res) => {
     const { title, published, salary, date, description, activity } = req.body;
     const prepare = [title, published, salary, date, description, activity]
