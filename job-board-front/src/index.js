@@ -22,6 +22,8 @@ import ManageAdverts from './components/Admin/manage/ManageAdverts/ManageAdverts
 import ManageCompanies from './components/Admin/manage/ManageCompanies/ManageCompanies';
 import jwt from 'jwt-decode'
 import getUserToken from './functions/getUserToken';
+import AdminLogin from './components/Admin/AdminLogin/AdminLogin'
+import CompanyLogin from './components/company/Login/Login.tsx'
 
 
 const Middleware = () => {
@@ -56,11 +58,32 @@ const Middleware = () => {
     }
   }
 
+
+  const company = () => {
+    const token = getUserToken()
+    if (token) {
+      const role = jwt(token).role
+      if (role === 'company') {
+        return (<></>)
+      }
+    }
+  }
+
   return <React.StrictMode>
     {authGuard()}
     <Router>
       <Route exact path="/">
         <Visitorpage />
+      </Route>
+      <Route path="/admin/login">
+        <AdminLogin />
+      </Route>
+
+      <Route path="/company/login" >
+        <CompanyLogin />
+      </Route>
+      <Route path="/company/register">
+        <CompanyRegister />
       </Route>
       <Route path="/login">
         <Login />
@@ -85,10 +108,8 @@ const Middleware = () => {
         <UserProfil />
       </Route>
       {admin()}
-      <Route path="/company/register">
-        <CompanyRegister />
-      </Route>
 
+      {company()}
 
 
 

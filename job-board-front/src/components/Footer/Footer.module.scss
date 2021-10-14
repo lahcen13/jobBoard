@@ -7,4 +7,16 @@
     position: absolute;
     bottom: 0px;
     left: 0px;
+    display: flex;
+
+    align-items: center;
+
+    .loginLink {
+      margin-left: 6%;
+      color: white;
+    }
+    .loginLink:hover {
+        cursor: pointer;
+    }
+  
 }

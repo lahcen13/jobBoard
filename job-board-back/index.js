@@ -13,7 +13,7 @@ const { get } = require('./functions/user')
 
 //middleware
 app.use(cors())
-app.use((req, res, next) => token(req, res, next, ['/login', '/sectors', '/register/user', '/register/company', '/adverts', '/company', '/applied']))
+app.use((req, res, next) => token(req, res, next, ['/login', '/sectors', '/register/user', '/register/company', '/admin/login', '/company/login', '/adverts', '/company', '/applied']))
 // app.use((req, res, next) => handleUser(req, res, next, db, ['/login', '/register']))
 app.use(express.json())
 //-------
@@ -22,6 +22,31 @@ app.use(express.json())
 db.connect((err) => {
     if (err) throw err
     console.log('Database connected')
+})
+app.post('/admin/login', (req, res) => {
+   
+    const password = req.body.data.password;
+    const email = req.body.data.email
+
+    console.log(req.body)
+
+    db.query("SELECT email, role, id, password_ FROM people WHERE role='admin' AND email=?", [email], (error, response) => {
+        if (error) return error
+        if (response.length === 0) {
+            return res.status(404).send('user_not_found')
+        }
+        const user = response[0]
+        console.log(user)
+        bcrypt.compare(password, user.password_).then((isSame) => {
+            if (isSame) {
+                console.log('GO')
+                const token =jwt.sign({role: user.role, email: user.email, id: user.id}, process.env.SECRET)
+                return res.status(200).send({token: token, user: {id: user.id, email: user.email}})
+            }
+            return res.status(401).send('bad_password')
+        })
+        .catch(err => console.log('error'))
+    })
 })
 
 app.get('/admin/select', (req, res) => {
@@ -163,43 +188,51 @@ app.put('/adverts/update', (req, res) => {
 })
 
 app.post('/company/login', (req, response) => {
-    if (!req.body || !req.body.password || !req.body.email) {
-        response.status(406).send('field_missing')
+    console.log(req.body)
+    if (!req.body.data || !req.body.data.password || !req.body.data.email) {
+       return response.status(406).send('field_missing')
     }
 
-    db.query(`SELECT * FROM companies WHERE email="${req.body.email}"`, (err, res) => {
+
+    db.query(`SELECT * FROM companies WHERE email=?`, [req.body.data.email], (err, res) => {
+
         if (res.length > 0) {
-            bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
+            bcrypt.compare(req.body.data.password, res[0].password_, function (err, result) {
                 if (result) {
                     var token = sign('company', res[0].id, res[0].email)
-                    response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
+                   return response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
                 } else {
-                    response.status(401).send("wrong_password")
+                   return response.status(401).send("wrong_password")
                 }
             });
         } else {
-            response.status(401).send("wrong_email")
+            return response.status(401).send("user_not_found")
         }
     })
 })
 
 app.post('/login', (req, response) => {
+    console.log('requer')
     if (!req.body || !req.body.password || !req.body.email) {
         response.status(406).send('field_missing')
     }
 
-    db.query(`SELECT * FROM people WHERE email="${req.body.email}"`, (err, res) => {
+    db.query(`SELECT id, password_, email FROM people WHERE role='user' AND email=?`, [req.body.email], (err, res) => {
+        if (err) {
+            return console.log(err)
+        }
+        console.log(res)
         if (res.length > 0) {
             bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
                 if (result) {
                     var token = sign(res[0].role, res[0].id, res[0].email)
-                    response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
+                   return  response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
                 } else {
-                    response.status(401).send("wrong_password")
+                    return response.status(401).send("wrong_password")
                 }
             });
         } else {
-            response.status(401).send("wrong_email")
+           return  response.status(401).send("user_not_found")
         }
     })
 })
@@ -354,15 +387,15 @@ app.post('/register/company', (req, response) => {
 
                 db.query(`insert into companies (name, password_, email, contact_name, sector, address, postal_code, city, siret, number_employes, website, phone)  values ("${req.body.name}","${hash}","${req.body.email}" ,"${req.body.contactName}" ,"${req.body.sector}" , "${req.body.address}" , "${req.body.postal_code}" ,"${req.body.city}" ,"${req.body.siret}","${req.body.number_employes}","${req.body.website}","${req.body.phone}" )`, (err, res) => {
                     if (err) throw err
-                    response.status(200).send('success');
+                   return response.status(200).send('success')
                 })
             });
         } else {
             if (req.body.siret === res[0].siret) {
-                response.status(406).send('siret_exist');
+                return response.status(406).send('siret_exist');
             }
             if (req.body.email === res[0].email) {
-                response.status(406).send('email_exist');
+               return response.status(406).send('email_exist');
             }
         }
     })

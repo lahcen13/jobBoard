@@ -10,7 +10,7 @@ const Advert = (props: props) => {
       <h4 id="titleAdvert">{props.title}</h4>
       <p id="paragraphAdvert">{props.short}</p>
     </div>
-    <Button onClick={() => props.select(props.index)} variant="primary" id="buttonAdvert">Learn more</Button>
+    <Button onClick={() => props.select(props.index)} id="buttonAdvert">Learn more</Button>
   </div>
 }
 

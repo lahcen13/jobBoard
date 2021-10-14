@@ -25,9 +25,11 @@ const Login = () => {
         window.location.href = '/adverts';
 
       } else if (res.data == 'wrong_password' || res.data == 'wrong_email') {
+        console.log("THEN",res.data)
         console.log(showAlert);
       }
     }).catch(err => {
+      console.log(err.response.data)
       console.error(err)
       setShowAlert(true);
       console.log(showAlert)

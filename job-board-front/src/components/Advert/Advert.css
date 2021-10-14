@@ -1,9 +1,9 @@
 .Advert {
-    height:35%;
+    height:fit-content;
     min-height: 200px;
     background:WHITE;
     filter: drop-shadow(0 0 0.3rem rgb(185, 185, 185));
-    width: 60%;
+    width: 70%;
     margin-top: 2%;
     margin-left: auto;
     margin-right: auto;
@@ -14,18 +14,17 @@
 }
 
 #titleAdvert {
-    font-size: 1.1em;
+    font-size: 1.6vw;
     text-align: center;
     padding-top: 2%;
 }
  #paragraphAdvert{
-    font-size: 0.9em;
+     padding: 3%;
+    font-size: 1.2vw;
     text-align:center;
     padding: 3%;
     
 }
-
-
 
 
 #buttonAdvert{
@@ -33,61 +32,14 @@
     position: absolute;
     bottom: 0;
     border-radius:0rem 0rem .3rem .3rem!important;
+    background-color: #5a71e4;
 }
 
 
-@media (max-width: 1560px) {
-    #titleAdvert, #paragraphAdvert{
-        font-size: 1em;
-        text-align:center;
-        padding: 2%;
-        
-}
-.Advert {
-    height:40%;
-    min-height: 200px;
-    background:WHITE;
-    filter: drop-shadow(0 0 0.3rem rgb(185, 185, 185));
-    margin-top: 4%;
-    width: 70%;
-}
-}
 
 
-@media (max-width: 1440px) {
-    #titleAdvert, #paragraphAdvert{
-        font-size: 1em;
-        text-align:center;
-        padding: 2%;
-        
-}
-.Advert {
-    height:40%;
-    min-height: 200px;
-    background:WHITE;
-    filter: drop-shadow(0 0 0.3rem rgb(185, 185, 185));
-    margin-top: 4%;
-    width: 80%;
-}
-}
 
 
-@media (max-width: 1145px) {
-    #titleAdvert, #paragraphAdvert{
-        font-size: 1em;
-        text-align:center;
-        padding: 2%;
-        
-}
-.Advert {
-    height:43%;
-    min-height: 200px;
-    background:WHITE;
-    filter: drop-shadow(0 0 0.3rem rgb(185, 185, 185));
-    margin-top: 4%;
-    width: 85%;
-}
-}
 
 
 

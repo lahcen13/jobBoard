@@ -1,5 +1,9 @@
+.nav {
+    background-color: #5a71e4;
+}
 
 .navbar{
+    background-color: #5a71e4;
     position: sticky!important;
 	top: 0!important;
     z-index: 1000!important;
