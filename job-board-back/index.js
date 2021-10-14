@@ -138,6 +138,16 @@ app.put('/company/update', (req, res) => {
         }
     })
 })
+
+app.post('/company/publish', (req, res) => {
+    const { companie_id, salary, title, description, short_description } = req.body;
+    var prepare = [title, salary, description, short_description, companie_id]
+    db.query(`INSERT INTO advertisements (title,salary, description, short_description, companie_id) values( ? , ? , ? , ? , ?)`, prepare, (err, response) => {
+        if (err) throw err
+        res.status(200).send(response);
+    })
+})
+
 app.get('/company/adverts', (req, res) => {
     db.query(`select * from  advertisements where companie_id="${req.query.id}"`, (err, response) => {
         if (err) throw err
@@ -185,6 +195,7 @@ app.post('/company/login', (req, response) => {
 
 
     db.query(`SELECT * FROM companies WHERE email=?`, [req.body.data.email], (err, res) => {
+
         if (res.length > 0) {
             bcrypt.compare(req.body.data.password, res[0].password_, function (err, result) {
                 if (result) {
