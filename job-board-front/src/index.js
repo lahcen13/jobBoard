@@ -23,7 +23,7 @@ import ManageCompanies from './components/Admin/manage/ManageCompanies/ManageCom
 import jwt from 'jwt-decode'
 import getUserToken from './functions/getUserToken';
 import AdminLogin from './components/Admin/AdminLogin/AdminLogin'
-import CompanyLogin from './components/company/Login/Login.tsx'
+import CompanyLogin from './components/Company/Login/Login.tsx'
 
 
 const Middleware = () => {
