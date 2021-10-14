@@ -3,7 +3,7 @@ import { get } from "../functions/session"
 export default () => {
     console.log('AUTH')
   
-    if (window.location.pathname === '/' || window.location.pathname === '/login' || window.location.pathname === '/register') {
+    if (window.location.pathname === '/' || window.location.pathname === '/admin/login' || window.location.pathname === '/login' || window.location.pathname === '/register' || window.location.pathname === '/adverts') {
         return
     }
 

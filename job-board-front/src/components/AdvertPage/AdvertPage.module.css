@@ -1,14 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Rowdies&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rowdies&display=swap");
 
 .advertPage {
-font-family: "Rowdies";
-position: relative;
-width: 100vw;
-height: 100%;
-display: flex;
-flex-direction: row;
-
+    font-family: "Rowdies";
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 3%;
 }
+
+
 
 #page {
     overflow: hidden;
@@ -16,21 +18,15 @@ flex-direction: row;
     min-width: 100vw;
 }
 
-.filter {
-   width: 20vw;
-   height: 100vh;
-   background-color: powderblue;
-}
-
 .advertContainer {
     overflow-y: scroll;
-background-color: white;
-width: 50%;
-height: 92%;
+    background-color: white;
+    width: 50%;
+    height: 92%;
 }
 
 .advertContainer::-webkit-scrollbar {
-display: none;
+    display: none;
 }
 
 @media (max-width: 1100px) {
@@ -39,7 +35,7 @@ display: none;
     }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 800px) {
     #filterBlock {
         display: none;
     }
