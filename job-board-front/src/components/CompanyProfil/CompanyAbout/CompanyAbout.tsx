@@ -25,7 +25,7 @@ const CompanyAbout = (props: { notif: Function }) => {
 
   useEffect(() => {
     if (!data.id) {
-      axios.get('http://localhost:5000/company?id=1', {
+      axios.get('http://localhost:5000/company?id='+getUser().id, {
         headers: {
           'content-type': 'application/json',
           "authorization": "Bearer " + getUserToken()
