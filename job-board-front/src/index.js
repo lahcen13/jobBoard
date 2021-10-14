@@ -21,6 +21,7 @@ import ManageAdverts from './components/Admin/manage/ManageAdverts/ManageAdverts
 import ManageCompanies from './components/Admin/manage/ManageCompanies/ManageCompanies';
 import jwt from 'jwt-decode'
 import getUserToken from './functions/getUserToken';
+import AdminLogin from './components/Admin/AdminLogin/AdminLogin'
 
 
 const Middleware = () => {
@@ -61,6 +62,11 @@ const Middleware = () => {
       <Route exact path="/">
         <Visitorpage />
       </Route>
+      <Route  path="/admin/login">
+        <AdminLogin />
+      </Route>
+      
+      
       <Route path="/login">
         <Login />
       </Route>

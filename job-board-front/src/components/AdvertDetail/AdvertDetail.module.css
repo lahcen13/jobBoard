@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Rowdies&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rowdies&display=swap");
 
 .advertDetail {
     overflow-x: hidden;
@@ -11,8 +11,8 @@
     right: 0;
     top: 0;
     overflow-y: scroll;
+    padding-bottom: 4%;
 }
-
 
 .title {
     color: black;
@@ -33,14 +33,22 @@
 }
 
 .labelIcon {
-
     display: flex;
 }
 
 .stretch {
     width: 100%;
 }
+
+h1 {
+    font-size: 2vw;
+}
+
+h2 {
+    font-size: 1.5vw;
+}
 .paragraph {
+    font-size: 1vw;
     text-align: justify;
     padding: 2%;
 }
@@ -56,7 +64,7 @@
     /* height: 2%; */
     /* line-height: 0.2; */
     width: auto;
-  margin-left: 5px;
+    margin-left: 5px;
 }
 
 .none {
@@ -70,6 +78,7 @@
 
 .detailFooter {
     padding-left: 10%;
+    margin-bottom: 10%;
     width: 100%;
     height: 40%;
 }
@@ -79,19 +88,20 @@
     margin-top: 2%;
     padding-left: 10%;
     width: min-content;
+    font-size: 1.4vw;
 }
 
 .contactSection {
     color: rgba(0, 0, 0, 0.521);
-   width: min-content;
+    width: min-content;
     padding-top: 3%;
-   margin: auto;
-  
+    margin: auto;
+    font-size: 1;
 }
 
 .contactSection span {
-   margin-left: auto;
-   margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
     justify-self: center;
     align-self: center;
 }
@@ -102,9 +112,10 @@
 
 .button {
     /* margin: auto; */
+    margin-bottom: 6%;
     width: 30vw;
     height: 10vh;
-    background-color: #0D6EFD;
+    background-color: #5a71e4;
     border: none;
     box-shadow: 1px 1px 3px black;
     color: white;
@@ -126,7 +137,7 @@
     margin: auto;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 800px) {
     .advertDetail {
         position: absolute;
         left: 0px;

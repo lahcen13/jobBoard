@@ -18,11 +18,11 @@ const Navbar = () => {
     setOpen(!isOpen)
   }
 
-  return   <div className={styles.navbar}>
-  <Navv bg="primary" variant="dark" >
+  return   <div  className={styles.navbar}>
+  <Navv  className={'nav'} variant="dark" >
     <Container>
-      <Navv.Brand href="#home">JobBoard</Navv.Brand>
-      <Navv.Text>
+      <Navv.Brand href="/">JobBoard</Navv.Brand>
+      <Navv.Text >
         {getUser() ? <><BellFill size={25} color="white" className={styles.bell}> </BellFill>
         <Image onClick={() => handleClick()} src="https://picsum.photos/200/200" className={styles.userPic} width="35px" roundedCircle /></>: <div className={styles.unRegisteredRedirects}><Link to="/login"><p>Connexion</p></Link> <Link to="/register"><p>Register</p></Link></div>}
       </Navv.Text>
