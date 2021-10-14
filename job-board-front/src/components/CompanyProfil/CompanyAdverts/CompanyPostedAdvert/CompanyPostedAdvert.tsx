@@ -22,10 +22,10 @@ const CompanyPostedAdvert = (props: any) => {
         </div>
       </div>
       <div className="row justify-content-between">
-        <div className="col-sm-6 col-md-6">
-          <Button onClick={() => show(props.id)} className={styles.show}>Show applied users</Button>
+        <div className="col-6 col-md-6">
+          <Button onClick={() => show(props.id)} className={styles.show}>Users</Button>
         </div>
-        <div className="col-sm-3 col-md-5">
+        <div className="col-5 col-md-5">
           <Button onClick={() => Delete(props.id)} className={styles.delete} >DELETE</Button>
         </div>
       </div>

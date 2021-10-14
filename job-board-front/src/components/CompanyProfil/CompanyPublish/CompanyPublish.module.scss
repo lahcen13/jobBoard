@@ -1,0 +1,59 @@
+
+.parent{
+    margin-top:10vh;
+    min-height: 75vh;
+    position:relative;
+}
+
+.child{
+    height:auto;
+    border-radius: 5px;
+    background: white;
+    padding: 2%;
+}
+
+.bg{
+    background-color: #F4F2F2; 
+    height:100%;   
+    
+}
+
+.textArea {
+    resize: none;
+  }
+
+.margin{
+    margin-top: 2vh;
+}
+
+.show{
+    position:absolute;
+    top:120px;
+    width:70%;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0px 0px 9px rgb(46, 46, 46);
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    height: 75vh;
+   
+}
+.showChild{
+    overflow-y: scroll;
+    height: 70vh;
+    padding:3%;
+}
+
+@media screen and (max-width: 768px) {
+    .bg{
+        height: fit-content;
+    }
+    .child{
+       
+        background: white;
+        
+    }
+  
+}
