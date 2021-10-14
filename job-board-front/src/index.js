@@ -96,7 +96,7 @@ const Middleware = () => {
         <AdvertPage />
       </Route>
 
-      <Route path="/company/profil">
+      <Route exact path="/company">
         <CompanyProfil />
       </Route>
 
