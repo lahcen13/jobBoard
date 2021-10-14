@@ -1,6 +1,5 @@
-.Visitor-page {
+.VisitorPage {
     height: 100vh;
-    overflow: hidden;
 }
 
 .introSection {
@@ -47,9 +46,20 @@
     margin-left: 2%;
     width: 70%;
     margin-right: 2%;
-    margin-top: 20%;
+    margin-top: 10%;
     margin: "auto";
     background-color: #5a71e4;
+    margin-bottom:4vh;
+}
+.button:hover{
+    transition: 0.2s;
+    border-radius: 4px;
+    background-color: #4158ce;
+}
+.logButton:hover{
+    transition: 0.2s;
+    border-radius: 4px;
+    background-color: #4158ce;
 }
 
 .redirectLogin {
