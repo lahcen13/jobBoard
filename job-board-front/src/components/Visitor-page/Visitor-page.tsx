@@ -18,7 +18,7 @@ const Visitorpage = () => (
       <div className={styles.redirects}>
         <div className={styles.redirectLogin}>
           <input onClick={() => window.location.href = '/login'} className={styles.logButton} type='button' value="I'm looking for a company" />
-          <input className={styles.logButton} type='button' value="I'm a company" />
+          <input onClick={() => window.location.href = '/company/login'} className={styles.logButton} type='button' value="I'm a company" />
         </div>
         <input onClick={() => window.location.href = '/adverts'} className={styles.button} type='button' value="See all advertisments" />
       </div>
