@@ -13,7 +13,7 @@ const { get } = require('./functions/user')
 
 //middleware
 app.use(cors())
-app.use((req, res, next) => token(req, res, next, ['/login', '/sectors', '/register/user', '/register/company', '/admin/login', '/adverts', '/company', '/applied']))
+app.use((req, res, next) => token(req, res, next, ['/login', '/sectors', '/register/user', '/register/company', '/admin/login', '/company/login', '/adverts', '/company', '/applied']))
 // app.use((req, res, next) => handleUser(req, res, next, db, ['/login', '/register']))
 app.use(express.json())
 //-------
@@ -178,22 +178,24 @@ app.put('/adverts/update', (req, res) => {
 })
 
 app.post('/company/login', (req, response) => {
-    if (!req.body || !req.body.password || !req.body.email) {
-        response.status(406).send('field_missing')
+    console.log(req.body)
+    if (!req.body.data || !req.body.data.password || !req.body.data.email) {
+       return response.status(406).send('field_missing')
     }
 
-    db.query(`SELECT * FROM companies WHERE email="${req.body.email}"`, (err, res) => {
+
+    db.query(`SELECT * FROM companies WHERE email=?`, [req.body.data.email], (err, res) => {
         if (res.length > 0) {
-            bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
+            bcrypt.compare(req.body.data.password, res[0].password_, function (err, result) {
                 if (result) {
                     var token = sign('company', res[0].id, res[0].email)
-                    response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
+                   return response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
                 } else {
-                    response.status(401).send("wrong_password")
+                   return response.status(401).send("wrong_password")
                 }
             });
         } else {
-            response.status(401).send("wrong_email")
+            return response.status(401).send("user_not_found")
         }
     })
 })
@@ -374,15 +376,15 @@ app.post('/register/company', (req, response) => {
 
                 db.query(`insert into companies (name, password_, email, contact_name, sector, address, postal_code, city, siret, number_employes, website, phone)  values ("${req.body.name}","${hash}","${req.body.email}" ,"${req.body.contactName}" ,"${req.body.sector}" , "${req.body.address}" , "${req.body.postal_code}" ,"${req.body.city}" ,"${req.body.siret}","${req.body.number_employes}","${req.body.website}","${req.body.phone}" )`, (err, res) => {
                     if (err) throw err
-                    response.status(200).send('success');
+                   return response.status(200).send('success')
                 })
             });
         } else {
             if (req.body.siret === res[0].siret) {
-                response.status(406).send('siret_exist');
+                return response.status(406).send('siret_exist');
             }
             if (req.body.email === res[0].email) {
-                response.status(406).send('email_exist');
+               return response.status(406).send('email_exist');
             }
         }
     })

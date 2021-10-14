@@ -131,7 +131,7 @@ const StepWrapper = () => {
         siret: inputData.cSiret,
         contactName: inputData.cContactName
       }).then(res => {
-        console.log('successfully registered')
+        window.location.href = '/company/login'
       }).catch(err => {
         if (err.response.data === 'email_exist') {
           setNoti({
