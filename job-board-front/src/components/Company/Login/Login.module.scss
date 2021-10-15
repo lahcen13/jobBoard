@@ -6,10 +6,11 @@
     background-color: #F4F2F2;
     display: flex;
     justify-content: center;
+  
 }
 
 .logWrapper {
-    margin-top: 10%;
+    margin-top: 6vh;
     width: 70%;
     height: 80%;
     box-shadow: 1px 1px 3px 0.5px;
@@ -28,11 +29,7 @@
     width: 60%;
     align-items: center;
     display: flex;
-    
-
     flex-direction: column;
-  
-    
 }
 
 label {
@@ -41,7 +38,6 @@ label {
     flex-direction: column;
     width: 60%;
     input {
-       
         height: 5vh;
         border: none;
         background-color: var.$secondary;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
@@ -58,7 +54,6 @@ label {
 }
 
 @media (max-width: 900px) {
-
     .logWrapper {
         margin-top: 5%;
         width: 70%;

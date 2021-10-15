@@ -35,7 +35,7 @@ const Login = () => {
     }).then((res) => {
       set(res.data.token, false, res.data.user)
       window.location.href = '/company'
-      
+
     }).catch(err => {
       console.log(err.response.data)
       if (err.response.data === 'bad_password') {
@@ -63,7 +63,7 @@ const Login = () => {
   return <div className={styles.AdminLogin}>
     <Notification {...noti} changeState={() => setNoti({ ...noti, isShown: false })} />
     <div className={styles.logWrapper}>
-      <h3 className={styles.title}>Admin login</h3>
+      <h3 className={styles.title}>Company login</h3>
       <div className={styles.inputWrapper}>
         <label>
           Email:
