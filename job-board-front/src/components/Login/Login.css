@@ -30,9 +30,19 @@
    align-self: flex-end;
    margin-right: 5%;
 }
+#createAccount{
+    cursor: default;
+    pointer-events: none;        
+    text-decoration: none;
+    color: white;
+}
+#createAccount:hover{
+    color: rgb(190, 188, 188);
+}
+
 
 .createLink {
-    margin-top: 20vh;
+
     text-align: center;
     color: white;
 }

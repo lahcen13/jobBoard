@@ -4,6 +4,7 @@ import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import axios from "axios";
 import { set } from '../../functions/session'
 import Alert from '../Alert/Alert';
+import { Link } from 'react-router-dom';
 
 
 const Login = () => {
@@ -25,7 +26,7 @@ const Login = () => {
         window.location.href = '/adverts';
 
       } else if (res.data == 'wrong_password' || res.data == 'wrong_email') {
-        console.log("THEN",res.data)
+        console.log("THEN", res.data)
         console.log(showAlert);
       }
     }).catch(err => {
@@ -46,7 +47,7 @@ const Login = () => {
         <FormControl name="email" className="center-text" placeholder="Email" />
       </InputGroup>
       <InputGroup onChange={(e) => onChange(e)} className="input">
-        <FormControl name="password" className="center-text" placeholder="Password" />
+        <FormControl name="password" type="password" className="center-text" placeholder="Password" />
       </InputGroup>
       <InputGroup className='input'>
         <InputGroup.Text>Stay connected</InputGroup.Text>
@@ -59,7 +60,7 @@ const Login = () => {
 
     <div className="createLink">
       <p>or</p>
-      <p><a>Create an account</a></p>
+      <Link to='register'><p id="createAccount">Create an account</p></Link>
     </div>
   </div>
 };

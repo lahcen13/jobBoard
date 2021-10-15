@@ -1,7 +1,9 @@
 .UserProfilApplied {
 
 }
-
+.BoxHeight{
+    height:78.7vh;
+}
 .scroll{
     height:65.6vh!important;
     overflow: auto;
