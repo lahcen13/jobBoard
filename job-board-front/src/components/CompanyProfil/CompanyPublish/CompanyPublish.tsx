@@ -13,7 +13,7 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 
 const CompanyPublish = () => {
-  const [data, setData] = useState<any>({ companie_id: "1", title: "", description: "", short_description: "", salary: "" });
+  const [data, setData] = useState<any>({ companie_id: getUser().id, title: "", description: "", short_description: "", salary: "" });
   const [show, setShow] = useState(false)
   const token: string = getUserToken();
 
@@ -78,7 +78,7 @@ const CompanyPublish = () => {
                   <Button onClick={() => submit()}>add</Button>
                 </div>
                 <div className="col-3">
-                  <Link to="/company/profil"><Button variant="danger">back</Button></Link>
+                  <Link to="/company"><Button variant="danger">back</Button></Link>
                 </div>
               </div>
             </div>

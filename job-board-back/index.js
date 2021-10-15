@@ -171,8 +171,10 @@ app.get('/company/adverts/user', (req, res) => {
 })
 
 app.get('/adverts', (req, response) => {
+    console.log('sss')
     db.query('SELECT * FROM advertisements where published=1 order by date desc', (err, res) => {
         if (err) throw err
+        console.log(res)
         response.status(200).send(res)
     })
 })
@@ -313,6 +315,7 @@ app.get('/user', (req, res) => {
             if (response.length === 0) {
                 return res.status(404).send('user_not_found')
             }
+            console.log(response.cv)
             return res.status(200).send(response[0])
         })
     } else {
@@ -334,15 +337,16 @@ app.delete('/user', (req, res) => {
 
 app.put('/user', (req, res) => {
     const { birth_date, name, first_name, email, address, postal_code, city, phone, gender, role, cv, picture, id } = req.body;
-    const prepare = [birth_date, name, first_name, email, address, postal_code, city, phone, gender, role, cv, picture]
+    const prepare = [birth_date, name, first_name, email, address, postal_code, city, phone, gender,  cv, picture ,role]
     var Role = getPayload(getToken(req)).role;
+    console.log(Role)
     db.query(`select email from  people where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, userList) => {
         if (err) throw err
         if (userList.length == 0) {
-            if (Role == "user") {
+            if (Role !== "admin") {
                 var queryString = `UPDATE people SET birth_date= ? , name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? WHERE email ='${req.body.email}'`;
             } else {
-                var queryString = `UPDATE people SET birth_date= ? ,name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? , role = ?, cv= ? , picture= ?  WHERE id ='${req.body.id}'`;
+                var queryString = `UPDATE people SET birth_date= ? ,name = ? , first_name = ? , email = ? , address = ? , postal_code = ? , city = ? , phone = ? , gender = ? , cv= ? , picture= ?, role = ?  WHERE id ='${req.body.id}'`;
             }
             db.query(queryString, prepare, (error, results) => {
                 if (error) throw error

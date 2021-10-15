@@ -29,7 +29,7 @@ const remove = () => {
 
   window.sessionStorage.removeItem('session')
   window.localStorage.removeItem('session')
-  window.location.href = '/login';
+  window.location.href = '/';
 
 }
 

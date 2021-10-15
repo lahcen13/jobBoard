@@ -28,7 +28,7 @@ const CompanyAdverts = (props: any) => {
 
   useEffect(() => {
     if (!data) {
-      axios.get('http://localhost:5000/company/adverts?id=1', {
+      axios.get('http://localhost:5000/company/adverts?id=' + getUser().id, {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Authorization': 'Bearer ' + token

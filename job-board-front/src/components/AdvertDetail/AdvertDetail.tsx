@@ -35,17 +35,7 @@ const AdvertDetail = (props: {
   })
 
 
-  const displayClass = () => {
-    
-    if (!display) {
-      console.log('DISPLAY FALSE')
-      return styles.none
-    }
-
-    if (!display) return setDisplay(true)
-    if (props.display) return styles.display
-    return styles.none
-  }
+  
 
   return data ? <div className={styles.advertDetail}><Reply className={styles.icon} width="30px" height="30px" onClick={() => setDisplay(false)} /><h3 className={styles.title}>{props.data.title}</h3>
     <div className={styles.detailHeader}>
