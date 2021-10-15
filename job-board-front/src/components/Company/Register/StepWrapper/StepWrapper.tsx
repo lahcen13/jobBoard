@@ -85,7 +85,6 @@ const StepWrapper = () => {
           <input disabled={errors ? true : false} className={styles.confirmButton} onClick={() => setStep(3)} type="button" value="Continue" />
         </div>
       </div>
-
       {errors && <div className={styles.errorContainer}>
         {errors.map(el => <p>{el}</p>)}
       </div>}
