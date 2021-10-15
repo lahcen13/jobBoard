@@ -15,26 +15,38 @@ const UserProfilAbout = (props: { notif: Function }) => {
   const [data, setData] = useState({ first_name: "", name: "", email: "", phone: "", city: "", postal_code: "", address: "", gender: "", id: getUser().id });
   const [email, setEmail] = useState(getUser().email);
   const [useEff, setUseEff] = useState(false);
-  const [controlError, setControlError] = useState<string>();
+  const [controlError, setControlError] = useState<string>(" ");
   const [showAlertMailExist, setShowAlertMailExist] = useState(false);
   const token: string = getUserToken()
 
 
   const formController = () => {
-    if (!controleName(data.first_name)) {
+    if (!controleName(data.first_name) || data.first_name === '') {
       setControlError("Incorrect first name ")
       return false
     }
-    if (!controleName(data.name)) {
+    if (!controleName(data.name) || data.name === '') {
       setControlError("Incorrect name")
       return false
     }
-    if (!controleName(data.city)) {
+    if (!controleEmail(data.email) || data.email === '') {
+      setControlError("Incorrect email")
+      return false
+    }
+    if (data.phone.length > 14 || data.phone === '') {
+      setControlError("Incorrect phone")
+      return false
+    }
+    if (!controleName(data.city) || data.city === '') {
       setControlError("Incorrect city")
       return false
     }
-    if (!controleEmail(data.email)) {
-      setControlError("Incorrect email")
+    if (data.postal_code.length !== 5 || data.postal_code === '') {
+      setControlError("Incorrect postal code")
+      return false
+    }
+    if (data.address === '') {
+      setControlError("Incorrect address")
       return false
     }
     return true;
@@ -92,7 +104,7 @@ const UserProfilAbout = (props: { notif: Function }) => {
   useEffect(() => {
     console.log(controlError)
     console.log(data)
-    setControlError('');
+
   })
 
 
@@ -134,7 +146,7 @@ const UserProfilAbout = (props: { notif: Function }) => {
         <div className="col-sm-5  col-md-6">
           <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="formBasicEmail">
             <Form.Label>Phone</Form.Label>
-            <Form.Control name='phone' type="tel" maxLength={13} value={data.phone ? data.phone : ""} />
+            <Form.Control name='phone' type="number" maxLength={13} className={styles.number} value={data.phone ? data.phone : ""} />
           </Form.Group>
         </div>
         <div className="col-sm-5 col-md-6">
@@ -148,7 +160,7 @@ const UserProfilAbout = (props: { notif: Function }) => {
         <div className="col-sm-5 col-md-6">
           <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="postalCode">
             <Form.Label>Postal code</Form.Label>
-            <Form.Control name='postal_code' type="text" maxLength={5} value={data.postal_code ? data.postal_code : ""} />
+            <Form.Control name='postal_code' type="number" maxLength={5} className={styles.number} value={data.postal_code ? data.postal_code : ""} />
           </Form.Group>
 
         </div>
@@ -169,10 +181,12 @@ const UserProfilAbout = (props: { notif: Function }) => {
             </Form.Select>
           </Form.Group>
         </div>
-        <div className="col-sm-5 col-md-5">
-          <Button onClick={() => onClick()} className={styles.submit}>Submit</Button>
-        </div>
-        <div className="col-sm-5 col-md-5">
+
+        <div className="row justify-content-between">
+          <div className="col-sm-3 col-md-3">
+            <Button onClick={() => onClick()} className={styles.submit}>Submit</Button>
+          </div>
+          {controlError !== " " ? <div className={"col-sm-12 col-md-7 bg-warning rounded " + styles.notif}> {controlError}</div> : ""}
         </div>
       </div>
     </div>

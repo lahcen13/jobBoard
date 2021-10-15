@@ -1,7 +1,22 @@
 .submit{
     margin-top:3vh;
 }
+.notif{
+    margin-top:3vh;
+    font-size:auto;
+    color: white;
+    text-align: center;
+    padding: 4px;
+}
 
 .height{
     min-height: 78.7vh!important;;
+}
+
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number]{
+    -moz-appearance: textfield;
 }
