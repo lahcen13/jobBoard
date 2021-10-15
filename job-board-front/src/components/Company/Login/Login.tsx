@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import styles from './Login.module.scss';
 import Notification from '../../Notification/Notification';
 import { set } from '../../../functions/session';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   console.log('LOGIN')
@@ -74,6 +76,7 @@ const Login = () => {
           <input onChange={(e) => handleChange(e)} name='password' type='password' value={data.password} />
         </label>
         <input onClick={() => handleSubmit()} type='button' className={styles.button} value='Connect' />
+        <Link to='/company/register'> <div className={styles.register}> No account ? Register here.</div></Link>
       </div>
     </div>
   </div>

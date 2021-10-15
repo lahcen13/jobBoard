@@ -73,6 +73,7 @@ const StepWrapper = () => {
     console.log(2)
     const errors = inputWatcher(inputData, 2)
     return <div className={styles.StepWrapper}>
+
       <div className={styles.inputsWrapper}>
         <div className={styles.inputs}>
           <input onChange={(e: any) => handleChange(e)} value={inputData.cCity} type='text' name='cCity' placeholder="City" />
@@ -81,10 +82,9 @@ const StepWrapper = () => {
           <input onChange={(e: any) => handleChange(e)} value={inputData.cWebsite} type='text' name='cWebsite' placeholder="Website" />
         </div>
         <div className={styles.buttonWrapper}>
-          <input disabled={errors ? true : false} className={styles.confirmButton} onClick={() => setStep(3)} type="button" value="Continue (again)" />
+          <input disabled={errors ? true : false} className={styles.confirmButton} onClick={() => setStep(3)} type="button" value="Continue" />
         </div>
       </div>
-
       {errors && <div className={styles.errorContainer}>
         {errors.map(el => <p>{el}</p>)}
       </div>}
@@ -98,8 +98,8 @@ const StepWrapper = () => {
         <div className={styles.inputs}>
           <input onChange={(e: any) => handleChange(e)} value={inputData.cNumOfEmployees === 0 ? "" : inputData.cNumOfEmployees} type='text' name='cNumOfEmployees' placeholder="Number of employees" />
           <input onChange={(e: any) => handleChange(e)} value={inputData.cContactName} type='text' name='cContactName' placeholder="Contact name" />
-          <input onChange={(e: any) => handleChange(e)} value={inputData.cPassword} type='text' name='cPassword' placeholder="Password" />
-          <input onChange={(e: any) => handleChange(e)} value={inputData.cConfirmPassword} type='text' name='cConfirmPassword' placeholder="confirm password" />
+          <input onChange={(e: any) => handleChange(e)} value={inputData.cPassword} type='password' name='cPassword' placeholder="Password" />
+          <input onChange={(e: any) => handleChange(e)} value={inputData.cConfirmPassword} type='password' name='cConfirmPassword' placeholder="confirm password" />
         </div>
         <div className={styles.buttonWrapper}>
           <input onClick={() => setStep(4)} disabled={errors ? true : false} className={styles.confirmButton} type="button" value="One last step !" />
@@ -141,7 +141,7 @@ const StepWrapper = () => {
             isShown: true,
             time: 4000
           })
-          
+
         }
 
         if (err.response.data === 'siret_exist') {
@@ -152,7 +152,7 @@ const StepWrapper = () => {
             isShown: true,
             time: 4000
           })
-          
+
         }
       })
     }
