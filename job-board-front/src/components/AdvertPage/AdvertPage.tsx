@@ -58,7 +58,6 @@ const AdvertPage = () => {
       }
     }
     if (selected) {
-      console.log('VALIDA')
       axios.post('http://localhost:5000/applied', {
         firstName: data.firstName,
         lastName: data.lastName,
@@ -114,6 +113,7 @@ const AdvertPage = () => {
 
   return (<div id={classes.page}>
     <Navbar />
+   
 
     <div className={classes.advertPage}>
       <div className={classes.advertContainer}>

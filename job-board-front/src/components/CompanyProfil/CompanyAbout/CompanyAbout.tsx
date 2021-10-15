@@ -22,23 +22,18 @@ const CompanyAbout = (props: { notif: Function }) => {
 
 
   const token: string = getUserToken()
-
-  useEffect(() => {
-    if (!data.id) {
-      axios.get('http://localhost:5000/company?id='+getUser().id, {
-        headers: {
-          'content-type': 'application/json',
-          "authorization": "Bearer " + getUserToken()
-        }
-      }).then(res => {
-        console.log(res.data)
-        setData(res.data)
-      }).catch(err => {
-      })
-    }
-  })
-
-
+  if (!data.id) {
+    axios.get('http://localhost:5000/company?id='+getUser().id, {
+      headers: {
+        'content-type': 'application/json',
+        "authorization": "Bearer " + getUserToken()
+      }
+    }).then(res => {
+      console.log(res.data)
+      setData(res.data)
+    }).catch(err => {
+    })
+  }
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data)
