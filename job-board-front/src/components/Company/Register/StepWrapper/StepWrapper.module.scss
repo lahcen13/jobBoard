@@ -93,12 +93,12 @@
 
     .confirmButton {
         margin: auto;
-        height: 11vh;
+        height: auto;
         background-color: var.$primary;
         color: var.$primaryText;
-        font-size: 6vw;
+        font-size: auto;
         border: none;
-        width: 80%;
+        width: 40%;
     }
 
     .confirmButton:disabled {
@@ -117,7 +117,7 @@
     margin-left: auto;
     margin-right: auto;
     p {
-        font-size: 3vw;
+        font-size: AUTO;
     }
 }
 
@@ -127,7 +127,7 @@
         width: 100vw;
         display: flex;
         flex-direction: row;
-        padding-top: 5%;
+        padding-top: 10px;
         padding-left: 2%;
         padding-right: 2%;
         justify-content: center;
@@ -197,7 +197,6 @@
     }
     .inputs {
         margin-top: 5vh;
-
         margin: none;
         flex-wrap: nowrap;
         flex-direction: column;
@@ -221,12 +220,12 @@
 
         .confirmButton {
             margin: auto;
-            height: 8vh;
+            height: auto;
             background-color: var.$primary;
             color: var.$primaryText;
-            font-size: 3vw;
+            font-size: auto;
             border: none;
-            width: 70%;
+            width: 40%;
         }
     }
     .errorContainer {
@@ -239,7 +238,7 @@
         width: 50%;
 
         p {
-            font-size: 1.6vw;
+            font-size: AUTO;
         }
     }
 }
@@ -250,7 +249,7 @@
         width: 100vw;
         display: flex;
         flex-direction: row;
-        padding-top: 5%;
+        padding-top: 10px;
         padding-left: 2%;
         padding-right: 2%;
         justify-content: center;
@@ -340,12 +339,12 @@
 
         .confirmButton {
             margin: auto;
-            height: 7vh;
+            height: auto;
             background-color: var.$primary;
             color: var.$primaryText;
-            font-size: 3vw;
+            font-size: auto;
             border: none;
-            width: 70%;
+            width: 40%;
         }
     }
     .errorContainer {
@@ -358,7 +357,7 @@
         width: 50%;
 
         p {
-            font-size: 2.5vw;
+            font-size: AUTO ;
         }
     }
 }
