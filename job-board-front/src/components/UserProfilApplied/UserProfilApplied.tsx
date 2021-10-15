@@ -16,7 +16,7 @@ const UserProfilApplied = () => {
 
   useEffect(() => {
     if (!data && current === null) {
-      axios.get('http://localhost:5000/applied?id='+getUser().id, {
+      axios.get('http://localhost:5000/applied?id=' + getUser().id, {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Authorization': 'Bearer ' + token
@@ -33,7 +33,7 @@ const UserProfilApplied = () => {
 
 
   const renderDefault = () => (
-    <div className="UserProfilColumn rounded ">
+    <div className={"UserProfilColumn rounded " + styles.BoxHeight}>
       <div className="col-sm-12  col-md-12">
         <div className="row justify-content-between">
           <h4> Last applied</h4>

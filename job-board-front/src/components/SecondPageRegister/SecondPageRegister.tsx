@@ -19,11 +19,11 @@ const SecondPageRegister = (props: any) => {
       </InputGroup>
       <div>{props.showAlertEmail && <Alert class=" bg-warning" text="the [email] field must match patern 'john@domain.com'" />}</div>
       <InputGroup onChange={(e) => props.update(e)} className="input">
-        <FormControl name="password" className="center-text" placeholder="Password" />
+        <FormControl name="password" type="password" className="center-text" placeholder="Password" />
       </InputGroup>
       <div>{props.showAlertPassword && <Alert class=" bg-warning" text="'This field must contain at least one special character, one letter, one number and a uppercase letter.'" />}</div>
       <InputGroup onChange={(e) => props.update(e)} className="input">
-        <FormControl name="confirm" className="center-text" placeholder="Confirm" />
+        <FormControl name="confirm" type="password" className="center-text" placeholder="Confirm" />
       </InputGroup>
       <div>{props.showAlertConfirm && <Alert class=" bg-warning" text="The [confirm] field must be the same as [Password]." />}</div>
       <Button disabled={!props.disabled} onClick={() => props.onClick()} className="buttonRegister" variant="light">Register</Button>

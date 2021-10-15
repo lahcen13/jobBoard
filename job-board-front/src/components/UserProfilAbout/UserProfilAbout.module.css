@@ -1,3 +1,7 @@
 .submit{
     margin-top:3vh;
 }
+
+.height{
+    min-height: 78.7vh!important;;
+}
