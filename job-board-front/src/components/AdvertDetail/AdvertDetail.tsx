@@ -11,8 +11,8 @@ import getUserToken from '../../functions/getUserToken';
 const AdvertDetail = (props: {
   data: dataProps,
   canClose?: boolean,
-  interact: Function
-  display: boolean
+  interact: Function,
+  display: Function
 }) => {
 
   const [data, setData] = useState<data | null>(null)
@@ -37,7 +37,7 @@ const AdvertDetail = (props: {
 
   
 
-  return data ? <div className={styles.advertDetail}><Reply className={styles.icon} width="30px" height="30px" onClick={() => setDisplay(false)} /><h3 className={styles.title}>{props.data.title}</h3>
+  return data ? <div className={styles.advertDetail}><Reply className={styles.icon} width="30px" height="30px" onClick={() => props.display()} /><h3 className={styles.title}>{props.data.title}</h3>
     <div className={styles.detailHeader}>
       <div className={styles.row}>
         <span className={styles.labelIcon}>

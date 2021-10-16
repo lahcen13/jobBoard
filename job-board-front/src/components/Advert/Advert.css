@@ -25,22 +25,24 @@ h4 {
 }
 
 #titleAdvert {
-    font-size: 1.6vw;
+    font-size: 1.3em;
     text-align: center;
     padding-top: 2%;
 }
  #paragraphAdvert{
      padding: 3%;
-    font-size: 1.2vw;
+    font-size: 1em;
     text-align:center;
     padding: 3%;
+    margin: 6%;
+ 
     
 }
 
 
 #buttonAdvert{
     width: 100%;
-    position: absolute;
+    /* position: fixed; */
     bottom: 0;
     border-radius:0rem 0rem .3rem .3rem!important;
     background-color: #5a71e4;

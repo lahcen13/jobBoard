@@ -121,9 +121,9 @@ const Popup = (props: props) => {
         </label>
 
         <label  className={styles.fileInput}>
-          {data.file.name ? data.file.name.substring(0, 10) : "Upload File"}
+          {(data.file && data.file.name )? data.file.name.substring(0, 10) : "Upload File"}
           <CloudUpload width="30px" height="30px" className={styles.icon} />
-          <input disabled={data.file.name ? disabled : false}  accept="application/pdf" onChange={(e: any) => handleFile(e)} hidden type="file" />
+          <input disabled={(data.file && data.file.name )? disabled : false}  accept="application/pdf" onChange={(e: any) => handleFile(e)} hidden type="file" />
         </label>
 
       </div>

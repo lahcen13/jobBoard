@@ -23,7 +23,7 @@ const AdvertPage = () => {
   const [pop, setPop] = useState<boolean>(false)
   const token: string = getUserToken()
   useEffect(() => {
-    if (displayDetails) setDetails(false)
+   
     if (!data) {
       axios.get('http://localhost:5000/adverts', {
         headers: {
@@ -42,9 +42,9 @@ const AdvertPage = () => {
   })
 
   const handleSelect = (i: number) => {
-    
+    setDetails(true)
   setSelected(data[i])
-  setDetails(true)
+  
   }
 
 
@@ -120,7 +120,7 @@ const AdvertPage = () => {
         {data && data.map((el: any, i: number) => <Advert select={(i: number) => handleSelect(i)} index={i} title={el.title} short={el.short_description} description={el.description} published={el.published} date={el.date} />)}
       </div>
 
-      {data && <AdvertDetail display={(displayDetails)} interact={() => setPop(true)} data={!selected ? data[0]: selected} />}
+      {(data && displayDetails) && <AdvertDetail display={() => setDetails(false)} interact={() => setPop(true)} data={!selected ? data[0]: selected} />}
       {pop && <Popup callBack={(d: notif) => handleNoti(d)} valid={(data: popupData) => onValid(data)} cancel={() => onCancel()} />}
       <Notification changeState={() => setNoti({ ...noti, isShown: false })} {...noti} />
     </div></div>)
