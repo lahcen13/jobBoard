@@ -24,7 +24,7 @@ db.connect((err) => {
     console.log('Database connected')
 })
 app.post('/admin/login', (req, res) => {
-   
+
     const password = req.body.data.password;
     const email = req.body.data.email
 
@@ -40,12 +40,12 @@ app.post('/admin/login', (req, res) => {
         bcrypt.compare(password, user.password_).then((isSame) => {
             if (isSame) {
                 console.log('GO')
-                const token =jwt.sign({role: user.role, email: user.email, id: user.id}, process.env.SECRET)
-                return res.status(200).send({token: token, user: {id: user.id, email: user.email}})
+                const token = jwt.sign({ role: user.role, email: user.email, id: user.id }, process.env.SECRET)
+                return res.status(200).send({ token: token, user: { id: user.id, email: user.email } })
             }
             return res.status(401).send('bad_password')
         })
-        .catch(err => console.log('error'))
+            .catch(err => console.log('error'))
     })
 })
 
@@ -119,19 +119,16 @@ app.get('/company', (req, res) => {
 })
 
 app.put('/company/update', (req, res) => {
-    const { siret, name, contact_name, number_employes, website, email, phone, city, postal_code, address, password_ } = req.body;
+    const { siret, name, contact_name, number_employes, website, email, phone, city, postal_code, address } = req.body;
     var prepare = [siret, name, contact_name, number_employes, website, email, phone, city, postal_code, address,]
 
     db.query(`select email from  companies where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, emails) => {
         if (err) throw err
         if (emails.length == 0) {
-            bcrypt.hash(req.body.password_, saltRounds, function (err, hash) {
-
-                const queryString = `UPDATE companies SET siret = ?,name = ? , contact_name = ? , number_employes = ? , website = ? , email = ? , phone = ? , city = ? , postal_code = ?, address = ?, password_= '${hash}'  WHERE id ='${req.body.id}'`
-                db.query(queryString, prepare, (error, results) => {
-                    if (error) throw error
-                    res.status(200).send("success");
-                })
+            const queryString = `UPDATE companies SET siret = ?,name = ? , contact_name = ? , number_employes = ? , website = ? , email = ? , phone = ? , city = ? , postal_code = ?, address = ?  WHERE id ='${req.body.id}'`
+            db.query(queryString, prepare, (error, results) => {
+                if (error) throw error
+                res.status(200).send("success");
             })
         } else {
             res.status(406).send('email_exist');
@@ -192,7 +189,7 @@ app.put('/adverts/update', (req, res) => {
 app.post('/company/login', (req, response) => {
     console.log(req.body)
     if (!req.body.data || !req.body.data.password || !req.body.data.email) {
-       return response.status(406).send('field_missing')
+        return response.status(406).send('field_missing')
     }
 
 
@@ -202,9 +199,9 @@ app.post('/company/login', (req, response) => {
             bcrypt.compare(req.body.data.password, res[0].password_, function (err, result) {
                 if (result) {
                     var token = sign('company', res[0].id, res[0].email)
-                   return response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
+                    return response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
                 } else {
-                   return response.status(401).send("wrong_password")
+                    return response.status(401).send("wrong_password")
                 }
             });
         } else {
@@ -228,13 +225,13 @@ app.post('/login', (req, response) => {
             bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
                 if (result) {
                     var token = sign(res[0].role, res[0].id, res[0].email)
-                   return  response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
+                    return response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
                 } else {
                     return response.status(401).send("wrong_password")
                 }
             });
         } else {
-           return  response.status(401).send("user_not_found")
+            return response.status(401).send("user_not_found")
         }
     })
 })
@@ -337,7 +334,7 @@ app.delete('/user', (req, res) => {
 
 app.put('/user', (req, res) => {
     const { birth_date, name, first_name, email, address, postal_code, city, phone, gender, role, cv, picture, id } = req.body;
-    const prepare = [birth_date, name, first_name, email, address, postal_code, city, phone, gender,  cv, picture ,role]
+    const prepare = [birth_date, name, first_name, email, address, postal_code, city, phone, gender, cv, picture, role]
     var Role = getPayload(getToken(req)).role;
     console.log(Role)
     db.query(`select email from  people where email="${req.body.email}" and id not like  "${req.body.id}"`, (err, userList) => {
@@ -391,7 +388,7 @@ app.post('/register/company', (req, response) => {
 
                 db.query(`insert into companies (name, password_, email, contact_name, sector, address, postal_code, city, siret, number_employes, website, phone)  values ("${req.body.name}","${hash}","${req.body.email}" ,"${req.body.contactName}" ,"${req.body.sector}" , "${req.body.address}" , "${req.body.postal_code}" ,"${req.body.city}" ,"${req.body.siret}","${req.body.number_employes}","${req.body.website}","${req.body.phone}" )`, (err, res) => {
                     if (err) throw err
-                   return response.status(200).send('success')
+                    return response.status(200).send('success')
                 })
             });
         } else {
@@ -399,7 +396,7 @@ app.post('/register/company', (req, response) => {
                 return response.status(406).send('siret_exist');
             }
             if (req.body.email === res[0].email) {
-               return response.status(406).send('email_exist');
+                return response.status(406).send('email_exist');
             }
         }
     })
