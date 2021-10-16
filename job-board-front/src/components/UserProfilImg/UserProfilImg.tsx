@@ -12,12 +12,12 @@ const UserProfilImg = (props: any) => (
           <div className='uploadImgButton'> Upload Image</div>
         </div>
         <div className="row justify-content-between containerNameGender">
-          <div className="col-2 col-sm-4 col-md-4 ">
+          {/* <div className="col-2 col-sm-4 col-md-4 ">
             {props.name}
           </div>
           <div className=" col-2 col-sm-2 col-md-2 ">
             {props.gender}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

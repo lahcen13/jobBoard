@@ -111,7 +111,7 @@ const UserProfilAbout = (props: { notif: Function }) => {
 
 
 
-  return <div className={"col-sm-12  col-md-4 "}>
+  return <div className={"col-sm-12  col-md-6"}>
 
     <div className={"UserProfilColumn rounded " + styles.height}>
       <div className="row">

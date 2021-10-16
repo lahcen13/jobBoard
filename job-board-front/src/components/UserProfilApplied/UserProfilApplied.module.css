@@ -9,3 +9,12 @@
     overflow: auto;
 }
 
+.noApply {
+    margin-top: 10%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  background-color: rgb(241, 239, 239);
+}
