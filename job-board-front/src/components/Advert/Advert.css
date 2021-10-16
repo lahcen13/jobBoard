@@ -13,6 +13,17 @@
     transform: scale(1.03)!important;
 }
 
+.container {
+    width: 100%;
+    overflow-wrap: break-word;
+    height: fit-content;
+    padding: 4%;
+}
+
+h4 {
+    width: 100%;
+}
+
 #titleAdvert {
     font-size: 1.6vw;
     text-align: center;

@@ -1,0 +1,48 @@
+
+
+.open {
+    animation: in;
+    animation-duration: 2s;
+    color: white;
+    padding-right: 6vw;
+    font-size: 2.5em;
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+    justify-content: space-between;
+}
+
+@keyframes out {
+    0% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+}
+
+@keyframes in {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+
+    50% {
+    }
+    100% {
+        
+        opacity: 1;
+    }
+}
+
+.person:hover {
+    transition: 0.5s;
+    color: rgba(255, 255, 255, 0.575);
+}
+.power:hover {
+    transition: 0.5s;
+    color: rgba(255, 255, 255, 0.575);
+}

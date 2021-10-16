@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
 import Navv from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
@@ -6,30 +6,36 @@ import Nav from 'react-bootstrap/Nav';
 import PropTypes from 'prop-types';
 import { BellFill } from 'react-bootstrap-icons';
 import Image from 'react-bootstrap/Image';
-import Menu from '../Menu/Menu'
 import { getUser } from '../../functions/session';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import AnimatedNavigation from '../AnimatedNavigation/AnimatedNavigation'
+import getUserToken from '../../functions/getUserToken';
 
 const Navbar = () => {
-  const [isOpen, setOpen] = useState<boolean>(false)
+  const [isOpen, setOpen] = useState<any>(false)
+  const [triggerAnimation, setTrigger] = useState<any>(null)
 
-  const handleClick = () => {
-    console.log('opening')
-    setOpen(!isOpen)
+  useEffect(() => {
+    console.log('updating')
+  })
+
+  const trigger = () => {
+    console.log('click')
+    setTrigger(Math.random())
   }
 
-  return   <div  className={styles.navbar}>
-  <Navv  className={'nav'} variant="dark" >
-    <Container>
-      <Navv.Brand href="/">JobBoard</Navv.Brand>
-      <Navv.Text >
-        {getUser() ? <><BellFill size={25} color="white" className={styles.bell}> </BellFill>
-        <Image onClick={() => handleClick()} src="https://picsum.photos/200/200" className={styles.userPic} width="35px" roundedCircle /></>: <div className={styles.unRegisteredRedirects}><Link to="/login"><p>Connexion</p></Link> <Link to="/register"><p>Register</p></Link></div>}
-      </Navv.Text>
-    </Container>
-  </Navv>
-  <Menu open={isOpen} />
-</div>
+  return <div className={styles.navbar}>
+    <h4 onClick={() => window.location.href = '/'}>Job board | Job</h4>
+
+    {getUser() && (<> <AnimatedNavigation animState={triggerAnimation} />
+
+      <div className={styles.imgWrapper}>
+
+        {getUserToken() && <img onClick={() => trigger()} className={styles.image} src="https://picsum.photos/50" />}
+
+      </div></>)}
+
+  </div>
 };
 
 export default Navbar;
