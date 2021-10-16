@@ -224,8 +224,10 @@ app.post('/login', (req, response) => {
         if (res.length > 0) {
             bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
                 if (result) {
+
                     var token = sign(res[0].role, res[0].id, res[0].email)
                     return response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
+
                 } else {
                     return response.status(401).send("wrong_password")
                 }
@@ -252,6 +254,8 @@ app.post('/applied', (req, res) => {
             if (get(req).email !== req.body.email) return res.status(401).send('wrong_email')
         }
         const id = result[0].id
+
+
         const apply = (id) => {
             return db.query('SELECT COUNT(*) FROM applied WHERE people_id = ? AND advertisement_id = ?', [id, req.body.advertID], (err, resultSelectApply) => {
                 if (err) throw err
@@ -262,6 +266,8 @@ app.post('/applied', (req, res) => {
                 })
             })
         }
+
+
         if (err) throw err
         if (result[0]["COUNT(*)"] !== 0) {
             db.query('UPDATE people SET phone = ?, name = ?, first_name = ?, cv = ? WHERE email = ?', [req.body.phone, req.body.lastName, req.body.firstName, req.body.cv, req.body.email], (err, updateResult) => {

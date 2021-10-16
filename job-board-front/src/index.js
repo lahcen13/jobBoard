@@ -64,7 +64,31 @@ const Middleware = () => {
     if (token) {
       const role = jwt(token).role
       if (role === 'company') {
-        return (<></>)
+        return (<>
+          <Route exact path="/company">
+            <CompanyProfil />
+          </Route>
+          <Route path="/company/publish">
+            <CompanyPublish />
+          </Route>
+        </>)
+      }
+    }
+  }
+
+
+  const user = () => {
+    const token = getUserToken()
+    if (token) {
+      const role = jwt(token).role
+      if (role === 'user') {
+        return (
+          <>
+            <Route path="/user/profile">
+              <UserProfil />
+            </Route>
+          </>
+        )
       }
     }
   }
@@ -91,22 +115,13 @@ const Middleware = () => {
       <Route path="/register">
         <Register />
       </Route>
-
       <Route path="/adverts">
         <AdvertPage />
       </Route>
 
-      <Route exact path="/company">
-        <CompanyProfil />
-      </Route>
 
-      <Route path="/company/publish">
-        <CompanyPublish />
-      </Route>
 
-      <Route path="/user/profil">
-        <UserProfil />
-      </Route>
+      {user()}
       {admin()}
 
       {company()}

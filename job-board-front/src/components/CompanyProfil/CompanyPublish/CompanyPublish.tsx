@@ -16,6 +16,7 @@ const CompanyPublish = () => {
   const [data, setData] = useState<any>({ companie_id: getUser().id, title: "", description: "", short_description: "", salary: "" });
   const [show, setShow] = useState(false)
   const [controlError, setControlError] = useState<string>(" ");
+  const [notifAdding, setNotifAdding] = useState<string>(" ");
   const token: string = getUserToken();
 
   const onChange = (e: any) => {
@@ -23,6 +24,7 @@ const CompanyPublish = () => {
   }
 
   const formController = () => {
+    setNotifAdding(" ")
     if (data.title.length > 230 || data.title.trim() === "") {
       setControlError("Incorrect title length")
       return false
@@ -54,6 +56,7 @@ const CompanyPublish = () => {
       }).then(res => {
         console.log("success");
         setControlError(" ")
+        setNotifAdding("Successfull adding");
       }).catch(err => console.log('error'));
     }
   }
@@ -105,7 +108,10 @@ const CompanyPublish = () => {
                   <Link to="/company"><Button variant="danger">back</Button></Link>
                 </div>
                 <div className="row ">
-                  {controlError !== " " ? <div className={"col-sm-12 col-md-12 bg-warning rounded " + styles.notif}> {controlError}</div> : ""}
+                  <div className="container">
+                    {controlError !== " " ? <div className={"col-sm-12 col-md-12 bg-warning rounded " + styles.notif}> {controlError}</div> : ""}
+                    {notifAdding !== " " ? <div className={"col-sm-12 col-md-12 bg-success rounded " + styles.notif}> {notifAdding}</div> : ""}
+                  </div>
                 </div>
               </div>
             </div>
