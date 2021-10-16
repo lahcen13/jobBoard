@@ -18,6 +18,7 @@ const AnimatedNavigation = (props: {
     const token = getUserToken()
     if (token) {
       const obj: { role: string } = jwtDecode(token)
+      console.log(obj)
       if (obj.role === 'company') {
         return <>
           <Building onClick={() => window.location.href = '/company'} />
@@ -25,9 +26,16 @@ const AnimatedNavigation = (props: {
         </>
       }
 
-      if (obj.role === 'admin') {
+      if (obj.role === 'user') {
         return <>
           <Person onClick={() => window.location.href = '/user/profile'} className={styles.person} />
+          <Power onClick={() => remove()} className={styles.power} />
+        </>
+      }
+
+      if (obj.role === 'admin') {
+        return <>
+          <Person onClick={() => window.location.href = '/admin'} className={styles.person} />
           <Power onClick={() => remove()} className={styles.power} />
         </>
       }

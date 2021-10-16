@@ -84,10 +84,6 @@ const Middleware = () => {
       if (role === 'user') {
         return (
           <>
-            <Route path="/adverts">
-              <AdvertPage />
-            </Route>
-
 
 
 
@@ -122,6 +118,10 @@ const Middleware = () => {
       <Route path="/register">
         <Register />
       </Route>
+      <Route path="/adverts">
+        <AdvertPage />
+      </Route>
+
 
 
       {user()}

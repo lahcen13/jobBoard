@@ -227,7 +227,7 @@ app.post('/login', (req, response) => {
         if (res.length > 0) {
             bcrypt.compare(req.body.password, res[0].password_, function (err, result) {
                 if (result) {
-                    var token = sign(res[0].role, res[0].id, res[0].email)
+                    var token = sign('user', res[0].id, res[0].email)
                    return  response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
                 } else {
                     return response.status(401).send("wrong_password")

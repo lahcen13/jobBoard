@@ -31,7 +31,7 @@ const Navbar = () => {
 
       <div className={styles.imgWrapper}>
 
-        {getUserToken() && <img onClick={() => trigger()} className={styles.image} src="https://picsum.photos/50" />}
+        {getUser() && <img onClick={() => trigger()} className={styles.image} src="https://picsum.photos/50" />}
 
       </div></>)}
 
