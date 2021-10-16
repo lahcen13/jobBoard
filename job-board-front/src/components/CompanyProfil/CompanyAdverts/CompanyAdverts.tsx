@@ -42,7 +42,7 @@ const CompanyAdverts = (props: any) => {
 
   return <div className={"col-sm-12 col-md-5 " + styles.box}>
     <div className="row justify-content-between">
-      <div className="col-3 col-sm-3">
+      <div className="col-10 col-sm-10">
         <h1> Adverts </h1>
       </div>
       <div className="col-2 col-sm-2">

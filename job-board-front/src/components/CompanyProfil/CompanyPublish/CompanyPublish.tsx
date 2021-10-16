@@ -15,23 +15,50 @@ import CloseButton from 'react-bootstrap/CloseButton';
 const CompanyPublish = () => {
   const [data, setData] = useState<any>({ companie_id: getUser().id, title: "", description: "", short_description: "", salary: "" });
   const [show, setShow] = useState(false)
+  const [controlError, setControlError] = useState<string>(" ");
+  const [notifAdding, setNotifAdding] = useState<string>(" ");
   const token: string = getUserToken();
 
-  const [test, setTest] = useState<string>("##hello");
-  useEffect(() => { })
   const onChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
-    console.log(data);
   }
+
+  const formController = () => {
+    setNotifAdding(" ")
+    if (data.title.length > 230 || data.title.trim() === "") {
+      setControlError("Incorrect title length")
+      return false
+    }
+    if (data.salary.trim() === "") {
+      setControlError("Incorrect salary")
+      return false
+    }
+    if (data.short_description.trim() === "") {
+      setControlError("Incorrect short description")
+      return false
+    }
+    if (data.description.length < 100 || data.description.trim() === "") {
+      setControlError("too short description")
+      return false
+    }
+
+
+    return true
+  }
+
   const submit = () => {
-    axios.post('http://localhost:5000/company/publish', data, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': 'Bearer ' + token
-      }
-    }).then(res => {
-      console.log("success");
-    }).catch(err => console.log('error'));
+    if (formController()) {
+      axios.post('http://localhost:5000/company/publish', data, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(res => {
+        console.log("success");
+        setControlError(" ")
+        setNotifAdding("Successfull adding");
+      }).catch(err => console.log('error'));
+    }
   }
 
   return <div className={styles.bg}>
@@ -45,7 +72,7 @@ const CompanyPublish = () => {
               <div className={"row " + styles.margin}>
                 <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="name">
                   <Form.Label>Advert title</Form.Label>
-                  <Form.Control name='title' type="text" step="100" min="0" />
+                  <Form.Control name='title' type="text" maxLength={250} />
                 </Form.Group>
               </div>
               <div className={"row"}>
@@ -66,7 +93,7 @@ const CompanyPublish = () => {
                 <div className="col-12">
                   <Form.Group onChange={(e) => onChange(e)} className="mb-3">
                     <Form.Label>Description</Form.Label>
-                    <Form.Control name="description" className={styles.textArea} as="textarea" rows={15} />
+                    <Form.Control name="description" className={styles.textArea} as="textarea" rows={13} />
                   </Form.Group>
                 </div>
               </div>
@@ -79,6 +106,12 @@ const CompanyPublish = () => {
                 </div>
                 <div className="col-3">
                   <Link to="/company"><Button variant="danger">back</Button></Link>
+                </div>
+                <div className="row ">
+                  <div className="container">
+                    {controlError !== " " ? <div className={"col-sm-12 col-md-12 bg-warning rounded " + styles.notif}> {controlError}</div> : ""}
+                    {notifAdding !== " " ? <div className={"col-sm-12 col-md-12 bg-success rounded " + styles.notif}> {notifAdding}</div> : ""}
+                  </div>
                 </div>
               </div>
             </div>

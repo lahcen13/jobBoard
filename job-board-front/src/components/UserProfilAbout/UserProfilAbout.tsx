@@ -14,13 +14,15 @@ import { getUser } from '../../functions/session';
 const UserProfilAbout = (props: { notif: Function }) => {
   const [data, setData] = useState({ first_name: "", name: "", email: "", phone: "", city: "", postal_code: "", address: "", gender: "", id: getUser().id });
   const [email, setEmail] = useState(getUser().email);
-  const [useEff, setUseEff] = useState(false);
   const [controlError, setControlError] = useState<string>(" ");
+  const [notifUpdated, setNotifUpdated] = useState<string>(" ");
+
   const [showAlertMailExist, setShowAlertMailExist] = useState(false);
   const token: string = getUserToken()
 
 
   const formController = () => {
+    setNotifUpdated(" ");
     if (!controleName(data.first_name) || data.first_name === '') {
       setControlError("Incorrect first name ")
       return false
@@ -41,7 +43,7 @@ const UserProfilAbout = (props: { notif: Function }) => {
       setControlError("Incorrect city")
       return false
     }
-    if (data.postal_code.length !== 5 || data.postal_code === '') {
+    if (data.postal_code.length < 6 && data.postal_code.length > 4 || data.postal_code === '') {
       setControlError("Incorrect postal code")
       return false
     }
@@ -77,13 +79,8 @@ const UserProfilAbout = (props: { notif: Function }) => {
           "authorization": "Bearer " + getUserToken()
         }
       }).then(res => {
-        props.notif({
-          bg: 'success',
-          show: true,
-          head: 'Error',
-          body: 'Your data has been updated with success'
-        })
-        setUseEff(false);
+        setControlError(" ");
+        setNotifUpdated("Update successfull");
       }).catch(err => {
         switch (err.response.data) {
           case "email_exist":
@@ -187,6 +184,7 @@ const UserProfilAbout = (props: { notif: Function }) => {
             <Button onClick={() => onClick()} className={styles.submit}>Submit</Button>
           </div>
           {controlError !== " " ? <div className={"col-sm-12 col-md-7 bg-warning rounded " + styles.notif}> {controlError}</div> : ""}
+          {notifUpdated !== " " ? <div className={"col-sm-12 col-md-7 bg-success rounded " + styles.notif}> {notifUpdated} </div> : ""}
         </div>
       </div>
     </div>

@@ -84,9 +84,6 @@ const Middleware = () => {
       if (role === 'user') {
         return (
           <>
-
-
-
             <Route path="/user/profile">
               <UserProfil />
             </Route>

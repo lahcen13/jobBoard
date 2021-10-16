@@ -9,9 +9,11 @@ const controleName = (name) => {
 const controlePassword = (password) => {
     return (password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/) ? true : false);
 }
+
 const controlePhone = (phone) => {
     return (phone.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/) ? true : false);
 }
+
 const controlePostalCode = (postalCode) => {
     return (postalCode.match(/^[0-9]{5}$/) ? true : false);
 }
