@@ -38,10 +38,15 @@ const UserProfilApplied = () => {
         <div className="row justify-content-between">
           <h4> Last applied</h4>
           <div className={current ? " " : styles.scroll}>
-            {data && data.map((el: any, i: number) => {
+            {data ? data.map((el: any, i: number) => {
               var event = new Date(el.date);
               return (<AppliedAdvert onClick={() => handleClick(el)} title={el.title} name={el.name} date={event.toLocaleDateString()} />)
-            })}
+            }):
+            <div className={styles.noApply}>
+              <p>
+You haven't applied for any job yet ...
+</p>
+              </div>}
           </div>
         </div>
       </div>
@@ -50,7 +55,7 @@ const UserProfilApplied = () => {
 
 
 
-  return <div className="col-sm-5  col-md-5 ">
+  return <div className="  col-md-6 ">
     {
       !current ? renderDefault() : <AdvertDetail canClose interact={() => setCurrent(null)} data={current}></AdvertDetail>
     }

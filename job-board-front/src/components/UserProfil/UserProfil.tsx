@@ -19,17 +19,10 @@ const UserProfil = () => {
     {noti && <Notification position='bottom-end' time={4000} changeState={() => closeNotification()} bg={noti.bg} isShown={noti.show} header={noti.head} body={noti.body} />}
     <Navbar></Navbar>
     <div className={styles.UserProfil}>
-      <div className="row justify-content-between">
-        <UserProfilImage img="https://picsum.photos/200/250" name="name" gender="gender" ></UserProfilImage>
+      <div className="row justify-content-around">
+       
         <UserProfilAbout notif={(data: any) => setNoti(data)} />
         <UserProfilApplied />
-      </div >
-      <div className="row justify-content-between">
-        <div className="col-sm-12 col-md-3">
-          <div className="UserProfilColumn rounded">
-            uploads
-          </div>
-        </div>
       </div >
     </div >
   </div >
