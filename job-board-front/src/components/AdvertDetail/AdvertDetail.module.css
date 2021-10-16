@@ -19,9 +19,11 @@
     text-align: center;
     padding: 3%;
     margin: 0;
+    font-size: 1.4em;
 }
 
 .detailHeader {
+    font-size: 0.7em;
     padding-left: 5%;
     padding-right: 5%;
     /* background-color:red ; */
@@ -41,15 +43,15 @@
 }
 
 h1 {
-    font-size: 2vw;
+    /* font-size: 1.5em; */
 }
 
 h2 {
-    font-size: 1.5vw;
+    /* font-size: 1em; */
 }
 .paragraph {
-    font-size: 1vw;
-    text-align: justify;
+    /* font-size: 0.4rem; */
+    text-align: left;
     padding: 2%;
 }
 

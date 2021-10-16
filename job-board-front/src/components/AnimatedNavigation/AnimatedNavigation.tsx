@@ -8,9 +8,6 @@ import styles from './AnimatedNavigation.module.scss';
 const AnimatedNavigation = (props: {
   animState: any
 }) => {
-  const [animation, setAnimation] = useState<any>(null)
-  const [last, setLast] = useState<any>(null)
-  const [one, setOne] = useState(false)
 
 
 
