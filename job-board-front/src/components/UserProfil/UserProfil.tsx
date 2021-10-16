@@ -24,13 +24,6 @@ const UserProfil = () => {
         <UserProfilAbout notif={(data: any) => setNoti(data)} />
         <UserProfilApplied />
       </div >
-      <div className="row justify-content-between">
-        <div className="col-sm-12 col-md-3">
-          <div className="UserProfilColumn rounded">
-            uploads
-          </div>
-        </div>
-      </div >
     </div >
   </div >
 };
