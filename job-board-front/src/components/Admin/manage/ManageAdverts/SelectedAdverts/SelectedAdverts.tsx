@@ -8,8 +8,10 @@ import getUserToken from '../../../../../functions/getUserToken';
 const SelectedAdverts = (props: any) => {
   const [data, setData] = useState<any>({ id: "", title: "", description: "", activity: "", salary: "", date: "", published: "" });
   const [id, setId] = useState<any>(null)
+  const [notif, setNotif] = useState<any>(false)
   const token: string = getUserToken()
   const onChange = (e: any) => {
+    setNotif(false);
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data)
   }
@@ -35,7 +37,6 @@ const SelectedAdverts = (props: any) => {
         ];
         var month = datevalues[1] >= 10 ? datevalues[1] : '0' + datevalues[1];
         var jour = datevalues[0] >= 10 ? datevalues[0] : '0' + datevalues[0];
-
         console.log(datevalues);
         setData({ ...res.data[0], date: datevalues[2] + '-' + month + '-' + jour })
 
@@ -50,7 +51,7 @@ const SelectedAdverts = (props: any) => {
         "authorization": "Bearer " + getUserToken()
       }
     }).then(res => {
-      console.log("success")
+      setNotif(true)
     }).catch(err => {
       console.log("error ")
     })
@@ -100,6 +101,8 @@ const SelectedAdverts = (props: any) => {
       <div className="col-sm-5 col-md-5">
         <Button onClick={() => updateDB()} className={styles.submit}>Submit</Button>
       </div>
+      {notif ? <div className={"col-sm-5 col-md-5 bg-success rounded center text-light " + styles.notifParent}> <h6 className={styles.notif}>Updated</h6>   </div> : ''}
+
     </div>
   </div >) : <> <Spinner animation="border" role="status">
     <span className="visually-hidden">Loading...</span>

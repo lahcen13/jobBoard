@@ -6,3 +6,13 @@
     overflow-y: scroll;
     padding:3%;
 }
+.notifParent{
+   margin-top: 10px;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.notif{
+    text-align:center ;
+}

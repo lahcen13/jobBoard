@@ -51,7 +51,7 @@ app.post('/admin/login', (req, res) => {
 
 app.get('/admin/select', (req, res) => {
     if (req.query.table == 'advertisements') {
-        sql = "id, title, published, salary, date, description, activity"
+        sql = "id, title, published, salary, date, description"
     } else if (req.query.table == 'companies') {
         sql = "id, name, contact_name, number_employes, website, email, phone, city, postal_code, address"
     } else {
@@ -177,9 +177,9 @@ app.get('/adverts', (req, response) => {
 })
 
 app.put('/adverts/update', (req, res) => {
-    const { title, published, salary, date, description, activity } = req.body;
-    const prepare = [title, published, salary, date, description, activity]
-    const queryString = `UPDATE advertisements SET title = ? , published = ? , salary = ? , date = ? , description = ? , activity = ? WHERE id ='${req.body.id}'`
+    const { title, published, salary, date, description } = req.body;
+    const prepare = [title, published, salary, date, description]
+    const queryString = `UPDATE advertisements SET title = ? , published = ? , salary = ? , date = ? , description = ?  WHERE id ='${req.body.id}'`
     db.query(queryString, prepare, (error, results) => {
         if (error) throw error
         res.status(200).send("success");

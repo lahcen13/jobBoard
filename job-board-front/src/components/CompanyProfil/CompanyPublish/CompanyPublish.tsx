@@ -78,7 +78,7 @@ const CompanyPublish = () => {
               <div className={"row"}>
                 <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="name">
                   <Form.Label>Salary</Form.Label>
-                  <Form.Control name='salary' type="number" step="100" min="0" />
+                  <Form.Control type="number" name='salary' />
                 </Form.Group>
               </div>
               <div className="row">
