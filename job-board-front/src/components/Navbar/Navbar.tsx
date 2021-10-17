@@ -31,7 +31,7 @@ const Navbar = () => {
 
       <div className={styles.imgWrapper}>
 
-        {getUser() && <img onClick={() => trigger()} className={styles.image} src="https://picsum.photos/50" />}
+        {/* {getUser() && <img onClick={() => trigger()} className={styles.image} src="https://picsum.photos/50" />} */}
 
       </div></>)}
 

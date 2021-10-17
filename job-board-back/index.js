@@ -201,7 +201,7 @@ app.post('/company/login', (req, response) => {
                     var token = sign('company', res[0].id, res[0].email)
                     return response.status(200).send({ token: token, user: { id: res[0].id, email: res[0].email } });
                 } else {
-                    return response.status(401).send("wrong_password")
+                    return response.status(401).send("bad_password")
                 }
             });
         } else {
