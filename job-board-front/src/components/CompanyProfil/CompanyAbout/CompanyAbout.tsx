@@ -164,7 +164,7 @@ const CompanyAbout = (props: { notif: Function }) => {
         <div className="col-sm-12  col-md-6">
           <Form.Group onChange={(e) => onChange(e)} className="mb-3" controlId="formBasicEmail">
             <Form.Label>Phone</Form.Label>
-            <Form.Control name='phone' type="tel" value={data.phone ? data.phone : ""} />
+            <Form.Control name='phone' type="number" value={data.phone ? data.phone : ""} />
           </Form.Group>
         </div>
         <div className="col-sm-12 col-md-6">
@@ -199,7 +199,6 @@ const CompanyAbout = (props: { notif: Function }) => {
       </div>
     </div>
   </div>
-
 };
 
 

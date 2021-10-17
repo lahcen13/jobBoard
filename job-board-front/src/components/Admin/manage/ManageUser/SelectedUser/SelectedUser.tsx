@@ -8,8 +8,9 @@ import getUserToken from '../../../../../functions/getUserToken';
 const SelectedUser = (props: any) => {
 
   const [data, setData] = useState({ id: "", first_name: "", name: "", email: "", phone: "", city: "", postal_code: "", address: "", gender: "", birth_date: "", role: "", cv: "", picture: "" });
-  const token: string = getUserToken()
-  const [id, setId] = useState<any>(null)
+  const token: string = getUserToken();
+  const [notif, setNotif] = useState<any>(false);
+  const [id, setId] = useState<any>(null);
 
   console.log(props.id)
 
@@ -46,13 +47,14 @@ const SelectedUser = (props: any) => {
         "authorization": "Bearer " + getUserToken()
       }
     }).then(res => {
-      console.log("success")
+      setNotif(true)
     }).catch(err => {
       console.log("error ")
     })
   }
 
   const onChange = (e: any) => {
+    setNotif(false);
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data)
   }
@@ -144,6 +146,7 @@ const SelectedUser = (props: any) => {
       <div className="col-sm-5 col-md-5">
         <Button className={styles.submit} onClick={() => updateDB()} >Submit</Button>
       </div>
+      {notif ? <div className={"col-sm-5 col-md-5 bg-success rounded center text-light " + styles.notifParent}> <h6 className={styles.notif}>Updated</h6>   </div> : ''}
     </div>
   </div>
 };
