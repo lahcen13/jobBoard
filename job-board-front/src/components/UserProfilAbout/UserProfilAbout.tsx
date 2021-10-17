@@ -43,7 +43,7 @@ const UserProfilAbout = (props: { notif: Function }) => {
       setControlError("Incorrect city")
       return false
     }
-    if (data.postal_code.length < 6 && data.postal_code.length > 4 || data.postal_code === '') {
+    if (data.postal_code === '') {
       setControlError("Incorrect postal code")
       return false
     }
